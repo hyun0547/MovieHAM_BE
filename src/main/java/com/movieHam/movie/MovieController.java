@@ -12,13 +12,14 @@ import java.util.Map;
 public class MovieController {
 
     @GetMapping(value="/movie/list", produces = "application/json; charset=UTF-8")
-    public String getMovieList(){
+    public String list(){
 
         ApiConnection con = new ApiConnection();
         try {
 
-            Map<String,String> resultMap = con.kobisMoviList();
+            Map<String,Object> resultMap = con.kobisMoviList();
             String st = resultMap.toString();
+
             return st;
         }catch(Exception e){
 
@@ -28,14 +29,15 @@ public class MovieController {
     }
 
     @GetMapping(value="/movie/search", produces = "application/json; charset=UTF-8")
-    public String searchMovie(String title){
+    public String search(String title){
 
         ApiConnection con = new ApiConnection();
         try {
 
-//            Map<String,Object> resultMap = con.naverMovieSearchConnection(title);
-//            String st = resultMap.toString();
-            return con.naverMovieSearch(title).toString();
+            Map<String,Object> resultMap = con.kmdbMovieSearch(title);
+            String st = resultMap.toString();
+
+            return st;
         }catch(Exception e){
 
             e.printStackTrace();
