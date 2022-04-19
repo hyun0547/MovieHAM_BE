@@ -2,6 +2,7 @@ package com.movieHam.movie;
 
 import com.api.ApiConnection;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -26,8 +27,8 @@ public class MovieController {
         return null;
     }
 
-    @GetMapping(value="/movie/search", produces = "application/json; charset=UTF-8")
-    public String search(String title){
+    @GetMapping(value="/movie/{type}", produces = "application/json; charset=UTF-8")
+    public String search(@PathVariable String title){
 
         ApiConnection con = new ApiConnection();
         try {

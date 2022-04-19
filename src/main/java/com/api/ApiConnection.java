@@ -49,14 +49,15 @@ public class ApiConnection {
 
     public Map<String, Object> kmdbMovieSearch(Map<String,String> paramMap) throws Exception {
 
+        // NameValuePair parameter 리스트로 변환
         List<NameValuePair> pairs = MapHandler.mapToNameValuePairList(paramMap);
 
         URI uri = new URIBuilder()
                 .setScheme("http")
                 .setHost(KMDB_API_DATA.HOST)
                 .setPath(KMDB_API_DATA.SEARCH_MOVIE_PATH_JSON)
-                .setParameter("collection", KMDB_API_DATA.COLLECTION)
-                .setParameter("ServiceKey", KMDB_API_DATA.SERVICE_KEY)
+                .setParameter("collection", KMDB_API_DATA.COLLECTION)   // required parameter
+                .setParameter("ServiceKey", KMDB_API_DATA.SERVICE_KEY)  // required parameter
                 .setParameters(pairs)
                 .build();
 
