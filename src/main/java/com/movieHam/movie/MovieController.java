@@ -1,10 +1,12 @@
 package com.movieHam.movie;
 
 import com.api.ApiConnection;
+import com.movieHam.movie.vo.MovieVO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -16,7 +18,7 @@ public class MovieController {
         ApiConnection con = new ApiConnection();
         try {
 
-            Map<String,Object> resultMap = con.kobisMoviList();
+            Map<String,Object> resultMap = con.kobisMovieList();
             String st = resultMap.toString();
 
             return st;
@@ -44,11 +46,17 @@ public class MovieController {
         return null;
     }
 
-    @GetMapping(value="/movie/init")
-    public String init() {
+    @GetMapping(value="/movie/init", produces = "application/json; charset=UTF-8")
+    public String init() throws Exception {
+
+        MovieVO movieVO = new MovieVO();
+        Map<String,String> paramMap = new HashMap<String,String>() {{
+            put("releaseDts", "20220101");
+        }};
+
+        Map<String,Object> resultMap = ApiConnection.kmdbMovieSearch(paramMap);
 
 
-
-        return "success!";
+        return resultMap.toString();
     }
 }

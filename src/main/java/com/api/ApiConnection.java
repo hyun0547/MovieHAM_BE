@@ -1,24 +1,22 @@
 package com.api;
 
 import com.util.parser.http.ConnectionHandler;
-import com.api.vo.KMDB_API_DATA;
+import com.api.co.KMDB_API_DATA;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.api.vo.NAVER_API_DATA;
+import com.api.co.NAVER_API_DATA;
 import com.util.parser.map.MapHandler;
 import kr.or.kobis.kobisopenapi.consumer.rest.KobisOpenAPIRestService;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.message.BasicNameValuePair;
 
 import java.net.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ApiConnection {
 
-    public Map<String, Object> naverMovieSearch(String title) throws Exception{
+    public static Map<String, Object> naverMovieSearch(String title) throws Exception{
 
         String encodedTitle = URLEncoder.encode(title, "UTF-8");
 
@@ -47,7 +45,10 @@ public class ApiConnection {
         return null;
     }
 
-    public Map<String, Object> kmdbMovieSearch(Map<String,String> paramMap) throws Exception {
+    public static Map<String, Object> kmdbMovieSearch(Map<String,String> paramMap) throws Exception {
+
+        paramMap.put("collection", KMDB_API_DATA.COLLECTION);       // required parameter
+        paramMap.put("ServiceKey", KMDB_API_DATA.SERVICE_KEY);      // required parameter
 
         // NameValuePair parameter 리스트로 변환
         List<NameValuePair> pairs = MapHandler.mapToNameValuePairList(paramMap);
@@ -56,8 +57,6 @@ public class ApiConnection {
                 .setScheme("http")
                 .setHost(KMDB_API_DATA.HOST)
                 .setPath(KMDB_API_DATA.SEARCH_MOVIE_PATH_JSON)
-                .setParameter("collection", KMDB_API_DATA.COLLECTION)   // required parameter
-                .setParameter("ServiceKey", KMDB_API_DATA.SERVICE_KEY)  // required parameter
                 .setParameters(pairs)
                 .build();
 
@@ -75,7 +74,7 @@ public class ApiConnection {
         return resultMap;
     }
 
-    public Map<String, Object> kobisMoviList() throws Exception {
+    public static Map<String, Object> kobisMovieList() throws Exception {
 
         String key = "4cf7dc867e97031d7f33282407a7a1a0";
 

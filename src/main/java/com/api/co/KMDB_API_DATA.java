@@ -1,7 +1,4 @@
-package com.api.vo;
-
-import java.util.HashMap;
-import java.util.Map;
+package com.api.co;
 
 public class KMDB_API_DATA {
 

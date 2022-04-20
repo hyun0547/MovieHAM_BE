@@ -1,4 +1,4 @@
-package com.api.vo;
+package com.api.co;
 
 public class NAVER_API_DATA {
 
