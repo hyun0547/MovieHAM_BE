@@ -1,10 +1,10 @@
 package com.api;
 
-import com.util.parser.http.ConnectionHandler;
+import com.movieHam.util.parser.http.ConnectionHandler;
 import com.api.co.KMDB_API_DATA;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.api.co.NAVER_API_DATA;
-import com.util.parser.map.MapHandler;
+import com.movieHam.util.parser.map.MapHandler;
 import kr.or.kobis.kobisopenapi.consumer.rest.KobisOpenAPIRestService;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URIBuilder;

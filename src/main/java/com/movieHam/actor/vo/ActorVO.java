@@ -1,4 +1,4 @@
-package com.movieHam.movie.vo;
+package com.movieHam.actor.vo;
 
 import jakarta.persistence.*;
 import lombok.Data;

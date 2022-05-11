@@ -1,4 +1,4 @@
-package com.util.parser.http;
+package com.movieHam.util.parser.http;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.movieHam.actor.vo;
+package com.movieHam.movie.vo;
 
 import lombok.Data;
 

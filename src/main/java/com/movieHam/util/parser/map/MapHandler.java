@@ -1,4 +1,4 @@
-package com.util.parser.map;
+package com.movieHam.util.parser.map;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;

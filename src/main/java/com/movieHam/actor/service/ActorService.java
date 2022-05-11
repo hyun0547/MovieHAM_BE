@@ -1,19 +1,16 @@
-package com.movieHam.movie.service;
+package com.movieHam.actor.service;
 
-import com.movieHam.movie.vo.ActorVO;
+import com.movieHam.actor.vo.ActorVO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import jakarta.persistence.PersistenceContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 @Service
 public class ActorService {
 
 //    @PersistenceContext(unitName = "com.movieHam")
+//    EntityManager entityManager2;
 
     public EntityManager getEntityManager() {
 
@@ -21,7 +18,6 @@ public class ActorService {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.movieHam");
         entityManager = emf.createEntityManager();
-
 
         return entityManager;
     }
@@ -42,7 +38,8 @@ public class ActorService {
 
         EntityManager entityManager = getEntityManager();
 
-        ActorVO actor = entityManager.find(ActorVO.class, "test");
+        ActorVO actor = entityManager.find(ActorVO.class, actorId);
+
         entityManager.close();
 
         return actor;
