@@ -1,10 +1,20 @@
 package com.movieHam.movie.vo;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
+@Entity(name = "movie")
+@Table(name = "TN_MOVIE")
 public class MovieVO {
+
+    @Id
+    @Column(name = "DOCID")
     private String docid;            // 영화코드
+
     private String actorId;          // 출연배우
     private String directorId;       // 감독
     private String movieId;          // ID
@@ -20,7 +30,7 @@ public class MovieVO {
     private String rating;           // 관람등급
     private String genre;            // 장르
     private String type;             // 유형구분
-    private String use;              // 용도구분
+    private String useClassification;      // 용도구분
     private String ratedYn;          // 심의여부
     private String repRatDate;       // 심의날짜
     private String repRlsDate;       // 개봉일
