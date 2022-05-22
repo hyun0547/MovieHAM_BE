@@ -31,7 +31,6 @@ build.log
 dependency-reduced-pom.xml
 dump.rdb
 interpolated*.xml
-lib/
 manifest.yml
 out
 overridedb.*
@@ -40,3 +39,4 @@ target
 secrets.yml
 .gradletasknamecache
 .sts4-cache
+src/main/resources/application.properties

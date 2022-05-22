@@ -9,6 +9,7 @@ import util.parser.map.MapHandler;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URIBuilder;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -70,6 +71,15 @@ public class ApiConnection {
         Map<String,Object> resultMap = mapper.readValue(resultStr, Map.class);
 
         return resultMap;
+    }
+
+    public ArrayList<Map<String,Object>> kmdbResultParse (Map<String,Object>resultMap){
+
+        ArrayList<Map<String, Object>> data = (ArrayList<Map<String, Object>>) resultMap.get("Data");
+        resultMap = data.get(0);
+
+        return (ArrayList<Map<String, Object>>) resultMap.get("Result");
+
     }
 
 //    public static Map<String, Object> kobisMovieList() throws Exception {

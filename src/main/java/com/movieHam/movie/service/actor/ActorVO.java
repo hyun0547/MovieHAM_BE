@@ -14,6 +14,4 @@ public class ActorVO {
 
     private String actorNm;                // 배우명
     private String actorEnNm;             // 배우영문명
-    private String regDate;                // 등록일
-    private String modDate;                // 수정일
 }
