@@ -39,4 +39,4 @@ target
 secrets.yml
 .gradletasknamecache
 .sts4-cache
-src/main/resources/application.*
+src/main/resources/application.properties
