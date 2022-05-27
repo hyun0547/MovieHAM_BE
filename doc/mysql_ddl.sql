@@ -2,7 +2,7 @@ USE movieham;
 CREATE TABLE TN_MOVIE
 (
     DOCID              VARCHAR(100) NOT NULL COMMENT '영화코드' PRIMARY KEY,
-    ACTOR_ID           VARCHAR(500) NULL COMMENT '출연배우',
+    ACTOR_ID           VARCHAR(1000) NULL COMMENT '출연배우',
     DIRECTOR_ID        VARCHAR(50)  NULL COMMENT '감독',
     MOVIE_ID           VARCHAR(10)  NULL COMMENT 'ID',
     MOVIE_SEQ          VARCHAR(50)  NULL COMMENT 'SEQ',
@@ -25,8 +25,8 @@ CREATE TABLE TN_MOVIE
     POSTERS            TEXT         NULL COMMENT '포스터 URL',
     STLLS              TEXT         NULL COMMENT '스틸샷 URL',
     OPEN_THTR          VARCHAR(50)  NULL COMMENT '개봉극장',
-    AWARDS1            VARCHAR(300) NULL COMMENT '수상내역',
-    AWARDS2            VARCHAR(300) NULL COMMENT '수상내역',
+    AWARDS1            VARCHAR(1000) NULL COMMENT '수상내역',
+    AWARDS2            VARCHAR(1000) NULL COMMENT '수상내역',
     REG_DATE           VARCHAR(50)  NULL COMMENT '등록일',
     MOD_DATE           VARCHAR(50)  NULL COMMENT '수정일'
 );

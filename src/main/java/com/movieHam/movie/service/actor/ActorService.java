@@ -2,6 +2,7 @@ package com.movieHam.movie.service.actor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 
 import java.util.List;
 
@@ -17,5 +18,9 @@ public class ActorService {
 
     public void insert(ActorVO actor) {
         actorRepository.save(actor);
+    }
+
+    public void insertAll(ArrayList<ActorVO> actorList) {
+        actorRepository.saveAll(actorList);
     }
 }

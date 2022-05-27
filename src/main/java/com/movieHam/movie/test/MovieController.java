@@ -1,19 +1,17 @@
-package com.movieHam.movie.web;
+package com.movieHam.movie.test;
 
-import com.movieHam.movie.api.ApiConnection;
+import com.movieHam.movie.externalApi.ApiConnection;
 import com.movieHam.movie.service.actor.ActorService;
 import com.movieHam.movie.service.actor.ActorVO;
 import com.movieHam.movie.service.director.DirectorService;
 import com.movieHam.movie.service.director.DirectorVO;
 import com.movieHam.movie.service.movie.MovieService;
 import com.movieHam.movie.service.movie.MovieVO;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import util.parser.map.MapHandler;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +36,7 @@ public class MovieController {
 
         Map<String,String> paramMap = new HashMap<String,String>(){
             {
-                put("listCount", "10");
+                put("listCount", "100");
                 put("releaseDts", startDate);
             }
         };
@@ -55,6 +53,10 @@ public class MovieController {
             ArrayList<ActorVO> actorList = (ArrayList<ActorVO>) movieInfo.get("actorList");
             ArrayList<DirectorVO> directorList = (ArrayList<DirectorVO>) movieInfo.get("directorList");
 
+            movieService.insertAll(movieList);
+            actorService.insertAll(actorList);
+            directorService.insertAll(directorList);
+
             return movieList.toString();
 
         }catch(Exception e){
@@ -65,7 +67,6 @@ public class MovieController {
 
     @GetMapping(value="/movie/test", produces = "application/json; charset=UTF-8")
     public String test(){
-        List<MovieVO> test = movieService.selectByTitle("사마에게");
         return "";
     }
 

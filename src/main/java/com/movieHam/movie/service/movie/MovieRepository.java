@@ -13,5 +13,21 @@ public interface MovieRepository extends JpaRepository<MovieVO, String> {
 
     MovieVO getById(String Id);
 
-    List<MovieVO> findByTitleLike(String title);
+    List<MovieVO> findByNationContains(String nation);
+
+    List<MovieVO> findByTitleContains(String title);
+
+    List<MovieVO> findByRatingContains(String queryParam);
+
+    List<MovieVO> findByGenreContains(String queryParam);
+
+    List<MovieVO> findByTypeContains(String queryParam);
+
+    List<MovieVO> findByActorIdContains(String queryParam);
+
+    List<MovieVO> findByDirectorIdContains(String queryParam);
+
+    List<MovieVO> findByRepRlsDateContains(String queryParam);
+
+    List<MovieVO> findByKeywordsContains(String queryParam);
 }

@@ -1,4 +1,4 @@
-package com.movieHam.movie.api.co;
+package com.movieHam.movie.externalApi.co;
 
 public class NAVER_API_DATA {
 
