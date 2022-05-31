@@ -24,7 +24,6 @@ public class MovieService {
 
         //regex 허용하는지 확인 필요
         String keywordRegex = Arrays.stream(keywords).collect(Collectors.joining("|"));
-
         List<MovieVO> resultList = (List<MovieVO>) m.invoke(movieRepository, keywordRegex);
 
         return resultList;

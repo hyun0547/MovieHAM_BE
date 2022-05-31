@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class MovieControllerApi {
@@ -26,28 +28,45 @@ public class MovieControllerApi {
     DirectorService directorService;
 
     @GetMapping(value="/movie/{searchType}", produces = "application/json; charset=UTF-8")
-    public String search(@PathVariable String searchType, String... keywords){
+    public Map<String,Object> search(@PathVariable String searchType, String... keywords){
 
         if("actor".equals(searchType)){
 //            actorService.search();
         }
+
         else if("director".equals(searchType)){
 //            directorService.search();
         }
 
+        Map<String,Object> result;
         try {
+
             List<MovieVO> resultList = movieService.search(searchType, keywords);
-            return resultList.toString();
+
+             result = new HashMap<>(){{
+                put("resultList", resultList);
+            }};
+
+
         }
+
         catch (NoSuchMethodException e){
-            return e.toString();
+            result = new HashMap<>(){{
+                put("error", e.getMessage());
+            }};
         }
         catch (InvocationTargetException e){
-            return e.toString();
+            result = new HashMap<>(){{
+                put("error", e.toString());
+            }};
         }
         catch (IllegalAccessException e){
-            return e.toString();
+            result = new HashMap<>(){{
+                put("error", e.toString());
+            }};
         }
+
+        return result;
 
     }
 

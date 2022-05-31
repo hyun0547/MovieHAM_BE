@@ -30,4 +30,5 @@ public interface MovieRepository extends JpaRepository<MovieVO, String> {
     List<MovieVO> findByRepRlsDateContains(String queryParam);
 
     List<MovieVO> findByKeywordsContains(String queryParam);
+
 }
