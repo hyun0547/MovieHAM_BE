@@ -14,4 +14,6 @@ public interface ActorRepository extends JpaRepository<ActorVO, String> {
     List<ActorVO> findAll();
 
     ActorVO save(ActorVO actor);
+
+    List<ActorVO> findByActorNmContains(String keyword);
 }

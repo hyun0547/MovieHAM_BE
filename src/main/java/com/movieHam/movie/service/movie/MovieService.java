@@ -15,7 +15,7 @@ public class MovieService {
     @Autowired
     MovieRepository movieRepository;
 
-    public List<MovieVO> search(String searchType, String... keywords) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public List<MovieVO> search(String searchType, String keyword) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
         String firstUpperWord = StringHandler.firstLetterUpperCase(searchType);
 
@@ -23,8 +23,7 @@ public class MovieService {
         Method m = test.getMethod("findBy" + firstUpperWord + "Contains", String.class);
 
         //regex 허용하는지 확인 필요
-        String keywordRegex = Arrays.stream(keywords).collect(Collectors.joining("|"));
-        List<MovieVO> resultList = (List<MovieVO>) m.invoke(movieRepository, keywordRegex);
+        List<MovieVO> resultList = (List<MovieVO>) m.invoke(movieRepository, keyword);
 
         return resultList;
     }

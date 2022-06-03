@@ -40,3 +40,4 @@ secrets.yml
 .gradletasknamecache
 .sts4-cache
 src/main/resources/application.*
+doc/apache-tomcat-9.0.63/
