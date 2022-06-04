@@ -1,9 +1,9 @@
-package com.movieHam.movie.externalApi;
+package com.movieHam.externalApi.movie;
 
 import util.parser.http.ConnectionHandler;
-import com.movieHam.movie.externalApi.co.KMDB_API_DATA;
+import com.movieHam.externalApi.movie.co.KMDB_API_DATA;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.movieHam.movie.externalApi.co.NAVER_API_DATA;
+import com.movieHam.externalApi.movie.co.NAVER_API_DATA;
 import util.parser.map.MapHandler;
 //import kr.or.kobis.kobisopenapi.consumer.rest.KobisOpenAPIRestService;
 import org.apache.http.NameValuePair;

@@ -1,6 +1,6 @@
 package com.movieHam.movie.test;
 
-import com.movieHam.movie.externalApi.ApiConnection;
+import com.movieHam.externalApi.movie.ApiConnection;
 import com.movieHam.movie.service.actor.ActorService;
 import com.movieHam.movie.service.actor.ActorVO;
 import com.movieHam.movie.service.director.DirectorService;
@@ -14,11 +14,10 @@ import util.parser.map.MapHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
-public class MovieController {
+public class MovieControllerTest {
 
     @Autowired
     MovieService movieService;

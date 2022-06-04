@@ -1,4 +1,4 @@
-package com.movieHam.movie.externalApi.co;
+package com.movieHam.externalApi.movie.co;
 
 public class KMDB_API_DATA {
 

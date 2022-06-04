@@ -2,7 +2,6 @@ package com.movieHam.movie.controller;
 
 import com.movieHam.movie.service.actor.ActorService;
 import com.movieHam.movie.service.director.DirectorService;
-import com.movieHam.movie.service.movie.MovieRepository;
 import com.movieHam.movie.service.movie.MovieService;
 import com.movieHam.movie.service.movie.MovieVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-public class MovieControllerApi {
+public class MovieController {
 
     @Autowired
     MovieService movieService;
