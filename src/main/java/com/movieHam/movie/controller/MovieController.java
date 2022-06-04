@@ -27,11 +27,12 @@ public class MovieController {
     DirectorService directorService;
 
     @GetMapping(value="/movie/{searchType}", produces = "application/json; charset=UTF-8")
-    public Map<String,Object> search(@PathVariable String searchType, String... keywords){
+    public Map<String,Object> search(@PathVariable String searchType, String keywords){
 
         if("actor".equals(searchType)){
-//            actorService.search();
+            actorService.search(keywords);
         }
+
 
         else if("director".equals(searchType)){
 //            directorService.search();
@@ -46,22 +47,11 @@ public class MovieController {
                 put("resultList", resultList);
             }};
 
-
         }
 
-        catch (NoSuchMethodException e){
+        catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e){
             result = new HashMap<>(){{
                 put("error", e.getMessage());
-            }};
-        }
-        catch (InvocationTargetException e){
-            result = new HashMap<>(){{
-                put("error", e.toString());
-            }};
-        }
-        catch (IllegalAccessException e){
-            result = new HashMap<>(){{
-                put("error", e.toString());
             }};
         }
 
