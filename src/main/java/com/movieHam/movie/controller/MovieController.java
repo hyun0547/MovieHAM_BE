@@ -5,6 +5,7 @@ import com.movieHam.movie.service.director.DirectorService;
 import com.movieHam.movie.service.movie.MovieService;
 import com.movieHam.movie.service.movie.MovieVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
