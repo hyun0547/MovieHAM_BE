@@ -1,43 +1,36 @@
-//package com.movieHam.user.controller;
-//
-//import com.movieHam.externalApi.kakao.OAuth;
-//import com.movieHam.user.service.UserService;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RestController;
-//import util.mapper.ResultSet;
-//
-//import javax.servlet.http.HttpSession;
-//import java.util.HashMap;
-//
-//@RestController
-//public class UserProfileController {
-//
-//    OAuth kakaoOAuth;
-//    UserService userService;
-//
-//
-//    @RequestMapping("/user/doLogin")
-//    public String doLogin(HttpSession session, String code) {
-//
-//        // 1번 인증코드 요청 전달
-//        String accessToken = kakaoOAuth.getAccessToken(code);
-//        // 2번 인증코드로 토큰 전달
-//        HashMap<String, Object> userInfo = kakaoOAuth.getUserInfo(accessToken);
-//
-//
-//        String userEmail = (String) userInfo.get("email");
-//        String userNickname = (String) userInfo.get("nickname");
-//
-////        ResultSet<User> joinRd = userService.doJoin("kakao", userEmail, userNickname);
-////        Member loginedMember = joinRd.getData();
-//
-//        if(userInfo.size() > 0) {
-//            session.setAttribute("accessToken", accessToken);
-////            session.setAttribute("loginedMember", loginedMember);
-//        }
-//
-//        return "/usr/home/main";
-//    }
-//
-//
-//}
+package com.movieHam.user.controller;
+
+import com.movieHam.user.service.SessionUser;
+import com.movieHam.user.service.UserService;
+import com.movieHam.user.service.UserVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+public class UserProfileController {
+
+    @Autowired
+    UserService userService;
+
+    @GetMapping(value="/user/profile", produces = "application/json; charset=UTF-8")
+    public Map<String, Object> doLogin(HttpSession session, String code) {
+
+        SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+        UserVO user = userService.view(sessionUser.getUniqueId());
+
+        Map<String, Object> result = new HashMap<>(){{
+            put("status", "success");
+            put("user", user);
+        }};
+
+        return result;
+    }
+
+
+}

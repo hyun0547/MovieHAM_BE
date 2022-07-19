@@ -1,5 +1,6 @@
 package com.movieHam.config.security;
 
+import com.movieHam.user.service.oAuth.OAuthAttributes;
 import com.movieHam.user.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

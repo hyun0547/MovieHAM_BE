@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import util.parser.map.MapHandler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @RestController
 public class MovieControllerTest {
@@ -65,8 +65,23 @@ public class MovieControllerTest {
     }
 
     @GetMapping(value="/movie/test", produces = "application/json; charset=UTF-8")
-    public String test(){
-        return "";
+    public String test() throws ParseException {
+
+        String test2 = "";
+        for(int year = 2022; year > 2021; year--){
+            for(int month = 12; month > 0; month--){
+                Calendar cal = Calendar.getInstance();
+                cal.set(year,month,1);
+                for(int date = cal.getActualMaximum(Calendar.DAY_OF_MONTH); date > 0; date--){
+                    String dateStr = year + "-" + month + "-" + date;
+                    SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+                    Date test = sf.parse(dateStr);
+                    test2 += sf.format(test) + "\n";
+                }
+            }
+        }
+
+        return test2;
     }
 
 

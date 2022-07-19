@@ -1,5 +1,7 @@
-package com.movieHam.user.service;
+package com.movieHam.user.service.oAuth;
 
+import com.movieHam.user.service.Role;
+import com.movieHam.user.service.UserVO;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -56,7 +58,7 @@ public class OAuthAttributes {
     }
 
     public UserVO toEntity(){
-        return User.builder()
+        return UserVO.builder()
                 .id(id)
                 .email(email)
                 .birthday(birthday)

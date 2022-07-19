@@ -9,10 +9,14 @@ import java.io.Serializable;
  */
 @Getter
 public class SessionUser implements Serializable {
+
     private String nickname;
     private String email;
+    private Long uniqueId;
+
 
     public SessionUser(UserVO user){
+        this.uniqueId = user.getId();
         this.nickname = user.getNickname();
         this.email = user.getEmail();
     }
