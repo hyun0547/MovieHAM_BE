@@ -3,7 +3,7 @@ CREATE TABLE TN_MOVIE
 (
     DOCID              VARCHAR(100) NOT NULL COMMENT '영화코드' PRIMARY KEY,
     ACTOR_ID           VARCHAR(1000) NULL COMMENT '출연배우',
-    DIRECTOR_ID        VARCHAR(50)  NULL COMMENT '감독',
+    DIRECTOR_ID        VARCHAR(500)  NULL COMMENT '감독',
     MOVIE_ID           VARCHAR(10)  NULL COMMENT 'ID',
     MOVIE_SEQ          VARCHAR(50)  NULL COMMENT 'SEQ',
     TITLE              VARCHAR(300) NULL COMMENT '제목',
@@ -45,32 +45,26 @@ CREATE TABLE TN_DIRECTOR
     DIRECTOR_EN_NM VARCHAR(100) NULL COMMENT '감독영문명'
 );
 
-
-
-
-
-CREATE TABLE USER
+CREATE TABLE TN_USER
 (
-    ID    VARCHAR(50) NOT NULL COMMENT '',
-    PW    VARCHAR(50) NOT NULL COMMENT '',
-    NAME  VARCHAR(50) NULL COMMENT '',
-    EMAIL VARCHAR(50) NULL COMMENT '',
+    user_id             bigint       not null primary key,
+    age_range           varchar(255) null,
+    birthday            varchar(255) null,
+    email               varchar(255) null,
+    gender              varchar(255) null,
+    is_default_image    varchar(255) null,
+    nickname            varchar(255) null,
+    role                varchar(255) null,
+    thumbnail_image_url varchar(255) null
 );
 
-CREATE TABLE USER_WISH_MOVIE
+CREATE TABLE TN_USER_MOVIE
 (
-    USER_ID VARCHAR(100) NOT NULL COMMENT '',
+    USER_ID         VARCHAR(100) NOT NULL COMMENT '',
     DOCID           VARCHAR(100) NOT NULL COMMENT '',
-    REG_DATE           VARCHAR(100) NOT NULL COMMENT '',
-    MOD_DATE VARCHAR(100) NULL COMMENT '';
-);
-
-CREATE TABLE USER_SEEN_MOVIE
-(
-    USER_ID  VARCHAR(100) NOT NULL COMMENT '',
-    DOCID    VARCHAR(100) NOT NULL COMMENT '',
-    RATING   VARCHAR(5)  NULL COMMENT '',
-    REVIEW   TEXT NULL COMMENT '',
-    REG_DATE VARCHAR(100) NOT NULL COMMENT '',
-    MOD_DATE VARCHAR(100) NULL COMMENT ''
+    RATING          VARCHAR(5)  NULL COMMENT '',
+    REG_DATE        VARCHAR(100) NOT NULL COMMENT '',
+    MOD_DATE        VARCHAR(100) NULL COMMENT '',
+    REVIEW          TEXT NULL COMMENT '',
+    SEEN_YN         CHAR(2) NOT NULL
 );

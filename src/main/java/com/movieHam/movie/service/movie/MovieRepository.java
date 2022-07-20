@@ -31,4 +31,6 @@ public interface MovieRepository extends JpaRepository<MovieVO, String> {
 
     List<MovieVO> findByKeywordsContains(String queryParam);
 
+    List<MovieVO> findByMovieSeqContains(String movieSeq);
+
 }
