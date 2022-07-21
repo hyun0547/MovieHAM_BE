@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import util.parser.map.MapHandler;
 
+import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -108,8 +109,9 @@ public class MovieControllerTest {
         int max = 55980;
         int random = (int) ((Math.random() * (max - min)) + min);
         String img = "";
+        List<MovieVO> movieList = null;
         while(img == null || "".equals(img)){
-            List<MovieVO> movieList = movieService.search("movieSeq", random + "");
+            movieList = movieService.search("movieSeq", random + "");
             random = (int) ((Math.random() * (max - min)) + min);
             MovieVO movie = movieList.get(0);
             img = "".equals(movie.getPosters()) || movie.getPosters() == null ? movie.getStlls() : movie.getPosters();
@@ -118,7 +120,41 @@ public class MovieControllerTest {
             }
         }
 
-        return "<img src='"+ img + "' style='width:700px'>";
+        MovieVO movie = movieList.get(0);
+        System.out.println(movie);
+
+        String result = "";
+        result += "<!DOCTYPE html>";
+        result += "<html lang='ko'>";
+        result += "<head>";
+        result += "<meta charset='utf-8'>";
+        result += "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">";
+        result += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">";
+        result += "<title>My test page</title>";
+        result += "</head>";
+        result += "<body>";
+        result += "<body>";
+        result += "<img src='"+ img +"' alt='My test image' style='width:300px'>";
+        result += "<h1>" + movie.getTitle() + "</h1>";
+        result += "<form action=\"/user/movie/insert\">";
+        result += "<input type=\"text\" name=\"Docid\" value=\"" + movie.getDocid() + "\" hidden>";
+        result += "<label for=\"seenYnY\">봤음<input type=\"radio\" id=\"seenYnY\" name=\"seenYn\" value=\"Y\"></label>";
+        result += "<label for=\"seenYnN\">안봤음<input type=\"radio\" id=\"seenYnN\" name=\"seenYn\" value=\"N\"></label>";
+        result += "<button>제출</button>";
+        result += "</form>";
+        result += "</body>";
+        result += "</html>";
+
+
+        return result;
+    }
+
+    @RequestMapping(value="/user/movie/insert")
+    public String insertMovie (MovieVO movieVO) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+
+        List<MovieVO> movieList = movieService.search("docid", movieVO.getDocid());
+
+        return "redirect:/movie/test";
     }
 
 

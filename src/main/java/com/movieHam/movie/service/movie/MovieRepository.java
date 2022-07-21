@@ -33,4 +33,6 @@ public interface MovieRepository extends JpaRepository<MovieVO, String> {
 
     List<MovieVO> findByMovieSeqContains(String movieSeq);
 
+    List<MovieVO> findByDocidContains(String docid);
+
 }
