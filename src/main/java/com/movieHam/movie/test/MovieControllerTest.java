@@ -149,13 +149,7 @@ public class MovieControllerTest {
         return result;
     }
 
-    @RequestMapping(value="/user/movie/insert")
-    public String insertMovie (MovieVO movieVO) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
 
-        List<MovieVO> movieList = movieService.search("docid", movieVO.getDocid());
-
-        return "redirect:/movie/test";
-    }
 
 
 
