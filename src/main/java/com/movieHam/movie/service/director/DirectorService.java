@@ -1,12 +1,9 @@
 package com.movieHam.movie.service.director;
 
-import com.movieHam.movie.service.actor.ActorRepository;
-import com.movieHam.movie.service.actor.ActorVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class DirectorService {
@@ -20,5 +17,11 @@ public class DirectorService {
 
     public void insertAll(ArrayList<DirectorVO> directorList){
         directorRepository.saveAll(directorList);
+    }
+
+    public ArrayList<DirectorVO> search(String directorNm) {
+        DirectorVO director = new DirectorVO();
+        director.setDirectorNm(directorNm);
+        return directorRepository.findByDirectorNmContains(director.getDirectorNm());
     }
 }

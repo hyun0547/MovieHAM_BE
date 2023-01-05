@@ -9,7 +9,6 @@ public class ConnectionHandler {
     public static String responseBodyToString(HttpURLConnection con) {
 
         try {
-            if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
                 StringBuilder sb = new StringBuilder();
                 String line = "";
@@ -22,10 +21,6 @@ public class ConnectionHandler {
                 resultStr.replaceAll("null", "");
 
                 return sb.toString();
-
-            } else {
-                return con.getResponseCode() + " Error!";
-            }
         } catch (IOException e) {
             return e + "Error!";
         }

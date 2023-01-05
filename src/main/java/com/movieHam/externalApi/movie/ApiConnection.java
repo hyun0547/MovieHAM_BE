@@ -8,6 +8,8 @@ import util.parser.map.MapHandler;
 //import kr.or.kobis.kobisopenapi.consumer.rest.KobisOpenAPIRestService;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URIBuilder;
+
+import javax.net.ssl.HttpsURLConnection;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,13 +55,13 @@ public class ApiConnection {
         List<NameValuePair> pairs = MapHandler.mapToNameValuePairList(paramMap);
 
         URI uri = new URIBuilder()
-                .setScheme("http")
+                .setScheme("https")
                 .setHost(KMDB_API_DATA.HOST)
                 .setPath(KMDB_API_DATA.SEARCH_MOVIE_PATH_JSON)
                 .setParameters(pairs)
                 .build();
 
-        HttpURLConnection con = (HttpURLConnection) uri.toURL().openConnection();
+        HttpsURLConnection con = (HttpsURLConnection) uri.toURL().openConnection();
         con.setConnectTimeout(5000); //서버에 연결되는 Timeout 시간 설정
         con.setReadTimeout(5000); // InputStream 읽어 오는 Timeout 시간 설정
         con.setRequestMethod("GET");

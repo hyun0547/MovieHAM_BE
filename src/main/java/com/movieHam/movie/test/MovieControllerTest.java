@@ -73,40 +73,40 @@ public class MovieControllerTest {
     @ResponseBody
     public String test() throws Exception {
 
-//        String test2 = "";
-//        String test3 = "";
-//        ApiConnection con = new ApiConnection();
-//        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-//        Calendar cal = Calendar.getInstance();
-//
-//        ArrayList<Map<String, Object>> movieInfoList = new ArrayList<>();
-//        for(int year = 55000; year > 54000; year--){
-//
-//            Map<String, String> paramMap = new HashMap<>();
-//            paramMap.put("movieSeq", year +"");
-//
-//            Map<String,Object> resultMap = con.kmdbMovieSearch(paramMap);
-//
-//            List<Map<String, Object>> list = con.kmdbResultParse(resultMap);
-//            if(list != null){
-//                movieInfoList.addAll(list);
-//            }
-//        }
-//
-//        Map<String, Object> movieInfo = MapHandler.getMovieInfo(movieInfoList);
-//
-//        if(movieInfo != null){
-//            ArrayList<MovieVO> movieList = (ArrayList<MovieVO>) movieInfo.get("movieList");
-//            ArrayList<ActorVO> actorList = (ArrayList<ActorVO>) movieInfo.get("actorList");
-//            ArrayList<DirectorVO> directorList = (ArrayList<DirectorVO>) movieInfo.get("directorList");
-//
-//            movieService.insertAll(movieList);
-//            actorService.insertAll(actorList);
-//            directorService.insertAll(directorList);
-//        }
+        String test2 = "";
+        String test3 = "";
+        ApiConnection con = new ApiConnection();
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
 
-        int min = 55000;
-        int max = 55980;
+        ArrayList<Map<String, Object>> movieInfoList = new ArrayList<>();
+        for(int year = 57000; year > 55000; year--){
+
+            Map<String, String> paramMap = new HashMap<>();
+            paramMap.put("movieSeq", year +"");
+
+            Map<String,Object> resultMap = con.kmdbMovieSearch(paramMap);
+
+            List<Map<String, Object>> list = con.kmdbResultParse(resultMap);
+            if(list != null){
+                movieInfoList.addAll(list);
+            }
+        }
+
+        Map<String, Object> movieInfo = MapHandler.getMovieInfo(movieInfoList);
+
+        if(movieInfo != null){
+            ArrayList<MovieVO> movieList = (ArrayList<MovieVO>) movieInfo.get("movieList");
+            ArrayList<ActorVO> actorList = (ArrayList<ActorVO>) movieInfo.get("actorList");
+            ArrayList<DirectorVO> directorList = (ArrayList<DirectorVO>) movieInfo.get("directorList");
+
+            movieService.insertAll(movieList);
+            actorService.insertAll(actorList);
+            directorService.insertAll(directorList);
+        }
+
+        int min = 57000;
+        int max = 55000;
         int random = (int) ((Math.random() * (max - min)) + min);
         String img = "";
         List<MovieVO> movieList = null;

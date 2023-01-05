@@ -1,5 +1,5 @@
-USE movieham;
-CREATE TABLE TN_MOVIE
+USE movie_ham;
+CREATE TABLE tn_movie
 (
     DOCID              VARCHAR(100) NOT NULL COMMENT '영화코드' PRIMARY KEY,
     ACTOR_ID           VARCHAR(1000) NULL COMMENT '출연배우',
@@ -29,23 +29,23 @@ CREATE TABLE TN_MOVIE
     AWARDS2            VARCHAR(1000) NULL COMMENT '수상내역',
     REG_DATE           VARCHAR(50)  NULL COMMENT '등록일',
     MOD_DATE           VARCHAR(50)  NULL COMMENT '수정일'
-);
+) charset=utf8 COLLATE=utf8_general_ci;
 
-CREATE TABLE TN_ACTOR
+CREATE TABLE tn_actor
 (
     ACTOR_ID    VARCHAR(50)  NOT NULL PRIMARY KEY,
     ACTOR_NM    VARCHAR(100) NULL COMMENT '배우명',
     ACTOR_EN_NM VARCHAR(100) NULL COMMENT '배우영문명'
-);
+) charset=utf8 COLLATE=utf8_general_ci;
 
-CREATE TABLE TN_DIRECTOR
+CREATE TABLE tn_director
 (
     DIRECTOR_ID    VARCHAR(50)  NULL COMMENT '감독코드',
     DIRECTOR_NM    VARCHAR(100) NULL COMMENT '감독명',
     DIRECTOR_EN_NM VARCHAR(100) NULL COMMENT '감독영문명'
-);
+) charset=utf8 COLLATE=utf8_general_ci;
 
-CREATE TABLE TN_USER
+CREATE TABLE tn_user
 (
     user_id             bigint       not null primary key,
     age_range           varchar(255) null,
@@ -56,9 +56,9 @@ CREATE TABLE TN_USER
     nickname            varchar(255) null,
     role                varchar(255) null,
     thumbnail_image_url varchar(255) null
-);
+) charset=utf8 COLLATE=utf8_general_ci;
 
-CREATE TABLE TN_USER_MOVIE
+CREATE TABLE tn_wish
 (
     USER_ID         VARCHAR(100) NOT NULL COMMENT '',
     DOCID           VARCHAR(100) NOT NULL COMMENT '',
@@ -67,4 +67,4 @@ CREATE TABLE TN_USER_MOVIE
     MOD_DATE        VARCHAR(100) NULL COMMENT '',
     REVIEW          TEXT NULL COMMENT '',
     SEEN_YN         CHAR(2) NOT NULL
-);
+) charset=utf8 COLLATE=utf8_general_ci;

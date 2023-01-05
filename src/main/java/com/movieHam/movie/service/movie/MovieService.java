@@ -19,8 +19,8 @@ public class MovieService {
 
         String firstUpperWord = StringHandler.firstLetterUpperCase(searchType);
 
-        Class test = MovieRepository.class;
-        Method m = test.getMethod("findBy" + firstUpperWord + "Contains", String.class);
+        Class movieRepositoryBean = MovieRepository.class;
+        Method m = movieRepositoryBean.getMethod("findBy" + firstUpperWord + "Contains", String.class);
 
         //regex 허용하는지 확인 필요
         List<MovieVO> resultList = (List<MovieVO>) m.invoke(movieRepository, keyword);
