@@ -15,7 +15,7 @@ public class DirectorService {
         directorRepository.save(director);
     }
 
-    public void insertAll(ArrayList<DirectorVO> directorList){
+    public void saveAll(ArrayList<DirectorVO> directorList){
         directorRepository.saveAll(directorList);
     }
 

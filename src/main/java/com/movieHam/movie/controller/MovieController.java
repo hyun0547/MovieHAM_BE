@@ -30,18 +30,18 @@ public class MovieController {
     @Autowired
     DirectorService directorService;
 
-    @GetMapping(value="/movie/search/{searchType}", produces = "application/json; charset=UTF-8")
+    @GetMapping(value="/movieHam/api/movie/search/{searchType}", produces = "application/json; charset=UTF-8")
     public Map<String,Object> search(@PathVariable String searchType, String keywords){
 
-        if("actor".equals(searchType)){
-            keywords = CommonUtil.checkNullEmpty(getActorIdList(actorService.search(keywords)), "noActor");
-            searchType = "actorId";
-        }
-
-        else if("director".equals(searchType)){
-            keywords = CommonUtil.checkNullEmpty(getDirectorId(directorService.search(keywords)), "noDirector");
-            searchType = "directorId";
-        }
+//        if("actor".equals(searchType)){
+//            keywords = CommonUtil.checkNullEmpty(getActorIdList(actorService.search(keywords)), "noActor");
+//            searchType = "actorId";
+//        }
+//
+//        else if("director".equals(searchType)){
+//            keywords = CommonUtil.checkNullEmpty(getDirectorId(directorService.search(keywords)), "noDirector");
+//            searchType = "directorId";
+//        }
 
         Map<String,Object> result;
         try {

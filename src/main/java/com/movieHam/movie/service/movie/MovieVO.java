@@ -1,9 +1,10 @@
 package com.movieHam.movie.service.movie;
 
+import com.movieHam.movie.service.actor.ActorVO;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity(name= "TN_MOVIE")
@@ -12,8 +13,6 @@ public class MovieVO {
     @Id
     private String docid;            // 영화코드
 
-    private String actorId;          // 출연배우
-    private String directorId;       // 감독
     private String movieId;          // ID
     private String movieSeq;         // SEQ
     private String title;            // 제목

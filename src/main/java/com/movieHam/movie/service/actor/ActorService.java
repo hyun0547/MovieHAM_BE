@@ -27,7 +27,7 @@ public class ActorService {
         actorRepository.save(actor);
     }
 
-    public void insertAll(ArrayList<ActorVO> actorList) {
+    public void saveAll(List<ActorVO> actorList) {
         actorRepository.saveAll(actorList);
     }
 

@@ -5,6 +5,10 @@ import com.movieHam.movie.service.actor.ActorService;
 import com.movieHam.movie.service.actor.ActorVO;
 import com.movieHam.movie.service.director.DirectorService;
 import com.movieHam.movie.service.director.DirectorVO;
+import com.movieHam.movie.service.mapper.movieActor.MovieActor;
+import com.movieHam.movie.service.mapper.movieActor.MovieActorService;
+import com.movieHam.movie.service.mapper.movieDirector.MovieDirector;
+import com.movieHam.movie.service.mapper.movieDirector.MovieDirectorService;
 import com.movieHam.movie.service.movie.MovieService;
 import com.movieHam.movie.service.movie.MovieVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +36,12 @@ public class MovieControllerTest {
     @Autowired
     DirectorService directorService;
 
+    @Autowired
+    MovieDirectorService movieDirectorService;
+
+    @Autowired
+    MovieActorService movieActorService;
+
     @GetMapping(value="/movie/init", produces = "application/json; charset=UTF-8")
     public String init(String startDate){
 
@@ -52,15 +62,19 @@ public class MovieControllerTest {
 
             Map<String, Object> movieInfo = MapHandler.getMovieInfo(movieInfoList);
 
-            ArrayList<MovieVO> movieList = (ArrayList<MovieVO>) movieInfo.get("movieList");
-            ArrayList<ActorVO> actorList = (ArrayList<ActorVO>) movieInfo.get("actorList");
-            ArrayList<DirectorVO> directorList = (ArrayList<DirectorVO>) movieInfo.get("directorList");
+//            ArrayList<MovieVO> movieList = (ArrayList<MovieVO>) movieInfo.get("movieList");
+//            ArrayList<ActorVO> actorList = (ArrayList<ActorVO>) movieInfo.get("actorList");
+//            ArrayList<DirectorVO> directorList = (ArrayList<DirectorVO>) movieInfo.get("directorList");
+//            ArrayList<MovieActor> movieActorList = (ArrayList<MovieActor>) movieInfo.get("directorList");
+//            ArrayList<MovieDirector> movieDirectorList = (ArrayList<MovieDirector>) movieInfo.get("directorList");
 
-            movieService.insertAll(movieList);
-            actorService.insertAll(actorList);
-            directorService.insertAll(directorList);
+            movieService.saveAll((ArrayList<MovieVO>) movieInfo.get("movieList"));
+            actorService.saveAll((ArrayList<ActorVO>) movieInfo.get("actorList"));
+            directorService.saveAll((ArrayList<DirectorVO>) movieInfo.get("directorList"));
+            movieActorService.saveAll((ArrayList<MovieActor>) movieInfo.get("directorList"));
+            movieDirectorService.saveAll((ArrayList<MovieDirector>) movieInfo.get("directorList"));
 
-            return movieList.toString();
+            return movieInfo.toString();
 
         }catch(Exception e){
             e.printStackTrace();
@@ -80,7 +94,7 @@ public class MovieControllerTest {
         Calendar cal = Calendar.getInstance();
 
         ArrayList<Map<String, Object>> movieInfoList = new ArrayList<>();
-        for(int year = 57000; year > 55000; year--){
+        for(int year = 57759; year > 56900; year--){
 
             Map<String, String> paramMap = new HashMap<>();
             paramMap.put("movieSeq", year +"");
@@ -96,17 +110,23 @@ public class MovieControllerTest {
         Map<String, Object> movieInfo = MapHandler.getMovieInfo(movieInfoList);
 
         if(movieInfo != null){
-            ArrayList<MovieVO> movieList = (ArrayList<MovieVO>) movieInfo.get("movieList");
-            ArrayList<ActorVO> actorList = (ArrayList<ActorVO>) movieInfo.get("actorList");
-            ArrayList<DirectorVO> directorList = (ArrayList<DirectorVO>) movieInfo.get("directorList");
+//            ArrayList<MovieVO> movieList = (ArrayList<MovieVO>) movieInfo.get("movieList");
+//            ArrayList<ActorVO> actorList = (ArrayList<ActorVO>) movieInfo.get("actorList");
+//            ArrayList<DirectorVO> directorList = (ArrayList<DirectorVO>) movieInfo.get("directorList");
+            try {
+                movieService.saveAll((ArrayList<MovieVO>) movieInfo.get("movieList"));
+                actorService.saveAll((ArrayList<ActorVO>) movieInfo.get("actorList"));
+                directorService.saveAll((ArrayList<DirectorVO>) movieInfo.get("directorList"));
+                movieActorService.saveAll((ArrayList<MovieActor>) movieInfo.get("movieActorList"));
+                movieDirectorService.saveAll((ArrayList<MovieDirector>) movieInfo.get("movieDirectorList"));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
-            movieService.insertAll(movieList);
-            actorService.insertAll(actorList);
-            directorService.insertAll(directorList);
         }
 
-        int min = 57000;
-        int max = 55000;
+        int min = 57759;
+        int max = 56900;
         int random = (int) ((Math.random() * (max - min)) + min);
         String img = "";
         List<MovieVO> movieList = null;
@@ -121,32 +141,8 @@ public class MovieControllerTest {
         }
 
         MovieVO movie = movieList.get(0);
-        System.out.println(movie);
 
-        String result = "";
-        result += "<!DOCTYPE html>";
-        result += "<html lang='ko'>";
-        result += "<head>";
-        result += "<meta charset='utf-8'>";
-        result += "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">";
-        result += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">";
-        result += "<title>My test page</title>";
-        result += "</head>";
-        result += "<body>";
-        result += "<body>";
-        result += "<img src='"+ img +"' alt='My test image' style='width:300px'>";
-        result += "<h1>" + movie.getTitle() + "</h1>";
-        result += "<form action=\"/user/movie/insert\">";
-        result += "<input type=\"text\" name=\"Docid\" value=\"" + movie.getDocid() + "\" hidden>";
-        result += "<label for=\"seenYnY\">봤음<input type=\"radio\" id=\"seenYnY\" name=\"seenYn\" value=\"Y\"></label>";
-        result += "<label for=\"seenYnN\">안봤음<input type=\"radio\" id=\"seenYnN\" name=\"seenYn\" value=\"N\"></label>";
-        result += "<button>제출</button>";
-        result += "</form>";
-        result += "</body>";
-        result += "</html>";
-
-
-        return result;
+        return movie.toString();
     }
 
 

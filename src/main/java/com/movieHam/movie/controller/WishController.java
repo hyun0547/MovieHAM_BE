@@ -17,7 +17,7 @@ public class WishController {
     @Autowired
     WishService wishService;
 
-    @RequestMapping(value="/movie/wish/insert")
+    @RequestMapping(value="/movieHam/api/movie/wish/insert")
     public String insert (MovieVO movieVO) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
 
         List<MovieVO> movieList = movieService.search("docid", movieVO.getDocid());
@@ -25,7 +25,7 @@ public class WishController {
         return "redirect:/movie/test";
     }
 
-    @RequestMapping(value="/movie/wish/modify")
+    @RequestMapping(value="/movieHam/api/movie/wish/modify")
     public String modify (MovieVO movieVO) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
 
         List<MovieVO> movieList = movieService.search("docid", movieVO.getDocid());

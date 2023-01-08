@@ -2,8 +2,6 @@ USE movie_ham;
 CREATE TABLE tn_movie
 (
     DOCID              VARCHAR(100) NOT NULL COMMENT '영화코드' PRIMARY KEY,
-    ACTOR_ID           VARCHAR(1000) NULL COMMENT '출연배우',
-    DIRECTOR_ID        VARCHAR(500)  NULL COMMENT '감독',
     MOVIE_ID           VARCHAR(10)  NULL COMMENT 'ID',
     MOVIE_SEQ          VARCHAR(50)  NULL COMMENT 'SEQ',
     TITLE              VARCHAR(300) NULL COMMENT '제목',
@@ -31,9 +29,9 @@ CREATE TABLE tn_movie
     MOD_DATE           VARCHAR(50)  NULL COMMENT '수정일'
 ) charset=utf8 COLLATE=utf8_general_ci;
 
-CREATE TABLE tn_actor
+CREATE TABLE tn_actor2
 (
-    ACTOR_ID    VARCHAR(50)  NOT NULL PRIMARY KEY,
+    ACTOR_ID    VARCHAR(50) NULL COMMENT '배우코드',
     ACTOR_NM    VARCHAR(100) NULL COMMENT '배우명',
     ACTOR_EN_NM VARCHAR(100) NULL COMMENT '배우영문명'
 ) charset=utf8 COLLATE=utf8_general_ci;
@@ -68,3 +66,21 @@ CREATE TABLE tn_wish
     REVIEW          TEXT NULL COMMENT '',
     SEEN_YN         CHAR(2) NOT NULL
 ) charset=utf8 COLLATE=utf8_general_ci;
+
+create table tm_movie_director
+(
+    cnt_no      BIGINT not null primary key,
+    director_id varchar(255) null,
+    docid       varchar(255) null
+) charset=utf8 COLLATE=utf8_general_ci;
+
+create table tm_movie_actor
+(
+    cnt_no   BIGINT not null primary key,
+    actor_id varchar(50) null,
+    docid    varchar(100) null
+) charset=utf8 COLLATE=utf8_general_ci;
+
+
+
+

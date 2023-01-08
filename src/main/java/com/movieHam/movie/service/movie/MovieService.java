@@ -28,7 +28,7 @@ public class MovieService {
         return resultList;
     }
 
-    public void insertAll(ArrayList<MovieVO> movieBeanList) {
+    public void saveAll(List<MovieVO> movieBeanList) {
         movieRepository.saveAll(movieBeanList);
     }
 

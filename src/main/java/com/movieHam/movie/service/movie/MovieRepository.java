@@ -23,10 +23,6 @@ public interface MovieRepository extends JpaRepository<MovieVO, String> {
 
     List<MovieVO> findByTypeContains(String queryParam);
 
-    List<MovieVO> findByActorIdContains(String queryParam);
-
-    List<MovieVO> findByDirectorIdContains(String queryParam);
-
     List<MovieVO> findByRepRlsDateContains(String queryParam);
 
     List<MovieVO> findByKeywordsContains(String queryParam);
