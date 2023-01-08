@@ -1,11 +1,10 @@
 package com.movieHam.movie.service.mapper.movieActor;
 
+import com.movieHam.movie.service.actor.ActorVO;
+import com.movieHam.movie.service.movie.MovieVO;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Mapping table for Movie and Actor
@@ -20,5 +19,13 @@ public class MovieActor {
 
     private String docid;            // 영화코드
     private String actorId;          // 배우코드
+
+    @ManyToOne
+    @JoinColumn(name = "docid")
+    private MovieVO movie;
+
+    @ManyToOne
+    @JoinColumn(name = "actor_id")
+    private ActorVO actor;
 
 }

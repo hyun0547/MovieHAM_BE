@@ -1,6 +1,8 @@
 package com.movieHam.movie.service.movie;
 
 import com.movieHam.movie.service.actor.ActorVO;
+import com.movieHam.movie.service.mapper.movieActor.MovieActor;
+import com.movieHam.movie.service.mapper.movieDirector.MovieDirector;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -38,4 +40,11 @@ public class MovieVO {
     private String awards2;          // 수상내역2
     private String regDate;          // 등록일
     private String modDate;          // 수정일
+
+    @OneToMany(mappedBy = "movie")
+    private List<MovieActor> movieActor;
+
+    @OneToMany(mappedBy = "director")
+    private List<MovieDirector> movieDirector;
+
 }
