@@ -29,16 +29,16 @@ CREATE TABLE tn_movie
     MOD_DATE           VARCHAR(50)  NULL COMMENT '수정일'
 ) charset=utf8 COLLATE=utf8_general_ci;
 
-CREATE TABLE tn_actor2
+CREATE TABLE tn_actor
 (
-    ACTOR_ID    VARCHAR(50) NULL COMMENT '배우코드',
+    ACTOR_ID    VARCHAR(50)  NOT NULL PRIMARY KEY COMMENT '배우코드',
     ACTOR_NM    VARCHAR(100) NULL COMMENT '배우명',
     ACTOR_EN_NM VARCHAR(100) NULL COMMENT '배우영문명'
 ) charset=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE tn_director
 (
-    DIRECTOR_ID    VARCHAR(50)  NULL COMMENT '감독코드',
+    DIRECTOR_ID    VARCHAR(50)  NOT NULL PRIMARY KEY COMMENT '감독코드',
     DIRECTOR_NM    VARCHAR(100) NULL COMMENT '감독명',
     DIRECTOR_EN_NM VARCHAR(100) NULL COMMENT '감독영문명'
 ) charset=utf8 COLLATE=utf8_general_ci;
@@ -70,15 +70,23 @@ CREATE TABLE tn_wish
 create table tm_movie_director
 (
     cnt_no      BIGINT not null primary key,
-    director_id varchar(255) null,
-    docid       varchar(255) null
+    director_id varchar(255)  null,
+    docid       varchar(255) null,
+    FOREIGN KEY (director_id)
+        REFERENCES tn_director(director_id) ON UPDATE CASCADE,
+    FOREIGN KEY (docid)
+        REFERENCES tn_movie(DOCID) ON UPDATE CASCADE
 ) charset=utf8 COLLATE=utf8_general_ci;
 
 create table tm_movie_actor
 (
     cnt_no   BIGINT not null primary key,
     actor_id varchar(50) null,
-    docid    varchar(100) null
+    docid    varchar(100) null,
+    FOREIGN KEY (actor_id)
+        REFERENCES tn_actor(actor_id) ON UPDATE CASCADE,
+    FOREIGN KEY (docid)
+        REFERENCES tn_movie(DOCID) ON UPDATE CASCADE
 ) charset=utf8 COLLATE=utf8_general_ci;
 
 

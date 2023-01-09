@@ -2,7 +2,7 @@ package com.movieHam.movie.controller;
 
 import com.movieHam.movie.service.wish.WishService;
 import com.movieHam.movie.service.movie.MovieService;
-import com.movieHam.movie.service.movie.MovieVO;
+import com.movieHam.movie.service.movie.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -18,17 +18,17 @@ public class WishController {
     WishService wishService;
 
     @RequestMapping(value="/movieHam/api/movie/wish/insert")
-    public String insert (MovieVO movieVO) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public String insert (Movie movieVO) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
 
-        List<MovieVO> movieList = movieService.search("docid", movieVO.getDocid());
+        List<Movie> movieList = movieService.search("docid", movieVO.getDocid());
 
         return "redirect:/movie/test";
     }
 
     @RequestMapping(value="/movieHam/api/movie/wish/modify")
-    public String modify (MovieVO movieVO) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public String modify (Movie movieVO) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
 
-        List<MovieVO> movieList = movieService.search("docid", movieVO.getDocid());
+        List<Movie> movieList = movieService.search("docid", movieVO.getDocid());
 
         return movieList.toString();
     }

@@ -1,7 +1,7 @@
 package com.movieHam;
 
 
-import com.movieHam.movie.service.movie.MovieVO;
+import com.movieHam.movie.service.movie.Movie;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -14,8 +14,8 @@ class MovieHamApplicationTests {
 	@Test
 	void wishTest() {
 
-		MovieVO movie = new MovieVO();
-		List<MovieVO> movieList = new ArrayList<>();
+		Movie movie = new Movie();
+		List<Movie> movieList = new ArrayList<>();
 
 		movie.setMovieId("test");
 		movieList.add(movie);

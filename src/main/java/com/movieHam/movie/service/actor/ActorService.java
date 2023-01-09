@@ -1,17 +1,13 @@
 package com.movieHam.movie.service.actor;
 
-import com.movieHam.movie.service.movie.MovieRepository;
-import com.movieHam.movie.service.movie.MovieVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import util.StringHandler;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ActorService {
@@ -31,12 +27,15 @@ public class ActorService {
         actorRepository.saveAll(actorList);
     }
 
-    public List<ActorVO> search(String keyword) {
+    public List<ActorVO> search(String searchType, String keyword) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
+        String firstUpperWord = StringHandler.firstLetterUpperCase(searchType);
 
-        List<ActorVO> resultList = actorRepository.findByActorNmContains(keyword);
+        Class repositoryBean = actorRepository.getClass();
+        Method m = repositoryBean.getMethod("findBy" + firstUpperWord + "Contains", String.class);
+
+        List<ActorVO> resultList = (List<ActorVO>) m.invoke(actorRepository, keyword);
 
         return resultList;
-
     }
 }

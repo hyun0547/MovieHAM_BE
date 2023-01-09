@@ -10,17 +10,14 @@ import com.movieHam.movie.service.mapper.movieActor.MovieActorService;
 import com.movieHam.movie.service.mapper.movieDirector.MovieDirector;
 import com.movieHam.movie.service.mapper.movieDirector.MovieDirectorService;
 import com.movieHam.movie.service.movie.MovieService;
-import com.movieHam.movie.service.movie.MovieVO;
+import com.movieHam.movie.service.movie.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import util.parser.map.MapHandler;
 
-import java.lang.reflect.InvocationTargetException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -68,7 +65,7 @@ public class MovieControllerTest {
 //            ArrayList<MovieActor> movieActorList = (ArrayList<MovieActor>) movieInfo.get("directorList");
 //            ArrayList<MovieDirector> movieDirectorList = (ArrayList<MovieDirector>) movieInfo.get("directorList");
 
-            movieService.saveAll((ArrayList<MovieVO>) movieInfo.get("movieList"));
+            movieService.saveAll((ArrayList<Movie>) movieInfo.get("movieList"));
             actorService.saveAll((ArrayList<ActorVO>) movieInfo.get("actorList"));
             directorService.saveAll((ArrayList<DirectorVO>) movieInfo.get("directorList"));
             movieActorService.saveAll((ArrayList<MovieActor>) movieInfo.get("directorList"));
@@ -114,7 +111,7 @@ public class MovieControllerTest {
 //            ArrayList<ActorVO> actorList = (ArrayList<ActorVO>) movieInfo.get("actorList");
 //            ArrayList<DirectorVO> directorList = (ArrayList<DirectorVO>) movieInfo.get("directorList");
             try {
-                movieService.saveAll((ArrayList<MovieVO>) movieInfo.get("movieList"));
+                movieService.saveAll((ArrayList<Movie>) movieInfo.get("movieList"));
                 actorService.saveAll((ArrayList<ActorVO>) movieInfo.get("actorList"));
                 directorService.saveAll((ArrayList<DirectorVO>) movieInfo.get("directorList"));
                 movieActorService.saveAll((ArrayList<MovieActor>) movieInfo.get("movieActorList"));
@@ -129,18 +126,18 @@ public class MovieControllerTest {
         int max = 56900;
         int random = (int) ((Math.random() * (max - min)) + min);
         String img = "";
-        List<MovieVO> movieList = null;
+        List<Movie> movieList = null;
         while(img == null || "".equals(img)){
             movieList = movieService.search("movieSeq", random + "");
             random = (int) ((Math.random() * (max - min)) + min);
-            MovieVO movie = movieList.get(0);
+            Movie movie = movieList.get(0);
             img = "".equals(movie.getPosters()) || movie.getPosters() == null ? movie.getStlls() : movie.getPosters();
             if(img.contains("|")){
                 img = img.split("\\|")[0];
             }
         }
 
-        MovieVO movie = movieList.get(0);
+        Movie movie = movieList.get(0);
 
         return movie.toString();
     }

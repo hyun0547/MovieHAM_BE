@@ -4,7 +4,7 @@ import com.movieHam.movie.service.actor.ActorVO;
 import com.movieHam.movie.service.director.DirectorVO;
 import com.movieHam.movie.service.mapper.movieActor.MovieActor;
 import com.movieHam.movie.service.mapper.movieDirector.MovieDirector;
-import com.movieHam.movie.service.movie.MovieVO;
+import com.movieHam.movie.service.movie.Movie;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import util.com.CommonUtil;
@@ -29,7 +29,7 @@ public class MapHandler {
 
     public static Map<String,Object> getMovieInfo(List<Map<String,Object>> movieInfoList){
 
-        ArrayList<MovieVO> movieVoList = new ArrayList<>();
+        ArrayList<Movie> movieVoList = new ArrayList<>();
         ArrayList<ActorVO> actorVoList = new ArrayList<>();
         ArrayList<DirectorVO> directorVoList = new ArrayList<>();
         ArrayList<MovieActor> movieActorList = new ArrayList<>();
@@ -38,7 +38,7 @@ public class MapHandler {
         try {
             for(Map<String, Object> movie : movieInfoList){
 
-                MovieVO movieBean = new MovieVO();
+                Movie movieBean = new Movie();
 
                 setMovieDate(movieBean, movie);
 
@@ -55,16 +55,15 @@ public class MapHandler {
                         if(!CommonUtil.checkNullEmpty(actor.get("actorEnNm"), "").equals("")) actorBean.setActorEnNm(actor.get("actorEnNm").toString());
                         if(!CommonUtil.checkNullEmpty(actor.get("actorId"), "").equals("")) {
                             actorBean.setActorId(actor.get("actorId").toString());
-
-                            MovieActor movieActor = new MovieActor();
-
-                            movieActor.setActorId(actorBean.getActorId());
-                            movieActor.setDocid(movieBean.getDocid());
-                            movieActorList.add(movieActor);
                         }
 
-                        if(actorBean.getActorId() != null || actorBean.getActorNm() != null || actorBean.getActorEnNm() != null){
+                        if(actorBean.getActorId() != null){
                             actorVoList.add(actorBean);
+
+                            MovieActor movieActor = new MovieActor();
+                            movieActor.setActor(actorBean);
+                            movieActor.setMovie(movieBean);
+                            movieActorList.add(movieActor);
                         }
                     }
                 }
@@ -81,18 +80,17 @@ public class MapHandler {
                         if(!CommonUtil.checkNullEmpty(director.get("directorNm"), "").equals("")) directorBean.setDirectorNm(director.get("directorNm").toString());
                         if(!CommonUtil.checkNullEmpty(director.get("directorEnNm"), "").equals("")) directorBean.setDirectorEnNm(director.get("directorEnNm").toString());
                         if(!CommonUtil.checkNullEmpty(director.get("directorId"), "").equals("")) {
-
                             directorBean.setDirectorId(director.get("directorId").toString());
+                        }
+
+                        if(directorBean.getDirectorId() != null){
+                            directorVoList.add(directorBean);
 
                             MovieDirector movieDirector = new MovieDirector();
 
-                            movieDirector.setDirectorId(directorBean.getDirectorId());
-                            movieDirector.setDocid(movieBean.getDocid());
+                            movieDirector.setDirector(directorBean);
+                            movieDirector.setMovie(movieBean);
                             movieDirectorList.add(movieDirector);
-                        }
-
-                        if(directorBean.getDirectorId() != null || directorBean.getDirectorNm() != null || directorBean.getDirectorEnNm() != null){
-                            directorVoList.add(directorBean);
                         }
                     }
                 }
@@ -116,7 +114,7 @@ public class MapHandler {
         return null;
     }
 
-    public static void setMovieDate(MovieVO movieBean, Map<String,Object> movie){
+    public static void setMovieDate(Movie movieBean, Map<String,Object> movie){
         if(movie.get("DOCID") != null) movieBean.setDocid(movie.get("DOCID").toString());
         if(movie.get("movieId") != null) movieBean.setMovieId(movie.get("movieId").toString());
         if(movie.get("movieSeq") != null) movieBean.setMovieSeq(movie.get("movieSeq").toString());

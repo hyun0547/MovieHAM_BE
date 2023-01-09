@@ -4,31 +4,31 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.RepositoryDefinition;
 import java.util.List;
 
-@RepositoryDefinition(domainClass = MovieVO.class, idClass = String.class)
-public interface MovieRepository extends JpaRepository<MovieVO, String> {
+@RepositoryDefinition(domainClass = Movie.class, idClass = String.class)
+public interface MovieRepository extends JpaRepository<Movie, String> {
 
-    List<MovieVO> findAll();
+    List<Movie> findAll();
 
-    <S extends MovieVO> List<S> saveAll(Iterable<S> movieList);
+    <S extends Movie> List<S> saveAll(Iterable<S> movieList);
 
-    MovieVO getById(String Id);
+    Movie getById(String Id);
 
-    List<MovieVO> findByNationContains(String nation);
+    List<Movie> findByNationContains(String nation);
 
-    List<MovieVO> findByTitleContains(String title);
+    List<Movie> findByTitleContains(String title);
 
-    List<MovieVO> findByRatingContains(String queryParam);
+    List<Movie> findByRatingContains(String queryParam);
 
-    List<MovieVO> findByGenreContains(String queryParam);
+    List<Movie> findByGenreContains(String queryParam);
 
-    List<MovieVO> findByTypeContains(String queryParam);
+    List<Movie> findByTypeContains(String queryParam);
 
-    List<MovieVO> findByRepRlsDateContains(String queryParam);
+    List<Movie> findByRepRlsDateContains(String queryParam);
 
-    List<MovieVO> findByKeywordsContains(String queryParam);
+    List<Movie> findByKeywordsContains(String queryParam);
 
-    List<MovieVO> findByMovieSeqContains(String movieSeq);
+    List<Movie> findByMovieSeqContains(String movieSeq);
 
-    List<MovieVO> findByDocidContains(String docid);
+    List<Movie> findByDocidContains(String docid);
 
 }
