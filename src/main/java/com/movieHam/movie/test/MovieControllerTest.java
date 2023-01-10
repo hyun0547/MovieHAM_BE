@@ -2,9 +2,9 @@ package com.movieHam.movie.test;
 
 import com.movieHam.externalApi.movie.ApiConnection;
 import com.movieHam.movie.service.actor.ActorService;
-import com.movieHam.movie.service.actor.ActorVO;
+import com.movieHam.movie.service.actor.Actor;
 import com.movieHam.movie.service.director.DirectorService;
-import com.movieHam.movie.service.director.DirectorVO;
+import com.movieHam.movie.service.director.Director;
 import com.movieHam.movie.service.mapper.movieActor.MovieActor;
 import com.movieHam.movie.service.mapper.movieActor.MovieActorService;
 import com.movieHam.movie.service.mapper.movieDirector.MovieDirector;
@@ -66,8 +66,8 @@ public class MovieControllerTest {
 //            ArrayList<MovieDirector> movieDirectorList = (ArrayList<MovieDirector>) movieInfo.get("directorList");
 
             movieService.saveAll((ArrayList<Movie>) movieInfo.get("movieList"));
-            actorService.saveAll((ArrayList<ActorVO>) movieInfo.get("actorList"));
-            directorService.saveAll((ArrayList<DirectorVO>) movieInfo.get("directorList"));
+            actorService.saveAll((ArrayList<Actor>) movieInfo.get("actorList"));
+            directorService.saveAll((ArrayList<Director>) movieInfo.get("directorList"));
             movieActorService.saveAll((ArrayList<MovieActor>) movieInfo.get("directorList"));
             movieDirectorService.saveAll((ArrayList<MovieDirector>) movieInfo.get("directorList"));
 
@@ -112,8 +112,8 @@ public class MovieControllerTest {
 //            ArrayList<DirectorVO> directorList = (ArrayList<DirectorVO>) movieInfo.get("directorList");
             try {
                 movieService.saveAll((ArrayList<Movie>) movieInfo.get("movieList"));
-                actorService.saveAll((ArrayList<ActorVO>) movieInfo.get("actorList"));
-                directorService.saveAll((ArrayList<DirectorVO>) movieInfo.get("directorList"));
+                actorService.saveAll((ArrayList<Actor>) movieInfo.get("actorList"));
+                directorService.saveAll((ArrayList<Director>) movieInfo.get("directorList"));
                 movieActorService.saveAll((ArrayList<MovieActor>) movieInfo.get("movieActorList"));
                 movieDirectorService.saveAll((ArrayList<MovieDirector>) movieInfo.get("movieDirectorList"));
             }catch (Exception e){

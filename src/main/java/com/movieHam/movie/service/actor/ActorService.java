@@ -15,26 +15,26 @@ public class ActorService {
     @Autowired
     ActorRepository actorRepository;
 
-    public List<ActorVO> allList() {
+    public List<Actor> allList() {
         return actorRepository.findAll();
     }
 
-    public void insert(ActorVO actor) {
+    public void insert(Actor actor) {
         actorRepository.save(actor);
     }
 
-    public void saveAll(List<ActorVO> actorList) {
+    public void saveAll(List<Actor> actorList) {
         actorRepository.saveAll(actorList);
     }
 
-    public List<ActorVO> search(String searchType, String keyword) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public List<Actor> search(String searchType, String keyword) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
         String firstUpperWord = StringHandler.firstLetterUpperCase(searchType);
 
         Class repositoryBean = actorRepository.getClass();
         Method m = repositoryBean.getMethod("findBy" + firstUpperWord + "Contains", String.class);
 
-        List<ActorVO> resultList = (List<ActorVO>) m.invoke(actorRepository, keyword);
+        List<Actor> resultList = (List<Actor>) m.invoke(actorRepository, keyword);
 
         return resultList;
     }

@@ -1,7 +1,7 @@
 package util.parser.map;
 
-import com.movieHam.movie.service.actor.ActorVO;
-import com.movieHam.movie.service.director.DirectorVO;
+import com.movieHam.movie.service.actor.Actor;
+import com.movieHam.movie.service.director.Director;
 import com.movieHam.movie.service.mapper.movieActor.MovieActor;
 import com.movieHam.movie.service.mapper.movieDirector.MovieDirector;
 import com.movieHam.movie.service.movie.Movie;
@@ -29,9 +29,9 @@ public class MapHandler {
 
     public static Map<String,Object> getMovieInfo(List<Map<String,Object>> movieInfoList){
 
-        ArrayList<Movie> movieVoList = new ArrayList<>();
-        ArrayList<ActorVO> actorVoList = new ArrayList<>();
-        ArrayList<DirectorVO> directorVoList = new ArrayList<>();
+        ArrayList<Movie> movieList = new ArrayList<>();
+        ArrayList<Actor> actorList = new ArrayList<>();
+        ArrayList<Director> directorList = new ArrayList<>();
         ArrayList<MovieActor> movieActorList = new ArrayList<>();
         ArrayList<MovieDirector> movieDirectorList = new ArrayList<>();
 
@@ -43,13 +43,13 @@ public class MapHandler {
                 setMovieDate(movieBean, movie);
 
                 Map<String,Object> actorData = (Map<String, Object>) movie.get("actors");
-                ArrayList<Map<String, Object>> actorList = (ArrayList<Map<String, Object>>) actorData.get("actor");
+                ArrayList<Map<String, Object>> actorInfoList = (ArrayList<Map<String, Object>>) actorData.get("actor");
 
                 if(actorList != null && actorList.size() > 0){
 
-                    for(Map<String,Object> actor : actorList){
+                    for(Map<String,Object> actor : actorInfoList){
 
-                        ActorVO actorBean = new ActorVO();
+                        Actor actorBean = new Actor();
 
                         if(!CommonUtil.checkNullEmpty(actor.get("actorNm"), "").equals("")) actorBean.setActorNm(actor.get("actorNm").toString());
                         if(!CommonUtil.checkNullEmpty(actor.get("actorEnNm"), "").equals("")) actorBean.setActorEnNm(actor.get("actorEnNm").toString());
@@ -58,7 +58,7 @@ public class MapHandler {
                         }
 
                         if(actorBean.getActorId() != null){
-                            actorVoList.add(actorBean);
+                            actorList.add(actorBean);
 
                             MovieActor movieActor = new MovieActor();
                             movieActor.setActor(actorBean);
@@ -69,13 +69,13 @@ public class MapHandler {
                 }
 
                 Map<String,Object> directorData = (Map<String, Object>) movie.get("directors");
-                ArrayList<Map<String, Object>> directorList = (ArrayList<Map<String, Object>>) directorData.get("director");
+                ArrayList<Map<String, Object>> directorInfoList = (ArrayList<Map<String, Object>>) directorData.get("director");
 
                 if(directorList != null && directorList.size() > 0){
 
-                    for(Map<String,Object> director : directorList){
+                    for(Map<String,Object> director : directorInfoList){
 
-                        DirectorVO directorBean = new DirectorVO();
+                        Director directorBean = new Director();
 
                         if(!CommonUtil.checkNullEmpty(director.get("directorNm"), "").equals("")) directorBean.setDirectorNm(director.get("directorNm").toString());
                         if(!CommonUtil.checkNullEmpty(director.get("directorEnNm"), "").equals("")) directorBean.setDirectorEnNm(director.get("directorEnNm").toString());
@@ -84,7 +84,7 @@ public class MapHandler {
                         }
 
                         if(directorBean.getDirectorId() != null){
-                            directorVoList.add(directorBean);
+                            directorList.add(directorBean);
 
                             MovieDirector movieDirector = new MovieDirector();
 
@@ -95,13 +95,13 @@ public class MapHandler {
                     }
                 }
 
-                movieVoList.add(movieBean);
+                movieList.add(movieBean);
             }
             Map<String, Object> movieInfo = new HashMap<>(){{
 
-                put("movieList", movieVoList);
-                put("actorList", actorVoList);
-                put("directorList", directorVoList);
+                put("movieList", movieList);
+                put("actorList", actorList);
+                put("directorList", directorList);
                 put("movieActorList", movieActorList);
                 put("movieDirectorList", movieDirectorList);
 

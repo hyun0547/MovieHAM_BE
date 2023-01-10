@@ -1,6 +1,8 @@
 package com.movieHam.movie.service.mapper.movieActor;
 
-import com.movieHam.movie.service.actor.ActorVO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.movieHam.movie.service.actor.Actor;
 import com.movieHam.movie.service.movie.Movie;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,15 +21,14 @@ public class MovieActor {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cntNo;
 
-//    private String docid;            // 영화코드
-//    private String actorId;          // 배우코드
-
     @ManyToOne
     @JoinColumn(name = "docid")
+    @JsonBackReference
     private Movie movie;
 
     @ManyToOne
     @JoinColumn(name = "actor_id")
-    private ActorVO actor;
+    @JsonManagedReference
+    private Actor actor;
 
 }

@@ -1,5 +1,6 @@
 package com.movieHam.movie.service.movie;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.movieHam.movie.service.mapper.movieActor.MovieActor;
 import com.movieHam.movie.service.mapper.movieDirector.MovieDirector;
 import lombok.Getter;
@@ -43,9 +44,11 @@ public class Movie {
     private String modDate;          // 수정일
 
     @OneToMany(mappedBy = "movie")
+    @JsonManagedReference
     private List<MovieActor> movieActor;
 
-    @OneToMany(mappedBy = "director")
+    @OneToMany(mappedBy = "movie")
+    @JsonManagedReference
     private List<MovieDirector> movieDirector;
 
 }

@@ -1,9 +1,9 @@
 package com.movieHam.movie.controller;
 
 import com.movieHam.movie.service.actor.ActorService;
-import com.movieHam.movie.service.actor.ActorVO;
+import com.movieHam.movie.service.actor.Actor;
 import com.movieHam.movie.service.director.DirectorService;
-import com.movieHam.movie.service.director.DirectorVO;
+import com.movieHam.movie.service.director.Director;
 import com.movieHam.movie.service.mapper.movieActor.MovieActor;
 import com.movieHam.movie.service.mapper.movieDirector.MovieDirector;
 import com.movieHam.movie.service.movie.MovieService;
@@ -46,10 +46,10 @@ public class MovieController {
             List<Movie> resultList = new ArrayList<>();
 
             if(CommonUtil.checkNullEmpty(searchType, "").contains("actor")){
-                List<ActorVO> actorList = actorService.search(searchType, keywords);;
+                List<Actor> actorList = actorService.search(searchType, keywords);;
 
                 List<MovieActor> movieActorList = new ArrayList<>();
-                for(ActorVO actor : actorList){
+                for(Actor actor : actorList){
                     movieActorList.addAll(actor.getMovieActor());
                 }
 
@@ -58,10 +58,10 @@ public class MovieController {
                 }
 
             }else if(CommonUtil.checkNullEmpty(searchType, "").contains("director")){
-                List<DirectorVO> directorList = directorService.search(keywords);;
+                List<Director> directorList = directorService.search(searchType, keywords);;
 
                 List<MovieDirector> movieDirectorList = new ArrayList<>();
-                for(DirectorVO director : directorList){
+                for(Director director : directorList){
                     movieDirectorList.addAll(director.getMovieDirector());
                 }
 
