@@ -6,6 +6,7 @@ import com.movieHam.movie.service.director.DirectorService;
 import com.movieHam.movie.service.director.Director;
 import com.movieHam.movie.service.mapper.movieActor.MovieActor;
 import com.movieHam.movie.service.mapper.movieDirector.MovieDirector;
+import com.movieHam.movie.service.movie.MovieDTO;
 import com.movieHam.movie.service.movie.MovieService;
 import com.movieHam.movie.service.movie.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,45 +35,43 @@ public class MovieController {
     @GetMapping(value="/movieHam/api/movie/search/{searchType}", produces = "application/json; charset=UTF-8")
     public Map<String,Object> search(@PathVariable String searchType, String keywords) {
 
-        Class serviceClass = null;
-        Method method = null;
-
-        String firstUpperWord = StringHandler.firstLetterUpperCase(searchType);
-
         Map<String,Object> result;
 
         try {
 
-            List<Movie> resultList = new ArrayList<>();
+            Set<MovieDTO> resultList = new LinkedHashSet<>();
 
             if(CommonUtil.checkNullEmpty(searchType, "").contains("actor")){
-                List<Actor> actorList = actorService.search(searchType, keywords);;
-
-                List<MovieActor> movieActorList = new ArrayList<>();
+                List<Actor> actorList = actorService.search(searchType, keywords);
                 for(Actor actor : actorList){
-                    movieActorList.addAll(actor.getMovieActor());
-                }
-
-                for(MovieActor movieActor : movieActorList){
-                    resultList.add(movieActor.getMovie());
+                    if(actor.getMovieActor() != null){
+                        for(MovieActor movieActor : actor.getMovieActor()){
+                            MovieDTO movieDTO = new MovieDTO(movieActor.getMovie());
+                            resultList.add(movieDTO);
+                        }
+                    }
                 }
 
             }else if(CommonUtil.checkNullEmpty(searchType, "").contains("director")){
-                List<Director> directorList = directorService.search(searchType, keywords);;
-
-                List<MovieDirector> movieDirectorList = new ArrayList<>();
+                List<Director> directorList = directorService.search(searchType, keywords);
                 for(Director director : directorList){
-                    movieDirectorList.addAll(director.getMovieDirector());
+                    if(director.getMovieDirector() != null){
+                        for(MovieDirector movieDirector : director.getMovieDirector()){
+                            MovieDTO movieDTO = new MovieDTO(movieDirector.getMovie());
+                            resultList.add(movieDTO);
+                        }
+                    }
                 }
 
-                for(MovieDirector movieDirector : movieDirectorList){
-                    resultList.add(movieDirector.getMovie());
-                }
             }else{
-                resultList = movieService.search(searchType, keywords);
+                List<Movie> movieList = movieService.search(searchType, keywords);
+                for(Movie movie : movieList){
+                    MovieDTO movieDTO = new MovieDTO(movie);
+                    resultList.add(movieDTO);
+                }
             }
 
-            Set<Movie> resultSet = new LinkedHashSet<>(resultList);
+            Set<MovieDTO> resultSet = new LinkedHashSet<>(resultList);
             result = new HashMap<>(){{
                 put("resultList", resultSet);
             }};
