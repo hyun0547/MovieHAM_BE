@@ -64,12 +64,16 @@ CREATE TABLE tn_wish
     REG_DATE        VARCHAR(100) NOT NULL COMMENT '',
     MOD_DATE        VARCHAR(100) NULL COMMENT '',
     REVIEW          TEXT NULL COMMENT '',
-    SEEN_YN         CHAR(2) NOT NULL
+    SEEN_YN         CHAR(2) NOT NULL,
+#     FOREIGN KEY (USER_ID)
+#         REFERENCES tn_user(USER_ID) ON UPDATE CASCADE,
+    FOREIGN KEY (DOCID)
+        REFERENCES tn_movie(DOCID) ON UPDATE CASCADE
 ) charset=utf8 COLLATE=utf8_general_ci;
 
 create table tm_movie_director
 (
-    cnt_no      BIGINT not null primary key,
+    movie_director_id varchar(255) not null primary key,
     director_id varchar(255)  null,
     docid       varchar(255) null,
     FOREIGN KEY (director_id)
@@ -80,7 +84,7 @@ create table tm_movie_director
 
 create table tm_movie_actor
 (
-    cnt_no   BIGINT not null primary key,
+    movie_actor_id   varchar(255) not null primary key,
     actor_id varchar(50) null,
     docid    varchar(100) null,
     FOREIGN KEY (actor_id)

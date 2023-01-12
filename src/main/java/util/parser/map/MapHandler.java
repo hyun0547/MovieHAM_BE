@@ -45,7 +45,7 @@ public class MapHandler {
                 Map<String,Object> actorData = (Map<String, Object>) movie.get("actors");
                 ArrayList<Map<String, Object>> actorInfoList = (ArrayList<Map<String, Object>>) actorData.get("actor");
 
-                if(actorList != null && actorList.size() > 0){
+                if(actorInfoList != null && actorInfoList.size() > 0){
 
                     for(Map<String,Object> actor : actorInfoList){
 
@@ -60,9 +60,7 @@ public class MapHandler {
                         if(actorBean.getActorId() != null){
                             actorList.add(actorBean);
 
-                            MovieActor movieActor = new MovieActor();
-                            movieActor.setActor(actorBean);
-                            movieActor.setMovie(movieBean);
+                            MovieActor movieActor = new MovieActor(movieBean, actorBean);
                             movieActorList.add(movieActor);
                         }
                     }
@@ -71,7 +69,7 @@ public class MapHandler {
                 Map<String,Object> directorData = (Map<String, Object>) movie.get("directors");
                 ArrayList<Map<String, Object>> directorInfoList = (ArrayList<Map<String, Object>>) directorData.get("director");
 
-                if(directorList != null && directorList.size() > 0){
+                if(directorInfoList != null && directorInfoList.size() > 0){
 
                     for(Map<String,Object> director : directorInfoList){
 
@@ -86,10 +84,7 @@ public class MapHandler {
                         if(directorBean.getDirectorId() != null){
                             directorList.add(directorBean);
 
-                            MovieDirector movieDirector = new MovieDirector();
-
-                            movieDirector.setDirector(directorBean);
-                            movieDirector.setMovie(movieBean);
+                            MovieDirector movieDirector = new MovieDirector(movieBean, directorBean);
                             movieDirectorList.add(movieDirector);
                         }
                     }

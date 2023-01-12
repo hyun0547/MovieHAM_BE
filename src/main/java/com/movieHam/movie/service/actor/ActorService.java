@@ -25,6 +25,7 @@ public class ActorService {
 
     public void saveAll(List<Actor> actorList) {
         actorRepository.saveAll(actorList);
+        actorRepository.flush();
     }
 
     public List<Actor> search(String searchType, String keyword) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {

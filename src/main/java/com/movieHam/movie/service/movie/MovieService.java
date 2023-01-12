@@ -29,6 +29,7 @@ public class MovieService {
 
     public void saveAll(List<Movie> movieBeanList) {
         movieRepository.saveAll(movieBeanList);
+        movieRepository.flush();
     }
 
 }

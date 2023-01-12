@@ -37,6 +37,12 @@ public class MovieController {
 
         Map<String,Object> result;
 
+        if(CommonUtil.checkNullEmpty(keywords, "").equals("")){
+            return new HashMap<>(){{
+                put("error", "키워드 누락");
+            }};
+        }
+
         try {
 
             Set<MovieDTO> resultList = new LinkedHashSet<>();
@@ -78,7 +84,7 @@ public class MovieController {
 
         }catch (NoSuchMethodException e){
             result = new HashMap<>(){{
-                put("error", e.getMessage());
+                put("error", "검색형식 오류");
             }};
         } catch (InvocationTargetException e) {
             result = new HashMap<>(){{

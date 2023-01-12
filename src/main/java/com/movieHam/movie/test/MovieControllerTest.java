@@ -91,7 +91,7 @@ public class MovieControllerTest {
         Calendar cal = Calendar.getInstance();
 
         ArrayList<Map<String, Object>> movieInfoList = new ArrayList<>();
-        for(int year = 57759; year > 56900; year--){
+        for(int year = 50000; year > 40000; year--){
 
             Map<String, String> paramMap = new HashMap<>();
             paramMap.put("movieSeq", year +"");
@@ -122,8 +122,8 @@ public class MovieControllerTest {
 
         }
 
-        int min = 57759;
-        int max = 56900;
+        int min = 50000;
+        int max = 57759;
         int random = (int) ((Math.random() * (max - min)) + min);
         String img = "";
         List<Movie> movieList = null;

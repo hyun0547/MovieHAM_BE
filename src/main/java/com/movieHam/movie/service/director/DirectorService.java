@@ -22,6 +22,7 @@ public class DirectorService {
 
     public void saveAll(ArrayList<Director> directorList){
         directorRepository.saveAll(directorList);
+        directorRepository.flush();
     }
 
     public List<Director> search(String searchType, String keyword) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
