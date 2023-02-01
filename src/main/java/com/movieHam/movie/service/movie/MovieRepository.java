@@ -21,6 +21,8 @@ public interface MovieRepository extends JpaRepository<Movie, String> {
 
     List<Movie> findByGenreContains(String queryParam);
 
+    List<Movie> findByGenreContainsAndPostersIsNotNull(String queryParam);
+
     List<Movie> findByTypeContains(String queryParam);
 
     List<Movie> findByRepRlsDateContains(String queryParam);
@@ -31,4 +33,5 @@ public interface MovieRepository extends JpaRepository<Movie, String> {
 
     List<Movie> findByDocidContains(String docid);
 
+    List<Movie> findByNationContainsAndPostersIsNotNull(String queryParam);
 }

@@ -20,7 +20,7 @@ public class WishController {
     @RequestMapping(value="/movieHam/api/movie/wish/insert")
     public String insert (Movie movieVO) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
 
-        List<Movie> movieList = movieService.search("docid", movieVO.getDocid());
+        List<Movie> movieList = movieService.search("docid", movieVO.getDocid(), "");
 
         return "redirect:/movie/test";
     }
@@ -28,7 +28,7 @@ public class WishController {
     @RequestMapping(value="/movieHam/api/movie/wish/modify")
     public String modify (Movie movieVO) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
 
-        List<Movie> movieList = movieService.search("docid", movieVO.getDocid());
+        List<Movie> movieList = movieService.search("docid", movieVO.getDocid(), "");
 
         return movieList.toString();
     }

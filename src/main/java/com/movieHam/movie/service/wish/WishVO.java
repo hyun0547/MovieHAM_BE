@@ -10,8 +10,6 @@ import javax.persistence.Id;
 public class WishVO {
 
     @Id
-    private String cntNo;            // 번호
-
     private String userId;
     private String docid;
     private String rating;

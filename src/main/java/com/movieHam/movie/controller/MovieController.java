@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import util.StringHandler;
 import util.com.CommonUtil;
 
+import javax.servlet.http.HttpSession;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -27,7 +28,9 @@ public class MovieController {
     PeopleService peopleService;
 
     @GetMapping(value="/movieHam/api/movie/search/{searchType}", produces = "application/json; charset=UTF-8")
-    public Map<String,Object> search(@PathVariable String searchType, String keywords) {
+    public Map<String,Object> search(HttpSession session, @PathVariable String searchType, String keywords, String required) {
+
+        System.out.println(session.getAttribute("user"));
 
         Map<String,Object> result;
 
@@ -53,7 +56,7 @@ public class MovieController {
                 }
 
             }else{
-                List<Movie> movieList = movieService.search(searchType, keywords);
+                List<Movie> movieList = movieService.search(searchType, keywords, required);
                 for(Movie movie : movieList){
                     MovieDTO movieDTO = new MovieDTO(movie);
                     resultList.add(movieDTO);

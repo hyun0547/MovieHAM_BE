@@ -118,7 +118,7 @@ public class MapHandler {
         if(movie.get("repRatDate") != null) movieBean.setRepRatDate(movie.get("repRatDate").toString());
         if(movie.get("repRlsDate") != null) movieBean.setRepRlsDate(movie.get("repRlsDate").toString());
         if(movie.get("keywords") != null) movieBean.setKeywords(movie.get("keywords").toString());
-        if(movie.get("posters") != null) movieBean.setPosters(movie.get("posters").toString());
+        if(!"".equals(CommonUtil.checkNullEmpty(movie.get("posters"),""))) movieBean.setPosters(movie.get("posters").toString());
         if(movie.get("stlls") != null) movieBean.setStlls(movie.get("stlls").toString());
         if(movie.get("openThtr") != null) movieBean.setOpenThtr(movie.get("openThtr").toString());
         if(movie.get("Awards1") != null) movieBean.setAwards1(movie.get("Awards1").toString());
