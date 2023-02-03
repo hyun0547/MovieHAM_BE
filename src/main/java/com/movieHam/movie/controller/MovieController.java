@@ -28,7 +28,10 @@ public class MovieController {
     PeopleService peopleService;
 
     @GetMapping(value="/movieHam/api/movie/search/{searchType}", produces = "application/json; charset=UTF-8")
-    public Map<String,Object> search(HttpSession session, @PathVariable String searchType, String keywords, String required) {
+    public Map<String,Object> search(HttpSession session, @PathVariable String searchType,
+                                     String keywords, String required,
+                                     Integer pageIndex, Integer countPerPage
+    ) {
 
         System.out.println(session.getAttribute("user"));
 
@@ -56,7 +59,7 @@ public class MovieController {
                 }
 
             }else{
-                List<Movie> movieList = movieService.search(searchType, keywords, required);
+                List<Movie> movieList = movieService.search(searchType, keywords, required, pageIndex, countPerPage);
                 for(Movie movie : movieList){
                     MovieDTO movieDTO = new MovieDTO(movie);
                     resultList.add(movieDTO);
