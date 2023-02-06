@@ -1,11 +1,8 @@
 package com.movieHam.movie.controller;
 
-import com.movieHam.movie.service.actor.ActorService;
-import com.movieHam.movie.service.actor.Actor;
-import com.movieHam.movie.service.director.DirectorService;
-import com.movieHam.movie.service.director.Director;
-import com.movieHam.movie.service.mapper.movieActor.MovieActor;
-import com.movieHam.movie.service.mapper.movieDirector.MovieDirector;
+import com.movieHam.movie.service.people.PeopleService;
+import com.movieHam.movie.service.people.People;
+import com.movieHam.movie.service.mapper.moviePeople.MoviePeople;
 import com.movieHam.movie.service.movie.MovieDTO;
 import com.movieHam.movie.service.movie.MovieService;
 import com.movieHam.movie.service.movie.Movie;
@@ -27,10 +24,7 @@ public class MovieController {
     MovieService movieService;
 
     @Autowired
-    ActorService actorService;
-
-    @Autowired
-    DirectorService directorService;
+    PeopleService peopleService;
 
     @GetMapping(value="/movieHam/api/movie/search/{searchType}", produces = "application/json; charset=UTF-8")
     public Map<String,Object> search(@PathVariable String searchType, String keywords) {
@@ -47,23 +41,12 @@ public class MovieController {
 
             Set<MovieDTO> resultList = new LinkedHashSet<>();
 
-            if(CommonUtil.checkNullEmpty(searchType, "").contains("actor")){
-                List<Actor> actorList = actorService.search(searchType, keywords);
-                for(Actor actor : actorList){
-                    if(actor.getMovieActor() != null){
-                        for(MovieActor movieActor : actor.getMovieActor()){
-                            MovieDTO movieDTO = new MovieDTO(movieActor.getMovie());
-                            resultList.add(movieDTO);
-                        }
-                    }
-                }
-
-            }else if(CommonUtil.checkNullEmpty(searchType, "").contains("director")){
-                List<Director> directorList = directorService.search(searchType, keywords);
-                for(Director director : directorList){
-                    if(director.getMovieDirector() != null){
-                        for(MovieDirector movieDirector : director.getMovieDirector()){
-                            MovieDTO movieDTO = new MovieDTO(movieDirector.getMovie());
+            if(CommonUtil.checkNullEmpty(searchType, "").contains("people")){
+                List<People> peopleList = peopleService.search(searchType, keywords);
+                for(People people : peopleList){
+                    if(people.getMoviePeople() != null){
+                        for(MoviePeople moviePeople : people.getMoviePeople()){
+                            MovieDTO movieDTO = new MovieDTO(moviePeople.getMovie());
                             resultList.add(movieDTO);
                         }
                     }

@@ -1,8 +1,8 @@
-package com.movieHam.movie.service.mapper.movieActor;
+package com.movieHam.movie.service.mapper.moviePeople;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.movieHam.movie.service.actor.Actor;
+import com.movieHam.movie.service.people.People;
 import com.movieHam.movie.service.movie.Movie;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,23 +11,23 @@ import lombok.Setter;
 import javax.persistence.*;
 
 /**
- * Mapping table for Movie and Actor
+ * Mapping table for Movie and People
  */
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity(name= "TM_MOVIE_ACTOR")
-public class MovieActor {
+public class MoviePeople {
 
-    public MovieActor(Movie movie, Actor actor){
+    public MoviePeople(Movie movie, People people){
         this.movie = movie;
-        this.actor = actor;
-        this.movieActorId = movie.getDocid() + actor.getActorId();
+        this.people = people;
+        this.moviePeopleId = movie.getDocid() + people.getPeopleId();
     }
 
     @Id
-    private String movieActorId;
+    private String moviePeopleId;
 
     @ManyToOne
     @JoinColumn(name = "docid")
@@ -35,8 +35,8 @@ public class MovieActor {
     private Movie movie;
 
     @ManyToOne
-    @JoinColumn(name = "actor_id")
+    @JoinColumn(name = "people_id")
     @JsonManagedReference
-    private Actor actor;
+    private People people;
 
 }

@@ -1,14 +1,10 @@
 package com.movieHam.movie.test;
 
 import com.movieHam.externalApi.movie.ApiConnection;
-import com.movieHam.movie.service.actor.ActorService;
-import com.movieHam.movie.service.actor.Actor;
-import com.movieHam.movie.service.director.DirectorService;
-import com.movieHam.movie.service.director.Director;
-import com.movieHam.movie.service.mapper.movieActor.MovieActor;
-import com.movieHam.movie.service.mapper.movieActor.MovieActorService;
-import com.movieHam.movie.service.mapper.movieDirector.MovieDirector;
-import com.movieHam.movie.service.mapper.movieDirector.MovieDirectorService;
+import com.movieHam.movie.service.people.PeopleService;
+import com.movieHam.movie.service.people.People;
+import com.movieHam.movie.service.mapper.moviePeople.MoviePeople;
+import com.movieHam.movie.service.mapper.moviePeople.MoviePeopleService;
 import com.movieHam.movie.service.movie.MovieService;
 import com.movieHam.movie.service.movie.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +24,10 @@ public class MovieControllerTest {
     MovieService movieService;
 
     @Autowired
-    ActorService actorService;
+    PeopleService peopleService;
 
     @Autowired
-    DirectorService directorService;
-
-    @Autowired
-    MovieDirectorService movieDirectorService;
-
-    @Autowired
-    MovieActorService movieActorService;
+    MoviePeopleService moviePeopleService;
 
     @GetMapping(value="/movie/init", produces = "application/json; charset=UTF-8")
     public String init(String startDate){
@@ -60,16 +50,13 @@ public class MovieControllerTest {
             Map<String, Object> movieInfo = MapHandler.getMovieInfo(movieInfoList);
 
 //            ArrayList<MovieVO> movieList = (ArrayList<MovieVO>) movieInfo.get("movieList");
-//            ArrayList<ActorVO> actorList = (ArrayList<ActorVO>) movieInfo.get("actorList");
+//            ArrayList<PeopleVO> peopleList = (ArrayList<PeopleVO>) movieInfo.get("peopleList");
 //            ArrayList<DirectorVO> directorList = (ArrayList<DirectorVO>) movieInfo.get("directorList");
-//            ArrayList<MovieActor> movieActorList = (ArrayList<MovieActor>) movieInfo.get("directorList");
+//            ArrayList<MoviePeople> moviePeopleList = (ArrayList<MoviePeople>) movieInfo.get("directorList");
 //            ArrayList<MovieDirector> movieDirectorList = (ArrayList<MovieDirector>) movieInfo.get("directorList");
 
             movieService.saveAll((ArrayList<Movie>) movieInfo.get("movieList"));
-            actorService.saveAll((ArrayList<Actor>) movieInfo.get("actorList"));
-            directorService.saveAll((ArrayList<Director>) movieInfo.get("directorList"));
-            movieActorService.saveAll((ArrayList<MovieActor>) movieInfo.get("directorList"));
-            movieDirectorService.saveAll((ArrayList<MovieDirector>) movieInfo.get("directorList"));
+            peopleService.saveAll((ArrayList<People>) movieInfo.get("peopleList"));
 
             return movieInfo.toString();
 
@@ -108,14 +95,12 @@ public class MovieControllerTest {
 
         if(movieInfo != null){
 //            ArrayList<MovieVO> movieList = (ArrayList<MovieVO>) movieInfo.get("movieList");
-//            ArrayList<ActorVO> actorList = (ArrayList<ActorVO>) movieInfo.get("actorList");
+//            ArrayList<PeopleVO> peopleList = (ArrayList<PeopleVO>) movieInfo.get("peopleList");
 //            ArrayList<DirectorVO> directorList = (ArrayList<DirectorVO>) movieInfo.get("directorList");
             try {
                 movieService.saveAll((ArrayList<Movie>) movieInfo.get("movieList"));
-                actorService.saveAll((ArrayList<Actor>) movieInfo.get("actorList"));
-                directorService.saveAll((ArrayList<Director>) movieInfo.get("directorList"));
-                movieActorService.saveAll((ArrayList<MovieActor>) movieInfo.get("movieActorList"));
-                movieDirectorService.saveAll((ArrayList<MovieDirector>) movieInfo.get("movieDirectorList"));
+                peopleService.saveAll((ArrayList<People>) movieInfo.get("peopleList"));
+                moviePeopleService.saveAll((ArrayList<MoviePeople>) movieInfo.get("moviePeopleList"));
             }catch (Exception e){
                 e.printStackTrace();
             }

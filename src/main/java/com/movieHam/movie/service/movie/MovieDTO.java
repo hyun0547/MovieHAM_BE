@@ -1,9 +1,7 @@
 package com.movieHam.movie.service.movie;
 
-import com.movieHam.movie.service.actor.Actor;
-import com.movieHam.movie.service.director.Director;
-import com.movieHam.movie.service.mapper.movieActor.MovieActor;
-import com.movieHam.movie.service.mapper.movieDirector.MovieDirector;
+import com.movieHam.movie.service.people.People;
+import com.movieHam.movie.service.mapper.moviePeople.MoviePeople;
 import lombok.Getter;
 
 import javax.persistence.Id;
@@ -41,15 +39,11 @@ public class MovieDTO {
         this.regDate = movie.getRegDate();
         this.modDate = movie.getModDate();
 
-        actorList = new ArrayList<>();
-        for(MovieActor movieActor : movie.getMovieActor()){
-            actorList.add(movieActor.getActor());
+        peopleList = new ArrayList<>();
+        for(MoviePeople moviePeople : movie.getMoviePeople()){
+            peopleList.add(moviePeople.getPeople());
         }
 
-        directorList = new ArrayList<>();
-        for(MovieDirector movieDirector : movie.getMovieDirector()){
-            directorList.add(movieDirector.getDirector());
-        }
     }
 
     @Id
@@ -81,8 +75,7 @@ public class MovieDTO {
     private String regDate;          // 등록일
     private String modDate;          // 수정일
 
-    List<Actor> actorList;
-    List<Director> directorList;
+    List<People> peopleList;
 
     @Override
     public int hashCode() {

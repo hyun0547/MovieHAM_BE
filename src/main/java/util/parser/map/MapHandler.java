@@ -1,9 +1,7 @@
 package util.parser.map;
 
-import com.movieHam.movie.service.actor.Actor;
-import com.movieHam.movie.service.director.Director;
-import com.movieHam.movie.service.mapper.movieActor.MovieActor;
-import com.movieHam.movie.service.mapper.movieDirector.MovieDirector;
+import com.movieHam.movie.service.people.People;
+import com.movieHam.movie.service.mapper.moviePeople.MoviePeople;
 import com.movieHam.movie.service.movie.Movie;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -30,10 +28,8 @@ public class MapHandler {
     public static Map<String,Object> getMovieInfo(List<Map<String,Object>> movieInfoList){
 
         ArrayList<Movie> movieList = new ArrayList<>();
-        ArrayList<Actor> actorList = new ArrayList<>();
-        ArrayList<Director> directorList = new ArrayList<>();
-        ArrayList<MovieActor> movieActorList = new ArrayList<>();
-        ArrayList<MovieDirector> movieDirectorList = new ArrayList<>();
+        ArrayList<People> peopleList = new ArrayList<>();
+        ArrayList<MoviePeople> moviePeopleList = new ArrayList<>();
 
         try {
             for(Map<String, Object> movie : movieInfoList){
@@ -42,26 +38,26 @@ public class MapHandler {
 
                 setMovieDate(movieBean, movie);
 
-                Map<String,Object> actorData = (Map<String, Object>) movie.get("actors");
-                ArrayList<Map<String, Object>> actorInfoList = (ArrayList<Map<String, Object>>) actorData.get("actor");
+                Map<String,Object> peopleData = (Map<String, Object>) movie.get("peoples");
+                ArrayList<Map<String, Object>> peopleInfoList = (ArrayList<Map<String, Object>>) peopleData.get("people");
 
-                if(actorInfoList != null && actorInfoList.size() > 0){
+                if(peopleInfoList != null && peopleInfoList.size() > 0){
 
-                    for(Map<String,Object> actor : actorInfoList){
+                    for(Map<String,Object> people : peopleInfoList){
 
-                        Actor actorBean = new Actor();
+                        People peopleBean = new People();
 
-                        if(!CommonUtil.checkNullEmpty(actor.get("actorNm"), "").equals("")) actorBean.setActorNm(actor.get("actorNm").toString());
-                        if(!CommonUtil.checkNullEmpty(actor.get("actorEnNm"), "").equals("")) actorBean.setActorEnNm(actor.get("actorEnNm").toString());
-                        if(!CommonUtil.checkNullEmpty(actor.get("actorId"), "").equals("")) {
-                            actorBean.setActorId(actor.get("actorId").toString());
+                        if(!CommonUtil.checkNullEmpty(people.get("peopleNm"), "").equals("")) peopleBean.setPeopleNm(people.get("peopleNm").toString());
+                        if(!CommonUtil.checkNullEmpty(people.get("peopleEnNm"), "").equals("")) peopleBean.setPeopleEnNm(people.get("peopleEnNm").toString());
+                        if(!CommonUtil.checkNullEmpty(people.get("peopleId"), "").equals("")) {
+                            peopleBean.setPeopleId(people.get("peopleId").toString());
                         }
 
-                        if(actorBean.getActorId() != null){
-                            actorList.add(actorBean);
+                        if(peopleBean.getPeopleId() != null){
+                            peopleList.add(peopleBean);
 
-                            MovieActor movieActor = new MovieActor(movieBean, actorBean);
-                            movieActorList.add(movieActor);
+                            MoviePeople moviePeople = new MoviePeople(movieBean, peopleBean);
+                            moviePeopleList.add(moviePeople);
                         }
                     }
                 }
@@ -69,36 +65,14 @@ public class MapHandler {
                 Map<String,Object> directorData = (Map<String, Object>) movie.get("directors");
                 ArrayList<Map<String, Object>> directorInfoList = (ArrayList<Map<String, Object>>) directorData.get("director");
 
-                if(directorInfoList != null && directorInfoList.size() > 0){
-
-                    for(Map<String,Object> director : directorInfoList){
-
-                        Director directorBean = new Director();
-
-                        if(!CommonUtil.checkNullEmpty(director.get("directorNm"), "").equals("")) directorBean.setDirectorNm(director.get("directorNm").toString());
-                        if(!CommonUtil.checkNullEmpty(director.get("directorEnNm"), "").equals("")) directorBean.setDirectorEnNm(director.get("directorEnNm").toString());
-                        if(!CommonUtil.checkNullEmpty(director.get("directorId"), "").equals("")) {
-                            directorBean.setDirectorId(director.get("directorId").toString());
-                        }
-
-                        if(directorBean.getDirectorId() != null){
-                            directorList.add(directorBean);
-
-                            MovieDirector movieDirector = new MovieDirector(movieBean, directorBean);
-                            movieDirectorList.add(movieDirector);
-                        }
-                    }
-                }
 
                 movieList.add(movieBean);
             }
             Map<String, Object> movieInfo = new HashMap<>(){{
 
                 put("movieList", movieList);
-                put("actorList", actorList);
-                put("directorList", directorList);
-                put("movieActorList", movieActorList);
-                put("movieDirectorList", movieDirectorList);
+                put("peopleList", peopleList);
+                put("moviePeopleList", moviePeopleList);
 
             }};
             return movieInfo;

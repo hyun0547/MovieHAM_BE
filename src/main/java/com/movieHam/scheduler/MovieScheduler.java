@@ -1,8 +1,7 @@
 package com.movieHam.scheduler;
 
 import com.movieHam.externalApi.movie.ApiConnection;
-import com.movieHam.movie.service.actor.ActorService;
-import com.movieHam.movie.service.director.DirectorService;
+import com.movieHam.movie.service.people.PeopleService;
 import com.movieHam.movie.service.movie.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,10 +15,8 @@ public class MovieScheduler {
     MovieService movieService;
 
     @Autowired
-    ActorService actorService;
+    PeopleService peopleService;
 
-    @Autowired
-    DirectorService directorService;
 
 //    @Scheduled(cron = "0 0 0/1 * * *")
     @Scheduled(fixedDelay=10000)
