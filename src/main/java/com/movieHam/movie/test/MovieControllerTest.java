@@ -113,7 +113,7 @@ public class MovieControllerTest {
         String img = "";
         List<Movie> movieList = null;
         while(img == null || "".equals(img)){
-            movieList = movieService.search("movieSeq", random + "");
+            movieList = movieService.search("movieSeq", random + "", null, null, null);
             random = (int) ((Math.random() * (max - min)) + min);
             Movie movie = movieList.get(0);
             img = "".equals(movie.getPosters()) || movie.getPosters() == null ? movie.getStlls() : movie.getPosters();
