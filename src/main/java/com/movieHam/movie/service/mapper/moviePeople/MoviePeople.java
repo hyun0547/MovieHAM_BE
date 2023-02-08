@@ -17,20 +17,20 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity(name= "TM_MOVIE_ACTOR")
+@Entity(name= "tm_movie_people")
 public class MoviePeople {
 
     public MoviePeople(Movie movie, People people){
         this.movie = movie;
         this.people = people;
-        this.moviePeopleId = movie.getDocid() + people.getPeopleId();
+        this.moviePeopleId = movie.getMovieId() + people.getPeopleId();
     }
 
     @Id
     private String moviePeopleId;
 
     @ManyToOne
-    @JoinColumn(name = "docid")
+    @JoinColumn(name = "movie_id")
     @JsonBackReference
     private Movie movie;
 

@@ -1,10 +1,13 @@
 package com.movieHam.movie.service.movie;
 
+import com.movieHam.movie.service.genre.Genre;
+import com.movieHam.movie.service.mapper.moviePeople.MovieGenre;
 import com.movieHam.movie.service.people.People;
 import com.movieHam.movie.service.mapper.moviePeople.MoviePeople;
 import lombok.Getter;
 
 import javax.persistence.Id;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,32 +15,23 @@ import java.util.List;
 public class MovieDTO {
 
     public MovieDTO (Movie movie){
-        this.docid = movie.getDocid();
         this.movieId = movie.getMovieId();
-        this.movieSeq = movie.getMovieSeq();
+        this.adult = movie.isAdult();
+        this.backdropPath = movie.getBackdropPath();
+        this.originalLanguage = movie.getOriginalLanguage();
+        this.originalTitle = movie.getOriginalTitle();
+        this.overview = movie.getOverview();
+        this.popularity = movie.getPopularity();
+        this.posterPath = movie.getPosterPath();
+        this.releaseDate = movie.getReleaseDate();
         this.title = movie.getTitle();
-        this.titleEng = movie.getTitleEng();
-        this.prodYear = movie.getProdYear();
-        this.nation = movie.getNation();
-        this.company = movie.getCompany();
-        this.plotKor = movie.getPlotKor();
-        this.plotEng = movie.getPlotEng();
-        this.runtime = movie.getRuntime();
-        this.rating = movie.getRating();
-        this.genre = movie.getGenre();
-        this.type = movie.getType();
-        this.useClassification = movie.getUseClassification();
-        this.ratedYn = movie.getRatedYn();
-        this.repRatDate = movie.getRepRatDate();
-        this.repRlsDate = movie.getRepRlsDate();
-        this.keywords = movie.getKeywords();
-        this.posters = movie.getPosters();
-        this.stlls = movie.getStlls();
-        this.openThtr = movie.getOpenThtr();
-        this.awards1 = movie.getAwards1();
-        this.awards2 = movie.getAwards2();
-        this.regDate = movie.getRegDate();
-        this.modDate = movie.getModDate();
+        this.voteAverage = movie.getVoteAverage();
+        this.voteCount = movie.getVoteCount();
+
+        genreList = new ArrayList<>();
+        for(MovieGenre moviePeople : movie.getMovieGenre()){
+            genreList.add(moviePeople.getGenre());
+        }
 
         peopleList = new ArrayList<>();
         for(MoviePeople moviePeople : movie.getMoviePeople()){
@@ -47,39 +41,27 @@ public class MovieDTO {
     }
 
     @Id
-    private String docid;            // 영화코드
+    private Integer movieId;            // 영화 아이디
 
-    private String movieId;          // ID
-    private String movieSeq;         // SEQ
-    private String title;            // 제목
-    private String titleEng;         // 영문제명
-    private String prodYear;         // 제작년도
-    private String nation;           // 국가
-    private String company;          // 제작사
-    private String plotKor;          // 줄거리
-    private String plotEng;          // 줄거리(영문)
-    private String runtime;          // 러닝타임
-    private String rating;           // 관람등급
-    private String genre;            // 장르
-    private String type;             // 유형구분
-    private String useClassification;      // 용도구분
-    private String ratedYn;          // 심의여부
-    private String repRatDate;       // 심의날짜
-    private String repRlsDate;       // 개봉일
-    private String keywords;         // 키워드
-    private String posters;          // 포스터URL
-    private String stlls;            // 스틸샷URL
-    private String openThtr;         // 개봉극장
-    private String awards1;          // 수상내역1
-    private String awards2;          // 수상내역2
-    private String regDate;          // 등록일
-    private String modDate;          // 수정일
+    private boolean adult;
+    private String backdropPath;        // 백드롭이미지
+    private String originalLanguage;
+    private String originalTitle;
+    private String overview;            // 줄거리
+    private double popularity;          // 인지도
+    private String posterPath;          // 포스터이미지
+    private Date releaseDate;         // 개봉일
+    private String title;               // 제목
+    private double voteAverage;         // 평점평균
+    private Integer voteCount;           // 평가수
+
 
     List<People> peopleList;
+    List<Genre> genreList;
 
     @Override
     public int hashCode() {
-        return docid.hashCode();
+        return movieId.hashCode();
     }
 
     @Override
@@ -90,7 +72,7 @@ public class MovieDTO {
 
         MovieDTO movie = (MovieDTO)obj;
 
-        return docid.equals(movie.docid);
+        return movieId.equals(movie.movieId);
 
     }
 }

@@ -7,6 +7,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import util.com.CommonUtil;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +37,7 @@ public class MapHandler {
 
                 Movie movieBean = new Movie();
 
-                setMovieDate(movieBean, movie);
+                setMovieData(movieBean, movie);
 
                 Map<String,Object> peopleData = (Map<String, Object>) movie.get("peoples");
                 ArrayList<Map<String, Object>> peopleInfoList = (ArrayList<Map<String, Object>>) peopleData.get("people");
@@ -83,47 +84,18 @@ public class MapHandler {
         return null;
     }
 
-    public static void setMovieDate(Movie movieBean, Map<String,Object> movie){
-        if(movie.get("DOCID") != null) movieBean.setDocid(movie.get("DOCID").toString());
-        if(movie.get("movieId") != null) movieBean.setMovieId(movie.get("movieId").toString());
-        if(movie.get("movieSeq") != null) movieBean.setMovieSeq(movie.get("movieSeq").toString());
-        if(movie.get("awards1") != null) movieBean.setAwards1(movie.get("awards1").toString());
-        if(movie.get("movieId") != null) movieBean.setMovieId(movie.get("movieId").toString());
-        if(movie.get("movieSeq") != null) movieBean.setMovieSeq(movie.get("movieSeq").toString());
-        if(movie.get("title") != null) movieBean.setTitle(movie.get("title").toString());
-        if(movie.get("titleEng") != null) movieBean.setTitleEng(movie.get("titleEng").toString());
-        if(movie.get("prodYear") != null) movieBean.setProdYear(movie.get("prodYear").toString());
-        if(movie.get("nation") != null) movieBean.setNation(movie.get("nation").toString());
-        if(movie.get("company") != null) movieBean.setCompany(movie.get("company").toString());
-        if(movie.get("plots") != null){
-            Map<String,Object> plots = (Map<String, Object>) movie.get("plots");
-            ArrayList<Map<String,Object>> plotList = (ArrayList<Map<String, Object>>) plots.get("plot");
-            if(plotList != null){
-                for(Map<String,Object> plot : plotList){
-                    if("한국어".equals(plot.get("plotLang"))){
-                        movieBean.setPlotKor(plot.get("plotText").toString());
-                    }else if(plot.get("plotLang") != null && !"".equals(plot.get("plotLang"))){
-                        movieBean.setPlotEng(plot.get("plotText").toString());
-                    }
-                }
-            }
-
-        }
-        if(movie.get("runtime") != null) movieBean.setRuntime(movie.get("runtime").toString());
-        if(movie.get("rating") != null) movieBean.setRating(movie.get("rating").toString());
-        if(movie.get("genre") != null) movieBean.setGenre(movie.get("genre").toString());
-        if(movie.get("type") != null) movieBean.setType(movie.get("type").toString());
-        if(movie.get("use") != null) movieBean.setUseClassification(movie.get("use").toString());
-        if(movie.get("ratedYn") != null) movieBean.setRatedYn(movie.get("ratedYn").toString());
-        if(movie.get("repRatDate") != null) movieBean.setRepRatDate(movie.get("repRatDate").toString());
-        if(movie.get("repRlsDate") != null) movieBean.setRepRlsDate(movie.get("repRlsDate").toString());
-        if(movie.get("keywords") != null) movieBean.setKeywords(movie.get("keywords").toString());
-        if(!"".equals(CommonUtil.checkNullEmpty(movie.get("posters"),""))) movieBean.setPosters(movie.get("posters").toString());
-        if(movie.get("stlls") != null) movieBean.setStlls(movie.get("stlls").toString());
-        if(movie.get("openThtr") != null) movieBean.setOpenThtr(movie.get("openThtr").toString());
-        if(movie.get("Awards1") != null) movieBean.setAwards1(movie.get("Awards1").toString());
-        if(movie.get("Awards1") != null) movieBean.setAwards2(movie.get("Awards1").toString());
-        if(movie.get("regDate") != null) movieBean.setRegDate(movie.get("regDate").toString());
-        if(movie.get("modDate") != null) movieBean.setModDate(movie.get("modDate").toString());
+    public static void setMovieData(Movie movieBean, Map<String,Object> movie){
+        if(movie.get("adult") != null) movieBean.setAdult(Boolean.parseBoolean(movie.get("runtime").toString()));
+        if(movie.get("backdrop_path") != null) movieBean.setBackdropPath(movie.get("rating").toString());
+        if(movie.get("id") != null) movieBean.setMovieId(Integer.parseInt(movie.get("type").toString()));
+        if(movie.get("original_language") != null) movieBean.setOriginalLanguage(movie.get("use").toString());
+        if(movie.get("original_title") != null) movieBean.setOriginalTitle(movie.get("ratedYn").toString());
+        if(movie.get("overview") != null) movieBean.setOverview(movie.get("repRatDate").toString());
+        if(movie.get("popularity") != null) movieBean.setPopularity(Double.parseDouble(movie.get("repRlsDate").toString()));
+        if(movie.get("poster_path") != null) movieBean.setPosterPath(movie.get("keywords").toString());
+        if(movie.get("release_date") != null) movieBean.setReleaseDate(Date.valueOf(movie.get("stlls").toString()));
+        if(movie.get("title") != null) movieBean.setTitle(movie.get("openThtr").toString());
+        if(movie.get("vote_average") != null) movieBean.setVoteAverage(Double.parseDouble(movie.get("Awards1").toString()));
+        if(movie.get("vote_count") != null) movieBean.setVoteCount(Integer.valueOf(movie.get("regDate").toString()));
     }
 }

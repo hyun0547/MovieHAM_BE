@@ -1,6 +1,7 @@
 package com.movieHam.movie.test;
 
 import com.movieHam.externalApi.movie.ApiConnection;
+import com.movieHam.externalApi.movie.TmdbApiService;
 import com.movieHam.movie.service.people.PeopleService;
 import com.movieHam.movie.service.people.People;
 import com.movieHam.movie.service.mapper.moviePeople.MoviePeople;
@@ -32,22 +33,23 @@ public class MovieControllerTest {
     @GetMapping(value="/movie/init", produces = "application/json; charset=UTF-8")
     public String init(String startDate){
 
-        ApiConnection con = new ApiConnection();
+        TmdbApiService tmdbApi = new TmdbApiService();
 
         Map<String,String> paramMap = new HashMap<String,String>(){
             {
-                put("listCount", "100");
-                put("releaseDts", startDate);
+                put("language", "ko");
+                put("page", "1");
             }
         };
 
         try {
 
-            Map<String,Object> resultMap = con.kmdbMovieSearch(paramMap);
+            Map<String,Object> resultMap = tmdbApi.tmdbNowPlayingMovies(paramMap);
 
-            ArrayList<Map<String, Object>> movieInfoList = con.kmdbResultParse(resultMap);
+            resultMap.get("total_pages");
+            resultMap.get("total_results");
 
-            Map<String, Object> movieInfo = MapHandler.getMovieInfo(movieInfoList);
+            Map<String, Object> movieInfo = MapHandler.getMovieInfo((List<Map<String, Object>>) resultMap.get("results"));
 
 //            ArrayList<MovieVO> movieList = (ArrayList<MovieVO>) movieInfo.get("movieList");
 //            ArrayList<PeopleVO> peopleList = (ArrayList<PeopleVO>) movieInfo.get("peopleList");
@@ -55,10 +57,10 @@ public class MovieControllerTest {
 //            ArrayList<MoviePeople> moviePeopleList = (ArrayList<MoviePeople>) movieInfo.get("directorList");
 //            ArrayList<MovieDirector> movieDirectorList = (ArrayList<MovieDirector>) movieInfo.get("directorList");
 
-            movieService.saveAll((ArrayList<Movie>) movieInfo.get("movieList"));
-            peopleService.saveAll((ArrayList<People>) movieInfo.get("peopleList"));
-
-            return movieInfo.toString();
+//            movieService.saveAll((ArrayList<Movie>) movieInfo.get("movieList"));
+//            peopleService.saveAll((ArrayList<People>) movieInfo.get("peopleList"));
+//
+//            return movieInfo.toString();
 
         }catch(Exception e){
             e.printStackTrace();
@@ -71,60 +73,7 @@ public class MovieControllerTest {
     @ResponseBody
     public String test() throws Exception {
 
-        String test2 = "";
-        String test3 = "";
-        ApiConnection con = new ApiConnection();
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar cal = Calendar.getInstance();
-
-        ArrayList<Map<String, Object>> movieInfoList = new ArrayList<>();
-        for(int year = 50000; year > 40000; year--){
-
-            Map<String, String> paramMap = new HashMap<>();
-            paramMap.put("movieSeq", year +"");
-
-            Map<String,Object> resultMap = con.kmdbMovieSearch(paramMap);
-
-            List<Map<String, Object>> list = con.kmdbResultParse(resultMap);
-            if(list != null){
-                movieInfoList.addAll(list);
-            }
-        }
-
-        Map<String, Object> movieInfo = MapHandler.getMovieInfo(movieInfoList);
-
-        if(movieInfo != null){
-//            ArrayList<MovieVO> movieList = (ArrayList<MovieVO>) movieInfo.get("movieList");
-//            ArrayList<PeopleVO> peopleList = (ArrayList<PeopleVO>) movieInfo.get("peopleList");
-//            ArrayList<DirectorVO> directorList = (ArrayList<DirectorVO>) movieInfo.get("directorList");
-            try {
-                movieService.saveAll((ArrayList<Movie>) movieInfo.get("movieList"));
-                peopleService.saveAll((ArrayList<People>) movieInfo.get("peopleList"));
-                moviePeopleService.saveAll((ArrayList<MoviePeople>) movieInfo.get("moviePeopleList"));
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-
-        }
-
-        int min = 50000;
-        int max = 57759;
-        int random = (int) ((Math.random() * (max - min)) + min);
-        String img = "";
-        List<Movie> movieList = null;
-        while(img == null || "".equals(img)){
-            movieList = movieService.search("movieSeq", random + "");
-            random = (int) ((Math.random() * (max - min)) + min);
-            Movie movie = movieList.get(0);
-            img = "".equals(movie.getPosters()) || movie.getPosters() == null ? movie.getStlls() : movie.getPosters();
-            if(img.contains("|")){
-                img = img.split("\\|")[0];
-            }
-        }
-
-        Movie movie = movieList.get(0);
-
-        return movie.toString();
+        return null;
     }
 
 
