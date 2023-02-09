@@ -17,9 +17,7 @@ class MovieHamApplicationTests {
 		Movie movie = new Movie();
 		List<Movie> movieList = new ArrayList<>();
 
-		movie.setMovieId("test");
 		movieList.add(movie);
-		movie.setMovieId("test2");
 
 		System.out.println(movieList.get(0));
 	}

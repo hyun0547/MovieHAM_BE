@@ -23,7 +23,7 @@ public class MoviePeople {
     public MoviePeople(Movie movie, People people){
         this.movie = movie;
         this.people = people;
-        this.moviePeopleId = movie.getMovieId() + people.getPeopleId();
+        this.moviePeopleId = String.valueOf(movie.getMovieId()) + String.valueOf(people.getPeopleId());
     }
 
     @Id

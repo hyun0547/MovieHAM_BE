@@ -10,14 +10,20 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity(name = "TN_ACTOR")
+@Entity(name = "tn_people")
 public class People {
 
     @Id
-    private String peopleId;                // 배우코드
+    private Integer peopleId;
 
-    private String peopleNm;                // 배우명
-    private String peopleEnNm;             // 배우영문명
+    private boolean adult;
+    private Integer gender;
+    private String knownForDepartment;
+    private String name;
+    private String original_name;
+    private String popularity;
+    private String profile_path;
+    private String job;
 
     @OneToMany(mappedBy = "people")
     @JsonBackReference

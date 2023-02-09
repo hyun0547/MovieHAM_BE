@@ -11,5 +11,4 @@ import java.util.List;
 @RepositoryDefinition(domainClass = Genre.class, idClass = String.class)
 public interface GenreRepository extends JpaRepository<Genre, String> {
 
-    List<Genre> findByPeopleNmContains(String keyword);
 }

@@ -1,5 +1,6 @@
 package util.parser.map;
 
+import com.movieHam.externalApi.movie.TmdbApiService;
 import com.movieHam.movie.service.people.People;
 import com.movieHam.movie.service.mapper.moviePeople.MoviePeople;
 import com.movieHam.movie.service.movie.Movie;
@@ -39,8 +40,16 @@ public class MapHandler {
 
                 setMovieData(movieBean, movie);
 
-                Map<String,Object> peopleData = (Map<String, Object>) movie.get("peoples");
-                ArrayList<Map<String, Object>> peopleInfoList = (ArrayList<Map<String, Object>>) peopleData.get("people");
+                Map<String,String> paramMap = new HashMap<String,String>(){
+                    {
+                        put("language", "ko");
+                        put("page", "1");
+                    }
+                };
+
+                Map<String,Object> peopleData = (Map<String, Object>) TmdbApiService.tmdbPeoplesFromMovieId(paramMap, movieBean.getMovieId());
+                ArrayList<Map<String, Object>> peopleInfoList = (ArrayList<Map<String, Object>>) peopleData.get("cast");
+                peopleInfoList.addAll((ArrayList<Map<String, Object>>) peopleData.get("crew"));
 
                 if(peopleInfoList != null && peopleInfoList.size() > 0){
 
@@ -48,10 +57,8 @@ public class MapHandler {
 
                         People peopleBean = new People();
 
-                        if(!CommonUtil.checkNullEmpty(people.get("peopleNm"), "").equals("")) peopleBean.setPeopleNm(people.get("peopleNm").toString());
-                        if(!CommonUtil.checkNullEmpty(people.get("peopleEnNm"), "").equals("")) peopleBean.setPeopleEnNm(people.get("peopleEnNm").toString());
                         if(!CommonUtil.checkNullEmpty(people.get("peopleId"), "").equals("")) {
-                            peopleBean.setPeopleId(people.get("peopleId").toString());
+                            peopleBean.setPeopleId((Integer) people.get("peopleId"));
                         }
 
                         if(peopleBean.getPeopleId() != null){
@@ -85,17 +92,17 @@ public class MapHandler {
     }
 
     public static void setMovieData(Movie movieBean, Map<String,Object> movie){
-        if(movie.get("adult") != null) movieBean.setAdult(Boolean.parseBoolean(movie.get("runtime").toString()));
-        if(movie.get("backdrop_path") != null) movieBean.setBackdropPath(movie.get("rating").toString());
-        if(movie.get("id") != null) movieBean.setMovieId(Integer.parseInt(movie.get("type").toString()));
-        if(movie.get("original_language") != null) movieBean.setOriginalLanguage(movie.get("use").toString());
-        if(movie.get("original_title") != null) movieBean.setOriginalTitle(movie.get("ratedYn").toString());
-        if(movie.get("overview") != null) movieBean.setOverview(movie.get("repRatDate").toString());
-        if(movie.get("popularity") != null) movieBean.setPopularity(Double.parseDouble(movie.get("repRlsDate").toString()));
-        if(movie.get("poster_path") != null) movieBean.setPosterPath(movie.get("keywords").toString());
-        if(movie.get("release_date") != null) movieBean.setReleaseDate(Date.valueOf(movie.get("stlls").toString()));
-        if(movie.get("title") != null) movieBean.setTitle(movie.get("openThtr").toString());
-        if(movie.get("vote_average") != null) movieBean.setVoteAverage(Double.parseDouble(movie.get("Awards1").toString()));
-        if(movie.get("vote_count") != null) movieBean.setVoteCount(Integer.valueOf(movie.get("regDate").toString()));
+        if(movie.get("adult") != null) movieBean.setAdult(Boolean.parseBoolean(movie.get("adult").toString()));
+        if(movie.get("backdrop_path") != null) movieBean.setBackdropPath(movie.get("backdrop_path").toString());
+        if(movie.get("id") != null) movieBean.setMovieId(Integer.parseInt(movie.get("id").toString()));
+        if(movie.get("original_language") != null) movieBean.setOriginalLanguage(movie.get("original_language").toString());
+        if(movie.get("original_title") != null) movieBean.setOriginalTitle(movie.get("original_title").toString());
+        if(movie.get("overview") != null) movieBean.setOverview(movie.get("overview").toString());
+        if(movie.get("popularity") != null) movieBean.setPopularity(Double.parseDouble(movie.get("popularity").toString()));
+        if(movie.get("poster_path") != null) movieBean.setPosterPath(movie.get("poster_path").toString());
+        if(movie.get("release_date") != null) movieBean.setReleaseDate(Date.valueOf(movie.get("release_date").toString()));
+        if(movie.get("title") != null) movieBean.setTitle(movie.get("title").toString());
+        if(movie.get("vote_average") != null) movieBean.setVoteAverage(Double.parseDouble(movie.get("vote_average").toString()));
+        if(movie.get("vote_count") != null) movieBean.setVoteCount(Integer.valueOf(movie.get("vote_count").toString()));
     }
 }
