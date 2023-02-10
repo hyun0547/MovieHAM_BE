@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 
 /**
  * Mapping table for Movie and People
@@ -23,11 +24,14 @@ public class MoviePeople {
     public MoviePeople(Movie movie, People people){
         this.movie = movie;
         this.people = people;
-        this.moviePeopleId = String.valueOf(movie.getMovieId()) + String.valueOf(people.getPeopleId());
+        this.moviePeopleId = new BigInteger(String.valueOf(movie.getMovieId()) + String.valueOf(people.getPeopleId()));
     }
 
     @Id
-    private String moviePeopleId;
+    private BigInteger moviePeopleId;
+    private Integer order;
+    private String character;
+    private String department;
 
     @ManyToOne
     @JoinColumn(name = "movie_id")

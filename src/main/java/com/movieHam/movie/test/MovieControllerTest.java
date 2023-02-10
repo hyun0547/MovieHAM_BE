@@ -51,16 +51,11 @@ public class MovieControllerTest {
 
             Map<String, Object> movieInfo = MapHandler.getMovieInfo((List<Map<String, Object>>) resultMap.get("results"));
 
-//            ArrayList<MovieVO> movieList = (ArrayList<MovieVO>) movieInfo.get("movieList");
-//            ArrayList<PeopleVO> peopleList = (ArrayList<PeopleVO>) movieInfo.get("peopleList");
-//            ArrayList<DirectorVO> directorList = (ArrayList<DirectorVO>) movieInfo.get("directorList");
-//            ArrayList<MoviePeople> moviePeopleList = (ArrayList<MoviePeople>) movieInfo.get("directorList");
-//            ArrayList<MovieDirector> movieDirectorList = (ArrayList<MovieDirector>) movieInfo.get("directorList");
+            movieService.saveAll((ArrayList<Movie>) movieInfo.get("movieList"));
+            peopleService.saveAll((ArrayList<People>) movieInfo.get("peopleList"));
+            moviePeopleService.saveAll((ArrayList<MoviePeople>) movieInfo.get("moviePeopleList"));
 
-//            movieService.saveAll((ArrayList<Movie>) movieInfo.get("movieList"));
-//            peopleService.saveAll((ArrayList<People>) movieInfo.get("peopleList"));
-//
-//            return movieInfo.toString();
+            return movieInfo.toString();
 
         }catch(Exception e){
             e.printStackTrace();

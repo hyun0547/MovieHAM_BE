@@ -42,9 +42,9 @@ CREATE TABLE tn_people
     `known_for_department` VARCHAR(256) NULL COMMENT '',
     `name` VARCHAR(256) NULL COMMENT '이름',
     `original_name` VARCHAR(256) NULL COMMENT '이름',
-    `popularity` VARCHAR(256) NULL COMMENT '인지도',
+    `popularity` DOUBLE NULL COMMENT '인지도',
     `profile_path` VARCHAR(512) NULL COMMENT '프로필 이미지',
-    `job` VARCHAR (256) NULL COMMENT '직업'
+    `job` VARCHAR (256) NULL COMMENT '직업',
 ) charset=utf8 COLLATE=utf8_general_ci;
 
 

@@ -20,9 +20,9 @@ public class People {
     private Integer gender;
     private String knownForDepartment;
     private String name;
-    private String original_name;
-    private String popularity;
-    private String profile_path;
+    private String originalName;
+    private double popularity;
+    private String profilePath;
     private String job;
 
     @OneToMany(mappedBy = "people")

@@ -1,5 +1,6 @@
 package util.parser.map;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.movieHam.externalApi.movie.TmdbApiService;
 import com.movieHam.movie.service.people.People;
 import com.movieHam.movie.service.mapper.moviePeople.MoviePeople;
@@ -37,7 +38,6 @@ public class MapHandler {
             for(Map<String, Object> movie : movieInfoList){
 
                 Movie movieBean = new Movie();
-
                 setMovieData(movieBean, movie);
 
                 Map<String,String> paramMap = new HashMap<String,String>(){
@@ -46,33 +46,26 @@ public class MapHandler {
                         put("page", "1");
                     }
                 };
-
                 Map<String,Object> peopleData = (Map<String, Object>) TmdbApiService.tmdbPeoplesFromMovieId(paramMap, movieBean.getMovieId());
                 ArrayList<Map<String, Object>> peopleInfoList = (ArrayList<Map<String, Object>>) peopleData.get("cast");
                 peopleInfoList.addAll((ArrayList<Map<String, Object>>) peopleData.get("crew"));
 
                 if(peopleInfoList != null && peopleInfoList.size() > 0){
-
                     for(Map<String,Object> people : peopleInfoList){
-
                         People peopleBean = new People();
+                        setPeopleData(peopleBean, people);
 
-                        if(!CommonUtil.checkNullEmpty(people.get("peopleId"), "").equals("")) {
-                            peopleBean.setPeopleId((Integer) people.get("peopleId"));
-                        }
-
-                        if(peopleBean.getPeopleId() != null){
+                        if(!"".equals(CommonUtil.checkNullEmpty(peopleBean.getPeopleId(), ""))){
                             peopleList.add(peopleBean);
 
                             MoviePeople moviePeople = new MoviePeople(movieBean, peopleBean);
+                            moviePeople.setCharacter((String) people.get("character"));
+                            moviePeople.setDepartment((String) people.get("department"));
+                            moviePeople.setOrder((Integer) people.get("order"));
                             moviePeopleList.add(moviePeople);
                         }
                     }
                 }
-
-                Map<String,Object> directorData = (Map<String, Object>) movie.get("directors");
-                ArrayList<Map<String, Object>> directorInfoList = (ArrayList<Map<String, Object>>) directorData.get("director");
-
 
                 movieList.add(movieBean);
             }
@@ -104,5 +97,17 @@ public class MapHandler {
         if(movie.get("title") != null) movieBean.setTitle(movie.get("title").toString());
         if(movie.get("vote_average") != null) movieBean.setVoteAverage(Double.parseDouble(movie.get("vote_average").toString()));
         if(movie.get("vote_count") != null) movieBean.setVoteCount(Integer.valueOf(movie.get("vote_count").toString()));
+    }
+
+    public static void setPeopleData(People peopleBean, Map<String,Object> people){
+        if(!CommonUtil.checkNullEmpty(people.get("id"), "").equals("")) peopleBean.setPeopleId((Integer) people.get("id"));
+        if(!CommonUtil.checkNullEmpty(people.get("adult"), "").equals("")) peopleBean.setAdult((Boolean) people.get("adult"));
+        if(!CommonUtil.checkNullEmpty(people.get("gender"), "").equals("")) peopleBean.setGender((Integer) people.get("gender"));
+        if(!CommonUtil.checkNullEmpty(people.get("known_for_department"), "").equals("")) peopleBean.setKnownForDepartment((String) people.get("known_for_department"));
+        if(!CommonUtil.checkNullEmpty(people.get("name"), "").equals("")) peopleBean.setName((String) people.get("name"));
+        if(!CommonUtil.checkNullEmpty(people.get("original_name"), "").equals("")) peopleBean.setOriginalName((String) people.get("original_name"));
+        if(!CommonUtil.checkNullEmpty(people.get("popularity"), "").equals("")) peopleBean.setPopularity((Double) people.get("popularity"));
+        if(!CommonUtil.checkNullEmpty(people.get("profile_path"), "").equals("")) peopleBean.setProfilePath((String) people.get("profile_path"));
+        if(!CommonUtil.checkNullEmpty(people.get("job"), "").equals("")) peopleBean.setJob((String) people.get("job"));
     }
 }
