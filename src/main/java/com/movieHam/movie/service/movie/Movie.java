@@ -1,8 +1,7 @@
 package com.movieHam.movie.service.movie;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.movieHam.movie.service.genre.Genre;
-import com.movieHam.movie.service.mapper.moviePeople.MovieGenre;
+import com.movieHam.movie.service.mapper.movieGenre.MovieGenre;
 import com.movieHam.movie.service.mapper.moviePeople.MoviePeople;
 import lombok.Getter;
 import lombok.Setter;

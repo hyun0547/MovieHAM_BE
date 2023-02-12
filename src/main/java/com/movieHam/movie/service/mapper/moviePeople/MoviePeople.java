@@ -24,11 +24,12 @@ public class MoviePeople {
     public MoviePeople(Movie movie, People people){
         this.movie = movie;
         this.people = people;
-        this.moviePeopleId = new BigInteger(String.valueOf(movie.getMovieId()) + String.valueOf(people.getPeopleId()));
+        this.moviePeopleId = String.valueOf(movie.getMovieId()) + "_" + String.valueOf(people.getPeopleId());
     }
 
     @Id
-    private BigInteger moviePeopleId;
+    private String moviePeopleId;
+
     private Integer order;
     private String character;
     private String department;

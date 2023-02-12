@@ -1,7 +1,8 @@
 package com.movieHam.movie.test;
 
-import com.movieHam.externalApi.movie.ApiConnection;
 import com.movieHam.externalApi.movie.TmdbApiService;
+import com.movieHam.movie.service.mapper.movieGenre.MovieGenre;
+import com.movieHam.movie.service.mapper.movieGenre.MovieGenreService;
 import com.movieHam.movie.service.people.PeopleService;
 import com.movieHam.movie.service.people.People;
 import com.movieHam.movie.service.mapper.moviePeople.MoviePeople;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import util.parser.map.MapHandler;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -30,36 +30,45 @@ public class MovieControllerTest {
     @Autowired
     MoviePeopleService moviePeopleService;
 
+    @Autowired
+    MovieGenreService movieGenreService;
+
     @GetMapping(value="/movie/init", produces = "application/json; charset=UTF-8")
     public String init(String startDate){
 
         TmdbApiService tmdbApi = new TmdbApiService();
+        int count = 1;
+        int totalPages = 1;
 
-        Map<String,String> paramMap = new HashMap<String,String>(){
-            {
-                put("language", "ko");
-                put("page", "1");
+        while(count <= totalPages){
+            int finalCount = count;
+            Map<String,String> paramMap = new HashMap<String,String>(){
+                {
+                    put("language", "ko");
+                    put("page", String.valueOf(finalCount));
+                }
+            };
+
+            try {
+
+                Map<String,Object> resultMap = tmdbApi.tmdbNowPlayingMovies(paramMap);
+
+//                totalPages = totalPages == 2 ? (int) resultMap.get("total_pages") : totalPages;
+
+                Map<String, Object> movieInfo = MapHandler.getMovieInfo((List<Map<String, Object>>) resultMap.get("results"));
+
+                movieService.saveAll((ArrayList<Movie>) movieInfo.get("movieList"));
+                peopleService.saveAll((ArrayList<People>) movieInfo.get("peopleList"));
+                moviePeopleService.saveAll((ArrayList<MoviePeople>) movieInfo.get("moviePeopleList"));
+                movieGenreService.saveAll((ArrayList<MovieGenre>) movieInfo.get("movieGenreList"));
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }finally {
+                count++;
             }
-        };
-
-        try {
-
-            Map<String,Object> resultMap = tmdbApi.tmdbNowPlayingMovies(paramMap);
-
-            resultMap.get("total_pages");
-            resultMap.get("total_results");
-
-            Map<String, Object> movieInfo = MapHandler.getMovieInfo((List<Map<String, Object>>) resultMap.get("results"));
-
-            movieService.saveAll((ArrayList<Movie>) movieInfo.get("movieList"));
-            peopleService.saveAll((ArrayList<People>) movieInfo.get("peopleList"));
-            moviePeopleService.saveAll((ArrayList<MoviePeople>) movieInfo.get("moviePeopleList"));
-
-            return movieInfo.toString();
-
-        }catch(Exception e){
-            e.printStackTrace();
         }
+
         return null;
     }
 

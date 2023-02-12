@@ -15,7 +15,6 @@ public class People {
 
     @Id
     private Integer peopleId;
-
     private boolean adult;
     private Integer gender;
     private String knownForDepartment;

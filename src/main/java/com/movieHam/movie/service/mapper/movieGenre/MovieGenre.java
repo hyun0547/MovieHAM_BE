@@ -1,4 +1,4 @@
-package com.movieHam.movie.service.mapper.moviePeople;
+package com.movieHam.movie.service.mapper.movieGenre;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -22,7 +22,7 @@ public class MovieGenre {
     public MovieGenre(Movie movie, Genre genre){
         this.movie = movie;
         this.genre = genre;
-        this.movieGenreId = String.valueOf(movie.getMovieId()) + String.valueOf(genre.getGenreId());
+        this.movieGenreId = String.valueOf(movie.getMovieId()) + "_" + String.valueOf(genre.getGenreId());
     }
 
     @Id

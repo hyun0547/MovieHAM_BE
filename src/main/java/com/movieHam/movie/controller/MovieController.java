@@ -1,5 +1,8 @@
 package com.movieHam.movie.controller;
 
+import com.movieHam.movie.service.genre.Genre;
+import com.movieHam.movie.service.genre.GenreService;
+import com.movieHam.movie.service.mapper.movieGenre.MovieGenre;
 import com.movieHam.movie.service.people.PeopleService;
 import com.movieHam.movie.service.people.People;
 import com.movieHam.movie.service.mapper.moviePeople.MoviePeople;
@@ -27,6 +30,9 @@ public class MovieController {
     @Autowired
     PeopleService peopleService;
 
+    @Autowired
+    GenreService genreService;
+
     @GetMapping(value="/movieHam/api/movie/search/{searchType}", produces = "application/json; charset=UTF-8")
     public Map<String,Object> search(HttpSession session, @PathVariable String searchType,
                                      String keywords, String required,
@@ -45,7 +51,7 @@ public class MovieController {
 
         try {
 
-            Set<MovieDTO> resultList = new LinkedHashSet<>();
+            Set<MovieDTO> resultSet = new LinkedHashSet<>();
 
             if(CommonUtil.checkNullEmpty(searchType, "").contains("people")){
                 List<People> peopleList = peopleService.search(searchType, keywords);
@@ -53,20 +59,29 @@ public class MovieController {
                     if(people.getMoviePeople() != null){
                         for(MoviePeople moviePeople : people.getMoviePeople()){
                             MovieDTO movieDTO = new MovieDTO(moviePeople.getMovie());
-                            resultList.add(movieDTO);
+                            resultSet.add(movieDTO);
                         }
                     }
                 }
 
+            }else if(CommonUtil.checkNullEmpty(searchType, "").contains("genre")){
+                List<Genre> genreList = genreService.search("name", keywords, pageIndex, countPerPage);
+                for(Genre genre : genreList){
+                    if(genre.getMovieGenre() != null){
+                        for(MovieGenre movieGenre : genre.getMovieGenre()){
+                            MovieDTO movieDTO = new MovieDTO(movieGenre.getMovie());
+                            resultSet.add(movieDTO);
+                        }
+                    }
+                }
             }else{
                 List<Movie> movieList = movieService.search(searchType, keywords, required, pageIndex, countPerPage);
                 for(Movie movie : movieList){
                     MovieDTO movieDTO = new MovieDTO(movie);
-                    resultList.add(movieDTO);
+                    resultSet.add(movieDTO);
                 }
             }
 
-            Set<MovieDTO> resultSet = new LinkedHashSet<>(resultList);
             result = new HashMap<>(){{
                 put("resultList", resultSet);
             }};

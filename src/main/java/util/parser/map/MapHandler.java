@@ -1,7 +1,8 @@
 package util.parser.map;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.movieHam.externalApi.movie.TmdbApiService;
+import com.movieHam.movie.service.genre.Genre;
+import com.movieHam.movie.service.mapper.movieGenre.MovieGenre;
 import com.movieHam.movie.service.people.People;
 import com.movieHam.movie.service.mapper.moviePeople.MoviePeople;
 import com.movieHam.movie.service.movie.Movie;
@@ -30,9 +31,10 @@ public class MapHandler {
 
     public static Map<String,Object> getMovieInfo(List<Map<String,Object>> movieInfoList){
 
-        ArrayList<Movie> movieList = new ArrayList<>();
-        ArrayList<People> peopleList = new ArrayList<>();
-        ArrayList<MoviePeople> moviePeopleList = new ArrayList<>();
+        List<Movie> movieList = new ArrayList<>();
+        List<People> peopleList = new ArrayList<>();
+        List<MoviePeople> moviePeopleList = new ArrayList<>();
+        List<MovieGenre> movieGenreList = new ArrayList<>();
 
         try {
             for(Map<String, Object> movie : movieInfoList){
@@ -46,6 +48,7 @@ public class MapHandler {
                         put("page", "1");
                     }
                 };
+
                 Map<String,Object> peopleData = (Map<String, Object>) TmdbApiService.tmdbPeoplesFromMovieId(paramMap, movieBean.getMovieId());
                 ArrayList<Map<String, Object>> peopleInfoList = (ArrayList<Map<String, Object>>) peopleData.get("cast");
                 peopleInfoList.addAll((ArrayList<Map<String, Object>>) peopleData.get("crew"));
@@ -67,6 +70,16 @@ public class MapHandler {
                     }
                 }
 
+                List<Integer> genreList = (List<Integer>) movie.get("genre_ids");
+                if(genreList != null && genreList.size() > 0){
+                    for(Integer genre : genreList){
+                        Genre genreBean = new Genre();
+                        genreBean.setGenreId(genre);
+
+                        movieGenreList.add(new MovieGenre(movieBean, genreBean));
+                    }
+                }
+
                 movieList.add(movieBean);
             }
             Map<String, Object> movieInfo = new HashMap<>(){{
@@ -74,6 +87,7 @@ public class MapHandler {
                 put("movieList", movieList);
                 put("peopleList", peopleList);
                 put("moviePeopleList", moviePeopleList);
+                put("movieGenreList", movieGenreList);
 
             }};
             return movieInfo;

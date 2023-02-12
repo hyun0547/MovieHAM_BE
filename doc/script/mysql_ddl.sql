@@ -1,7 +1,9 @@
+drop database movie_ham;
+CREATE DATABASE movie_ham;
 USE movie_ham;
 CREATE TABLE tn_movie
 (
-    `movie_id` BIGINT not null primary key,
+    `movie_id` INT not null primary key,
     `adult` BOOLEAN DEFAULT FALSE,
     `backdrop_path` VARCHAR(512) NULL,
     `original_language` VARCHAR(512) NULL,
@@ -25,8 +27,8 @@ values (27,'공포'), (10402,'음악'), (9648,'미스터리'), (10749,'로맨스
 
 CREATE TABLE tm_movie_genre
 (
-    `movie_genre_id` BIGINT NOT NULL PRIMARY KEY,
-    `movie_id` BIGINT,
+    `movie_genre_id` VARCHAR(128) NOT NULL PRIMARY KEY,
+    `movie_id` INT,
     `genre_id` INT,
     FOREIGN KEY (movie_id)
         REFERENCES tn_movie(movie_id) ON UPDATE CASCADE,
@@ -36,7 +38,7 @@ CREATE TABLE tm_movie_genre
 
 CREATE TABLE tn_people
 (
-    `people_id`  BIGINT  NOT NULL PRIMARY KEY COMMENT '배우코드',
+    `people_id`  INT  NOT NULL PRIMARY KEY COMMENT '배우코드',
     `adult` BOOLEAN NULL COMMENT '',
     `gender` TINYINT NULL COMMENT '성별',
     `known_for_department` VARCHAR(256) NULL COMMENT '',
@@ -44,25 +46,22 @@ CREATE TABLE tn_people
     `original_name` VARCHAR(256) NULL COMMENT '이름',
     `popularity` DOUBLE NULL COMMENT '인지도',
     `profile_path` VARCHAR(512) NULL COMMENT '프로필 이미지',
-    `job` VARCHAR (256) NULL COMMENT '직업',
+    `job` VARCHAR (256) NULL COMMENT '직업'
 ) charset=utf8 COLLATE=utf8_general_ci;
-
 
 create table tm_movie_people
 (
-    `movie_people_id` BIGINT not null primary key,
-    `people_id` BIGINT null,
-    `movie_id` BIGINT null,
+    `movie_people_id` VARCHAR(128) not null primary key,
     `order` INT NULL COMMENT '출력순서',
     `character` VARCHAR(512) NULL COMMENT '극중 명',
     `department` VARCHAR(256) NULL COMMENT '담당',
+    `movie_id` INT not null,
+    `people_id` INT not null,
     FOREIGN KEY (people_id)
         REFERENCES tn_people(people_id) ON UPDATE CASCADE,
     FOREIGN KEY (movie_id)
         REFERENCES tn_movie(movie_id) ON UPDATE CASCADE
 ) charset=utf8 COLLATE=utf8_general_ci;
-
-
 
 CREATE TABLE tn_user
 (
@@ -80,7 +79,7 @@ CREATE TABLE tn_user
 CREATE TABLE tn_wish
 (
     `USER_ID`         VARCHAR(100) NOT NULL COMMENT '',
-    `movie_id`           VARCHAR(100) NOT NULL COMMENT '',
+    `movie_id`           INT NOT NULL COMMENT '',
     `RATING`          VARCHAR(5)  NULL COMMENT '',
     `REG_DATE`        VARCHAR(100) NOT NULL COMMENT '',
     `MOD_DATE`        VARCHAR(100) NULL COMMENT '',

@@ -1,8 +1,7 @@
 package com.movieHam.movie.service.genre;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.movieHam.movie.service.mapper.moviePeople.MovieGenre;
-import com.movieHam.movie.service.mapper.moviePeople.MoviePeople;
+import com.movieHam.movie.service.mapper.movieGenre.MovieGenre;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,7 +20,7 @@ public class Genre {
     @Id
     private Integer genreId;                // 장르아이디
 
-    private String genreNm;                // 장르명
+    private String name;                // 장르명
 
     @OneToMany(mappedBy = "genre")
     @JsonBackReference
