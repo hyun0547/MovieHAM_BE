@@ -53,32 +53,43 @@ public class MovieController {
 
             Set<MovieDTO> resultSet = new LinkedHashSet<>();
 
-            if(CommonUtil.checkNullEmpty(searchType, "").contains("people")){
-                List<People> peopleList = peopleService.search(searchType, keywords);
-                for(People people : peopleList){
-                    if(people.getMoviePeople() != null){
-                        for(MoviePeople moviePeople : people.getMoviePeople()){
-                            MovieDTO movieDTO = new MovieDTO(moviePeople.getMovie());
+            if(searchType != null){
+                switch (searchType){
+                    case "people":
+                        List<People> peopleList = peopleService.search(searchType, keywords);
+                        for(People people : peopleList){
+                            if(people.getMoviePeople() != null){
+                                for(MoviePeople moviePeople : people.getMoviePeople()){
+                                    MovieDTO movieDTO = new MovieDTO(moviePeople.getMovie());
+                                    resultSet.add(movieDTO);
+                                }
+                            }
+                        }
+                        break;
+                    case "genre":
+                        List<Genre> genreList = genreService.search("name", keywords, pageIndex, countPerPage);
+                        for(Genre genre : genreList){
+                            if(genre.getMovieGenre() != null){
+                                for(MovieGenre movieGenre : genre.getMovieGenre()){
+                                    MovieDTO movieDTO = new MovieDTO(movieGenre.getMovie());
+                                    resultSet.add(movieDTO);
+                                }
+                            }
+                        }
+                        break;
+                    case "recent":
+                        List<Movie> movieList = movieService.recent(pageIndex, countPerPage);
+                        for(Movie movie : movieList){
+                            MovieDTO movieDTO = new MovieDTO(movie);
                             resultSet.add(movieDTO);
                         }
-                    }
-                }
-
-            }else if(CommonUtil.checkNullEmpty(searchType, "").contains("genre")){
-                List<Genre> genreList = genreService.search("name", keywords, pageIndex, countPerPage);
-                for(Genre genre : genreList){
-                    if(genre.getMovieGenre() != null){
-                        for(MovieGenre movieGenre : genre.getMovieGenre()){
-                            MovieDTO movieDTO = new MovieDTO(movieGenre.getMovie());
+                        break;
+                    default:
+                        movieList = movieService.search(searchType, keywords, required, pageIndex, countPerPage);
+                        for(Movie movie : movieList){
+                            MovieDTO movieDTO = new MovieDTO(movie);
                             resultSet.add(movieDTO);
                         }
-                    }
-                }
-            }else{
-                List<Movie> movieList = movieService.search(searchType, keywords, required, pageIndex, countPerPage);
-                for(Movie movie : movieList){
-                    MovieDTO movieDTO = new MovieDTO(movie);
-                    resultSet.add(movieDTO);
                 }
             }
 

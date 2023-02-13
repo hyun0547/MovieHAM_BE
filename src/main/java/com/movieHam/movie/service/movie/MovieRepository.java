@@ -11,9 +11,13 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     <S extends Movie> List<S> saveAll(Iterable<S> movieList);
 
+    List<Movie> findAllByOrderByReleaseDateDesc();
+    List<Movie> findAllByOrderByReleaseDateDesc(Pageable pageable);
+
     List<Movie> findByReleaseDateContainsAndPosterPathIsNotNull(String queryParam);
     List<Movie> findByReleaseDateContainsAndPosterPathIsNotNull(String queryParam, Pageable pageable);
 
+    List<Movie> findByTitleContains(String queryParam, Pageable pageable);
     List<Movie> findByTitleContainsAndPosterPathIsNotNull(String queryParam);
     List<Movie> findByTitleContainsAndPosterPathIsNotNull(String queryParam, Pageable pageable);
 

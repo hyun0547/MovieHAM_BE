@@ -46,4 +46,8 @@ public class MovieService {
         movieRepository.flush();
     }
 
+    public List<Movie> recent(Integer pageIndex, Integer countPerPage) {
+        PageRequest pageRequest = PageRequest.of(pageIndex, countPerPage);
+        return movieRepository.findAllByOrderByReleaseDateDesc(pageRequest);
+    }
 }
