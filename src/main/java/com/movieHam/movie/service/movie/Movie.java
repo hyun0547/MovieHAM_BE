@@ -39,4 +39,12 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     @JsonManagedReference
     private List<MovieGenre> movieGenre;
+
+    public String getPosterPath(){
+        return "https://image.tmdb.org/t/p/original" + posterPath;
+    }
+
+    public String getBackdropPath(){
+        return "https://image.tmdb.org/t/p/original" + backdropPath;
+    }
 }
