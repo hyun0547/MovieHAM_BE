@@ -1,4 +1,4 @@
-package com.movieHam.movie.controller;
+package com.movieHam.movie.controller.wish;
 
 import com.movieHam.movie.service.wish.WishService;
 import com.movieHam.movie.service.movie.MovieService;

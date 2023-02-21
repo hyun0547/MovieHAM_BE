@@ -18,11 +18,11 @@ public class MovieService {
     @Autowired
     MovieRepository movieRepository;
 
-    public List<Movie> search(String searchType, String keyword, String required,
+    public List<Movie> search(String category, String order, String orderType,
                               Integer pageIndex, Integer countPerPage) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
-        String firstUpperWord = StringHandler.firstLetterUpperCase(searchType);
-        required = "".equals(CommonUtil.checkNullEmpty(required,"")) ? "" : "And" + StringHandler.firstLetterUpperCase(required) + "IsNotNull";
+        String firstUpperWord = StringHandler.firstLetterUpperCase(category);
+        order = "OrderBy" + order + StringHandler.firstLetterUpperCase(orderType);
 
         Class repositoryBean = movieRepository.getClass();
         List<Movie> resultList;
@@ -30,12 +30,12 @@ public class MovieService {
         Method m = null;
 
         if(pageIndex != null && countPerPage != null){
-            m = repositoryBean.getMethod("findBy" + firstUpperWord + "Contains" + required, String.class, Pageable.class);
+            m = repositoryBean.getMethod("findBy" + firstUpperWord + "Contains" + order, String.class, Pageable.class);
             pageRequest = PageRequest.of(pageIndex, countPerPage);
-            resultList = (List<Movie>) m.invoke(movieRepository, keyword, pageRequest);
+            resultList = (List<Movie>) m.invoke(movieRepository, category, pageRequest);
         }else{
-            m = repositoryBean.getMethod("findBy" + firstUpperWord + "Contains" + required, String.class);
-            resultList = (List<Movie>) m.invoke(movieRepository, keyword);
+            m = repositoryBean.getMethod("findBy" + firstUpperWord + "Contains" + order, String.class);
+            resultList = (List<Movie>) m.invoke(movieRepository, category);
         }
 
         return resultList;
@@ -44,10 +44,5 @@ public class MovieService {
     public void saveAll(List<Movie> movieBeanList) {
         movieRepository.saveAll(movieBeanList);
         movieRepository.flush();
-    }
-
-    public List<Movie> recent(Integer pageIndex, Integer countPerPage) {
-        PageRequest pageRequest = PageRequest.of(pageIndex, countPerPage);
-        return movieRepository.findAllByOrderByReleaseDateDesc(pageRequest);
     }
 }
