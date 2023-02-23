@@ -1,6 +1,5 @@
 package com.movieHam.movie.service.movie;
 
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.RepositoryDefinition;
@@ -11,20 +10,17 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     <S extends Movie> List<S> saveAll(Iterable<S> movieList);
 
-    List<Movie> findAllByOrderByReleaseDateDesc();
-    List<Movie> findAllByOrderByReleaseDateDesc(Pageable pageable);
-
-    List<Movie> findByReleaseDateContainsAndPosterPathIsNotNull(String queryParam);
-    List<Movie> findByReleaseDateContainsAndPosterPathIsNotNull(String queryParam, Pageable pageable);
-
+    List<Movie> findByMovieIdContains(String queryParam, Pageable pageable);
+    List<Movie> findByAdultContains(String queryParam, Pageable pageable);
+    List<Movie> findByBackdropPathContains(String queryParam, Pageable pageable);
+    List<Movie> findByOriginalLanguageContains(String queryParam, Pageable pageable);
+    List<Movie> findByOriginalTitleContains(String queryParam, Pageable pageable);
+    List<Movie> findByOverviewContains(String queryParam, Pageable pageable);
+    List<Movie> findByPopularityContains(String queryParam, Pageable pageable);
+    List<Movie> findByPosterPathContains(String queryParam, Pageable pageable);
+    List<Movie> findByReleaseDateContains(String queryParam, Pageable pageable);
     List<Movie> findByTitleContains(String queryParam, Pageable pageable);
-    List<Movie> findByTitleContainsAndPosterPathIsNotNull(String queryParam);
-    List<Movie> findByTitleContainsAndPosterPathIsNotNull(String queryParam, Pageable pageable);
-
-    List<Movie> findByVoteAverageContainsAndPosterPathIsNotNull(String queryParam);
-    List<Movie> findByVoteAverageContainsAndPosterPathIsNotNull(String queryParam, Pageable pageable);
-
-    List<Movie> findByOriginalLanguageContainsAndPosterPathIsNotNull(String queryParam);
-    List<Movie> findByOriginalLanguageContainsAndPosterPathIsNotNull(String queryParam, Pageable pageable);
+    List<Movie> findByVoteAverageContains(String queryParam, Pageable pageable);
+    List<Movie> findByVoteCountContains(String queryParam, Pageable pageable);
 
 }

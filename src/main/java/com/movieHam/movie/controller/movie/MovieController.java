@@ -33,9 +33,9 @@ public class MovieController {
     @Autowired
     GenreService genreService;
 
-    @GetMapping(value="/movieHam/api/movie/list/{category}/{order}", produces = "application/json; charset=UTF-8")
-    public Map<String,Object> search(HttpSession session, @PathVariable String category, @PathVariable String order,
-                                     String orderType, Integer pageIndex, Integer countPerPage
+    @GetMapping(value="/movie/list/{group}/{order}", produces = "application/json; charset=UTF-8")
+    public Map<String,Object> search(HttpSession session, @PathVariable String group, @PathVariable String order,
+                                     String groupKeyword, String orderType, Integer pageIndex, Integer countPerPage
     ) {
 
         Map<String,Object> result;
@@ -44,7 +44,7 @@ public class MovieController {
 
             Set<MovieDTO> resultSet = new LinkedHashSet<>();
 
-            List<Movie> movieList = movieService.search(category, order, CommonUtil.checkNullEmpty(orderType, "Desc"), pageIndex, countPerPage);
+            List<Movie> movieList = movieService.search(group, groupKeyword, order, orderType, pageIndex, countPerPage);
             for(Movie movie : movieList){
                 MovieDTO movieDTO = new MovieDTO(movie);
                 resultSet.add(movieDTO);
