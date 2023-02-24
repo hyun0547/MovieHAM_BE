@@ -3,6 +3,7 @@ package com.movieHam.movie.service.movie;
 import org.apache.commons.text.CaseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -30,20 +31,21 @@ public class MovieService {
         Method m;
 
         String methodName = "";
-        if("All".equals(groupFirstUpper)){
-            methodName = "findAll";
-            m = repositoryBean.getMethod(methodName, Pageable.class);
-        }else{
-            methodName = "findBy" + groupFirstUpper + "Contains";
-            m = repositoryBean.getMethod(methodName, String.class, Pageable.class);
-        }
-
-
         Sort sort = Sort.by(order);
 
         PageRequest pageRequest = PageRequest.of(CommonUtil.checkNullEmpty(pageIndex, 0), CommonUtil.checkNullEmpty(countPerPage, 100), "asc".equals(orderType)?sort.ascending():sort.descending());
+        List<Movie> resultList=null;
 
-        List<Movie> resultList = (List<Movie>) m.invoke(movieRepository, groupKeywordFirstUpper, pageRequest);
+        if("All".equals(groupFirstUpper)){
+            methodName = "findAll";
+            m = repositoryBean.getMethod(methodName, Pageable.class);
+            Page<Movie> tmpList = (Page<Movie>) m.invoke(movieRepository, pageRequest);
+            resultList = tmpList.getContent();
+        }else{
+            methodName = "findBy" + groupFirstUpper + "Contains";
+            m = repositoryBean.getMethod(methodName, String.class, Pageable.class);
+            resultList = (List<Movie>) m.invoke(movieRepository, groupKeywordFirstUpper, pageRequest);
+        }
 
         return resultList;
     }

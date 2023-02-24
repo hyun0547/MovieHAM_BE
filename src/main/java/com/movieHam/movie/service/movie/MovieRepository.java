@@ -1,5 +1,6 @@
 package com.movieHam.movie.service.movie;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.RepositoryDefinition;
@@ -10,6 +11,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     <S extends Movie> List<S> saveAll(Iterable<S> movieList);
 
+    Page<Movie> findAll(Pageable pageable);
     List<Movie> findByMovieIdContains(String queryParam, Pageable pageable);
     List<Movie> findByAdultContains(String queryParam, Pageable pageable);
     List<Movie> findByBackdropPathContains(String queryParam, Pageable pageable);
