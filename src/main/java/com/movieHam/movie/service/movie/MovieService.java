@@ -21,7 +21,7 @@ public class MovieService {
     @Autowired
     MovieRepository movieRepository;
 
-    public List<Movie> search(String group, String groupKeyword, String order, String orderType,
+    public List<Movie> searchList(String group, String groupKeyword, String order, String orderType,
                               Integer pageIndex, Integer countPerPage) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
         String groupFirstUpper = StringHandler.firstLetterUpperCase(group);

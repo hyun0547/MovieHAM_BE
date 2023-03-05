@@ -44,7 +44,7 @@ public class MovieController {
 
             Set<MovieDTO> resultSet = new LinkedHashSet<>();
 
-            List<Movie> movieList = movieService.search(group, groupKeyword, order, orderType, pageIndex, countPerPage);
+            List<Movie> movieList = movieService.searchList(group, groupKeyword, order, orderType, pageIndex, countPerPage);
             for(Movie movie : movieList){
                 MovieDTO movieDTO = new MovieDTO(movie);
                 resultSet.add(movieDTO);

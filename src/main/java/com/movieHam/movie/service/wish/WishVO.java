@@ -6,12 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Data
-@Entity(name= "TN_WISH")
+@Entity(name= "tn_wish")
 public class WishVO {
 
     @Id
     private String userId;
-    private String docid;
+    private Integer movieId;
     private String rating;
     private String regDate;
     private String modDate;
