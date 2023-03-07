@@ -78,15 +78,17 @@ CREATE TABLE tn_user
 
 CREATE TABLE tn_wish
 (
-    `USER_ID`         VARCHAR(100) NOT NULL COMMENT '',
-    `movie_id`           INT NOT NULL COMMENT '',
+    `user_id`         bigint NOT NULL COMMENT '',
+    `movie_id`        INT NOT NULL COMMENT '',
     `RATING`          VARCHAR(5)  NULL COMMENT '',
-    `REG_DATE`        VARCHAR(100) NOT NULL COMMENT '',
-    `MOD_DATE`        VARCHAR(100) NULL COMMENT '',
+    `REG_DATE`        date NOT NULL COMMENT '',
+    `MOD_DATE`        date NULL COMMENT '',
     `REVIEW`          TEXT NULL COMMENT '',
     `SEEN_YN`         CHAR(2) NOT NULL,
-    #     FOREIGN KEY (USER_ID)
-        #         REFERENCES tn_user(USER_ID) ON UPDATE CASCADE,
+    `WISH_STATUS`     CHAR(2) NOT NULL,
+    primary key (`user_id`, `movie_id`),
+         FOREIGN KEY (USER_ID)
+                 REFERENCES tn_user(USER_ID) ON UPDATE CASCADE,
     FOREIGN KEY (movie_id)
         REFERENCES tn_movie(movie_id) ON UPDATE CASCADE
 ) charset=utf8 COLLATE=utf8_general_ci;

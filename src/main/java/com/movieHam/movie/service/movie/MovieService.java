@@ -1,8 +1,6 @@
 package com.movieHam.movie.service.movie;
 
-import org.apache.commons.text.CaseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -50,8 +48,40 @@ public class MovieService {
         return resultList;
     }
 
+    public List<Movie> searchNotClassifiedList(String group, String groupKeyword, String order, String orderType,
+                                               Integer pageIndex, Integer countPerPage, String userId) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        {
+            String groupFirstUpper = StringHandler.firstLetterUpperCase(group);
+            String groupKeywordFirstUpper = StringHandler.firstLetterUpperCase(CommonUtil.checkNullEmpty(groupKeyword, ""));
+
+            Class repositoryBean = movieRepository.getClass();
+            Method m;
+
+            String methodName = "";
+            Sort sort = Sort.by(order);
+
+            PageRequest pageRequest = PageRequest.of(CommonUtil.checkNullEmpty(pageIndex, 0), CommonUtil.checkNullEmpty(countPerPage, 100), "asc".equals(orderType) ? sort.ascending() : sort.descending());
+            List<Movie> resultList = null;
+
+            if ("All".equals(groupFirstUpper)) {
+                methodName = "findAllNotClassified";
+                m = repositoryBean.getMethod(methodName, Pageable.class, String.class);
+                Page<Movie> tmpList = (Page<Movie>) m.invoke(movieRepository, pageRequest, userId);
+                resultList = tmpList.getContent();
+            } else {
+                methodName = "findBy" + groupFirstUpper + "ContainsNotClassified";
+                m = repositoryBean.getMethod(methodName, String.class, Pageable.class, String.class);
+                resultList = (List<Movie>) m.invoke(movieRepository, groupKeywordFirstUpper, pageRequest, userId);
+            }
+
+            return resultList;
+        }
+    }
+
     public void saveAll(List<Movie> movieBeanList) {
         movieRepository.saveAll(movieBeanList);
         movieRepository.flush();
     }
+
+
 }

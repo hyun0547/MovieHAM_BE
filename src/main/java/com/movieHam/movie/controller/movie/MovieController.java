@@ -12,6 +12,7 @@ import com.movieHam.movie.service.movie.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import util.StringHandler;
 import util.com.CommonUtil;
@@ -34,7 +35,7 @@ public class MovieController {
     GenreService genreService;
 
     @GetMapping(value="/movie/list/{group}/{order}", produces = "application/json; charset=UTF-8")
-    public Map<String,Object> search(HttpSession session, @PathVariable String group, @PathVariable String order,
+    public Map<String,Object> searchList(HttpSession session, @PathVariable String group, @PathVariable String order,
                                      String groupKeyword, String orderType, Integer pageIndex, Integer countPerPage
     ) {
 
@@ -45,6 +46,44 @@ public class MovieController {
             Set<MovieDTO> resultSet = new LinkedHashSet<>();
 
             List<Movie> movieList = movieService.searchList(group, groupKeyword, order, orderType, pageIndex, countPerPage);
+            for(Movie movie : movieList){
+                MovieDTO movieDTO = new MovieDTO(movie);
+                resultSet.add(movieDTO);
+            }
+
+            result = new HashMap<>(){{
+                put("resultList", resultSet);
+            }};
+
+        }catch (NoSuchMethodException e){
+            result = new HashMap<>(){{
+                put("error", "검색형식 오류");
+            }};
+        } catch (InvocationTargetException e) {
+            result = new HashMap<>(){{
+                put("error", e.getMessage());
+            }};
+        } catch (IllegalAccessException e) {
+            result = new HashMap<>(){{
+                put("error", e.getMessage());
+            }};
+        }
+
+        return result;
+    }
+
+    @PostMapping(value="/movie/notClassifiedList/{group}/{order}", produces = "application/json; charset=UTF-8")
+    public Map<String,Object> searchNotClassifiedList(HttpSession session, @PathVariable String group, @PathVariable String order,
+                                     String groupKeyword, String orderType, Integer pageIndex, Integer countPerPage, String userId
+    ) {
+
+        Map<String,Object> result;
+
+        try {
+
+            Set<MovieDTO> resultSet = new LinkedHashSet<>();
+
+            List<Movie> movieList = movieService.searchNotClassifiedList(group, groupKeyword, order, orderType, pageIndex, countPerPage, userId);
             for(Movie movie : movieList){
                 MovieDTO movieDTO = new MovieDTO(movie);
                 resultSet.add(movieDTO);
