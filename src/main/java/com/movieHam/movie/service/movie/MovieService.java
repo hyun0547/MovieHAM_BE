@@ -36,7 +36,7 @@ public class MovieService {
 
         if("All".equals(groupFirstUpper)){
             methodName = "findAll";
-            m = repositoryBean.getMethod(methodName, Pageable.class);
+            m = repositoryBean.getMethod(methodName, String.class, Pageable.class);
             Page<Movie> tmpList = (Page<Movie>) m.invoke(movieRepository, pageRequest);
             resultList = tmpList.getContent();
         }else{
@@ -49,7 +49,7 @@ public class MovieService {
     }
 
     public List<Movie> searchNotClassifiedList(String group, String groupKeyword, String order, String orderType,
-                                               Integer pageIndex, Integer countPerPage, String userId) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+                                               Integer pageIndex, Integer countPerPage, Long userId) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         {
             String groupFirstUpper = StringHandler.firstLetterUpperCase(group);
             String groupKeywordFirstUpper = StringHandler.firstLetterUpperCase(CommonUtil.checkNullEmpty(groupKeyword, ""));
@@ -65,12 +65,11 @@ public class MovieService {
 
             if ("All".equals(groupFirstUpper)) {
                 methodName = "findAllNotClassified";
-                m = repositoryBean.getMethod(methodName, Pageable.class, String.class);
-                Page<Movie> tmpList = (Page<Movie>) m.invoke(movieRepository, pageRequest, userId);
-                resultList = tmpList.getContent();
+                m = repositoryBean.getMethod(methodName, Pageable.class, Long.class);
+                resultList = (List<Movie>) m.invoke(movieRepository, pageRequest, userId);
             } else {
                 methodName = "findBy" + groupFirstUpper + "ContainsNotClassified";
-                m = repositoryBean.getMethod(methodName, String.class, Pageable.class, String.class);
+                m = repositoryBean.getMethod(methodName, String.class, Pageable.class, Long.class);
                 resultList = (List<Movie>) m.invoke(movieRepository, groupKeywordFirstUpper, pageRequest, userId);
             }
 

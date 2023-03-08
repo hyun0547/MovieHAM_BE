@@ -32,48 +32,48 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
             "from tn_movie m left join tn_wish w " +
             "on m.movieId = w.movieId and w.userId = :userId " +
             "where w.movieId is null")
-    Page<Movie> findAllNotClassified(Pageable pageable, String userId);
+    List<Movie> findAllNotClassified(Pageable pageable, Long userId);
 
     @Query("select m " +
             "from tn_movie m left join tn_wish w " +
             "on m.movieId = w.movieId and w.userId = :userId " +
             "where w.movieId is null and m.movieId = :queryParam")
-    List<Movie> findByMovieIdContainsNotClassified(String queryParam, Pageable pageable, String userId);
+    List<Movie> findByMovieIdContainsNotClassified(String queryParam, Pageable pageable, Long userId);
 
     @Query("select m " +
             "from tn_movie m left join tn_wish w " +
             "on m.movieId = w.movieId and w.userId = :userId " +
             "where w.movieId is null and m.adult = :queryParam")
-    List<Movie> findByAdultContainsNotClassified(String queryParam, Pageable pageable, String userId);
+    List<Movie> findByAdultContainsNotClassified(String queryParam, Pageable pageable, Long userId);
 
     @Query("select m " +
             "from tn_movie m left join tn_wish w " +
             "on m.movieId = w.movieId and w.userId = :userId " +
             "where w.movieId is null and m.originalLanguage like %:queryParam%")
-    List<Movie> findByOriginalLanguageContainsNotClassified(String queryParam, Pageable pageable, String userId);
+    List<Movie> findByOriginalLanguageContainsNotClassified(String queryParam, Pageable pageable, Long userId);
 
     @Query("select m " +
             "from tn_movie m left join tn_wish w " +
             "on m.movieId = w.movieId and w.userId = :userId " +
             "where w.movieId is null and m.originalTitle like %:queryParam%")
-    List<Movie> findByOriginalTitleContainsNotClassified(String queryParam, Pageable pageable, String userId);
+    List<Movie> findByOriginalTitleContainsNotClassified(String queryParam, Pageable pageable, Long userId);
 
     @Query("select m " +
             "from tn_movie m left join tn_wish w " +
             "on m.movieId = w.movieId and w.userId = :userId " +
             "where w.movieId is null and m.overview like %:queryParam%")
-    List<Movie> findByOverviewContainsNotClassified(String queryParam, Pageable pageable, String userId);
+    List<Movie> findByOverviewContainsNotClassified(String queryParam, Pageable pageable, Long userId);
 
     @Query("select m " +
             "from tn_movie m left join tn_wish w " +
             "on m.movieId = w.movieId and w.userId = :userId " +
             "where w.movieId is null and m.releaseDate = :queryParam")
-    List<Movie> findByReleaseDateContainsNotClassified(String queryParam, Pageable pageable, String userId);
+    List<Movie> findByReleaseDateContainsNotClassified(String queryParam, Pageable pageable, Long userId);
 
     @Query("select m " +
             "from tn_movie m left join tn_wish w " +
             "on m.movieId = w.movieId and w.userId = :userId " +
             "where w.movieId is null and m.title like %:queryParam%")
-    List<Movie> findByTitleContainsNotClassified(String queryParam, Pageable pageable, String userId);
+    List<Movie> findByTitleContainsNotClassified(String queryParam, Pageable pageable, Long userId);
 
 }

@@ -74,7 +74,7 @@ public class MovieController {
 
     @PostMapping(value="/movie/notClassifiedList/{group}/{order}", produces = "application/json; charset=UTF-8")
     public Map<String,Object> searchNotClassifiedList(HttpSession session, @PathVariable String group, @PathVariable String order,
-                                     String groupKeyword, String orderType, Integer pageIndex, Integer countPerPage, String userId
+                                     String groupKeyword, String orderType, Integer pageIndex, Integer countPerPage, Long userId
     ) {
 
         Map<String,Object> result;
@@ -99,7 +99,7 @@ public class MovieController {
             }};
         } catch (InvocationTargetException e) {
             result = new HashMap<>(){{
-                put("error", e.getMessage());
+                put("error", e.getCause());
             }};
         } catch (IllegalAccessException e) {
             result = new HashMap<>(){{
