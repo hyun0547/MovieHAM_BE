@@ -70,6 +70,12 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
             "where w.movieId is null and m.releaseDate = :queryParam")
     List<Movie> findByReleaseDateContainsNotClassified(String queryParam, Pageable pageable, Long userId);
 
+    @Query(value = "select m " +
+            "from tn_movie m left join tn_wish w " +
+            "on m.movieId = w.movieId and w.userId = :userId " +
+            "where w.movieId is null and date_format(m.releaseDate, '%Y') = :queryParam" , nativeQuery = true)
+    List<Movie> findByReleaseYearContainsNotClassified(String queryParam, Pageable pageable, Long userId);
+
     @Query("select m " +
             "from tn_movie m left join tn_wish w " +
             "on m.movieId = w.movieId and w.userId = :userId " +
