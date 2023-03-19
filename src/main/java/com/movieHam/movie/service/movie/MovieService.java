@@ -19,11 +19,14 @@ public class MovieService {
     @Autowired
     MovieRepository movieRepository;
 
-    public List<Movie> searchList(String group, String groupKeyword, String order, String orderType,
+    public Movie findMovieById(Integer movieId){
+        return movieRepository.findById(movieId).get();
+    }
+
+    public List<Movie> searchList(String group, Object groupKeyword, String order, String orderType,
                               Integer pageIndex, Integer countPerPage) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
         String groupFirstUpper = StringHandler.firstLetterUpperCase(group);
-        String groupKeywordFirstUpper = StringHandler.firstLetterUpperCase(CommonUtil.checkNullEmpty(groupKeyword, ""));
 
         Class repositoryBean = movieRepository.getClass();
         Method m;
@@ -36,23 +39,22 @@ public class MovieService {
 
         if("All".equals(groupFirstUpper)){
             methodName = "findAll";
-            m = repositoryBean.getMethod(methodName, String.class, Pageable.class);
+            m = repositoryBean.getMethod(methodName, Pageable.class);
             Page<Movie> tmpList = (Page<Movie>) m.invoke(movieRepository, pageRequest);
             resultList = tmpList.getContent();
         }else{
             methodName = "findBy" + groupFirstUpper + "Contains";
-            m = repositoryBean.getMethod(methodName, String.class, Pageable.class);
-            resultList = (List<Movie>) m.invoke(movieRepository, groupKeywordFirstUpper, pageRequest);
+            m = repositoryBean.getMethod(methodName, groupKeyword.getClass(), Pageable.class);
+            resultList = (List<Movie>) m.invoke(movieRepository, groupKeyword, pageRequest);
         }
 
         return resultList;
     }
 
-    public List<Movie> searchNotClassifiedList(String group, String groupKeyword, String order, String orderType,
+    public List<Movie> searchNotClassifiedList(String group, Object groupKeyword, String order, String orderType,
                                                Integer pageIndex, Integer countPerPage, Long userId) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         {
             String groupFirstUpper = StringHandler.firstLetterUpperCase(group);
-            String groupKeywordFirstUpper = StringHandler.firstLetterUpperCase(CommonUtil.checkNullEmpty(groupKeyword, ""));
 
             Class repositoryBean = movieRepository.getClass();
             Method m;
@@ -69,8 +71,8 @@ public class MovieService {
                 resultList = (List<Movie>) m.invoke(movieRepository, pageRequest, userId);
             } else {
                 methodName = "findBy" + groupFirstUpper + "ContainsNotClassified";
-                m = repositoryBean.getMethod(methodName, String.class, Pageable.class, Long.class);
-                resultList = (List<Movie>) m.invoke(movieRepository, groupKeywordFirstUpper, pageRequest, userId);
+                m = repositoryBean.getMethod(methodName, groupKeyword.getClass(), Pageable.class, Long.class);
+                resultList = (List<Movie>) m.invoke(movieRepository, groupKeyword, pageRequest, userId);
             }
 
             return resultList;

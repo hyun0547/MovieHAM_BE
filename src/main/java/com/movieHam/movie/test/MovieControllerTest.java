@@ -53,7 +53,7 @@ public class MovieControllerTest {
 
                 Map<String,Object> resultMap = tmdbApi.tmdbNowPlayingMovies(paramMap);
 
-//                totalPages = totalPages == 2 ? (int) resultMap.get("total_pages") : totalPages;
+                totalPages = count == 1 ? (int) resultMap.get("total_pages") : totalPages;
 
                 Map<String, Object> movieInfo = MapHandler.getMovieInfo((List<Map<String, Object>>) resultMap.get("results"));
 

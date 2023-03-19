@@ -1,6 +1,7 @@
 package util.parser.map;
 
 import com.movieHam.externalApi.movie.TmdbApiService;
+import com.movieHam.externalApi.translation.Papago;
 import com.movieHam.movie.service.genre.Genre;
 import com.movieHam.movie.service.mapper.movieGenre.MovieGenre;
 import com.movieHam.movie.service.people.People;
@@ -8,8 +9,12 @@ import com.movieHam.movie.service.mapper.moviePeople.MoviePeople;
 import com.movieHam.movie.service.movie.Movie;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import util.com.CommonUtil;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 public class MapHandler {
+
+
 
     public static List<NameValuePair> mapToNameValuePairList (Map<String,String> paramMap){
 
@@ -113,12 +120,31 @@ public class MapHandler {
         if(movie.get("vote_count") != null) movieBean.setVoteCount(Integer.valueOf(movie.get("vote_count").toString()));
     }
 
-    public static void setPeopleData(People peopleBean, Map<String,Object> people){
+    public static void setPeopleData(People peopleBean, Map<String,Object> people) throws Exception {
         if(!CommonUtil.checkNullEmpty(people.get("id"), "").equals("")) peopleBean.setPeopleId((Integer) people.get("id"));
         if(!CommonUtil.checkNullEmpty(people.get("adult"), "").equals("")) peopleBean.setAdult((Boolean) people.get("adult"));
         if(!CommonUtil.checkNullEmpty(people.get("gender"), "").equals("")) peopleBean.setGender((Integer) people.get("gender"));
         if(!CommonUtil.checkNullEmpty(people.get("known_for_department"), "").equals("")) peopleBean.setKnownForDepartment((String) people.get("known_for_department"));
-        if(!CommonUtil.checkNullEmpty(people.get("name"), "").equals("")) peopleBean.setName((String) people.get("name"));
+        if(!CommonUtil.checkNullEmpty(people.get("name"), "").equals("")) {
+            peopleBean.setName((String) people.get("name"));
+            Map<String,String> paramMap = new HashMap<String,String>(){
+                {
+                    put("language", "ko");
+                }
+            };
+            try{
+                Map<String,Object> resultMap =  TmdbApiService.tmdbPeopleInfoFromPeopleId(paramMap, (Integer) people.get("id"));
+                List<String> alsoKnownAsList = (List<String>) resultMap.get("also_known_as");
+                for(String alsoKnownAs : alsoKnownAsList){
+                    if(alsoKnownAs.matches(".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*")){
+                        peopleBean.setName(alsoKnownAs);
+                    }
+                }
+            }catch (Exception e){
+                Logger logger = LoggerFactory.getLogger(MapHandler.class);
+                logger.error(e.toString());
+            }
+        }
         if(!CommonUtil.checkNullEmpty(people.get("original_name"), "").equals("")) peopleBean.setOriginalName((String) people.get("original_name"));
         if(!CommonUtil.checkNullEmpty(people.get("popularity"), "").equals("")) peopleBean.setPopularity((Double) people.get("popularity"));
         if(!CommonUtil.checkNullEmpty(people.get("profile_path"), "").equals("")) peopleBean.setProfilePath((String) people.get("profile_path"));

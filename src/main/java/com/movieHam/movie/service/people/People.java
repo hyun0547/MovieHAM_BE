@@ -24,6 +24,10 @@ public class People {
     private String profilePath;
     private String job;
 
+    public String getProfilePath(){
+        return profilePath != null ? "https://image.tmdb.org/t/p/original/" + profilePath : null;
+    }
+
     @OneToMany(mappedBy = "people")
     @JsonBackReference
     private List<MoviePeople> moviePeople;

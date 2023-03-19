@@ -5,6 +5,7 @@ import com.movieHam.movie.service.mapper.movieGenre.MovieGenre;
 import com.movieHam.movie.service.mapper.moviePeople.MoviePeople;
 import lombok.Getter;
 import lombok.Setter;
+import util.com.CommonUtil;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -41,10 +42,10 @@ public class Movie {
     private List<MovieGenre> movieGenre;
 
     public String getPosterPath(){
-        return "https://image.tmdb.org/t/p/original" + posterPath;
+        return posterPath != null ? "https://image.tmdb.org/t/p/original" + posterPath : null;
     }
 
     public String getBackdropPath(){
-        return "https://image.tmdb.org/t/p/original" + backdropPath;
+        return backdropPath != null ? "https://image.tmdb.org/t/p/original" + backdropPath : null;
     }
 }

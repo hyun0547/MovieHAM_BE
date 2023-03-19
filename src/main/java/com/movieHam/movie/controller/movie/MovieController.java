@@ -18,8 +18,10 @@ import util.StringHandler;
 import util.com.CommonUtil;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URISyntaxException;
 import java.util.*;
 
 @RestController
@@ -34,7 +36,27 @@ public class MovieController {
     @Autowired
     GenreService genreService;
 
-    @GetMapping(value="/movie/list/{group}/{order}", produces = "application/json; charset=UTF-8")
+    @GetMapping(value="/movie/{movieId}", produces = "application/json; charset=UTF-8")
+    public Map<String,Object> searchList(HttpSession session, @PathVariable Integer movieId
+    ) {
+
+        Map<String,Object> result;
+
+        Set<MovieDTO> resultSet = new LinkedHashSet<>();
+
+        Movie movie = movieService.findMovieById(movieId);
+
+        MovieDTO movieDTO = new MovieDTO(movie);
+        resultSet.add(movieDTO);
+
+        result = new HashMap<>(){{
+            put("result", resultSet);
+        }};
+
+        return result;
+    }
+
+    @PostMapping(value="/movie/list/{group}/{order}", produces = "application/json; charset=UTF-8")
     public Map<String,Object> searchList(HttpSession session, @PathVariable String group, @PathVariable String order,
                                      String groupKeyword, String orderType, Integer pageIndex, Integer countPerPage
     ) {
@@ -52,7 +74,7 @@ public class MovieController {
             }
 
             result = new HashMap<>(){{
-                put("resultList", resultSet);
+                put("result", resultSet);
             }};
 
         }catch (NoSuchMethodException e){
@@ -75,7 +97,8 @@ public class MovieController {
     @PostMapping(value="/movie/notClassifiedList/{group}/{order}", produces = "application/json; charset=UTF-8")
     public Map<String,Object> searchNotClassifiedList(HttpSession session, @PathVariable String group, @PathVariable String order,
                                      String groupKeyword, String orderType, Integer pageIndex, Integer countPerPage, Long userId
-    ) {
+    ) throws IOException, URISyntaxException {
+//        peopleService.translateAll();
 
         Map<String,Object> result;
 
@@ -90,7 +113,7 @@ public class MovieController {
             }
 
             result = new HashMap<>(){{
-                put("resultList", resultSet);
+                put("result", resultSet);
             }};
 
         }catch (NoSuchMethodException e){
