@@ -93,5 +93,25 @@ CREATE TABLE tn_wish
         REFERENCES tn_movie(movie_id) ON UPDATE CASCADE
 ) charset=utf8 COLLATE=utf8_general_ci;
 
+create index idx_movie
+    on tn_movie (movie_id);
+
+create index idx_movie_genre
+    on tm_movie_genre (movie_id, genre_id);
+
+create index idx_genre
+    on tn_genre (genre_id);
+
+create index idx_movie_people
+    on tm_movie_people (movie_id, people_id);
+
+create index idx_people
+    on tn_people (people_id);
+
+create index idx_user
+    on tn_user (user_id);
+
+create index idx_wish_user
+    on tn_wish (user_id, movie_id);
 
 
