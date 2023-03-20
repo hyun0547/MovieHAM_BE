@@ -33,7 +33,7 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
             "from tn_movie m " +
             "left join tm_movie_genre tmg on m.movie_id = tmg.movie_id " +
             "left join tn_genre tg on tmg.genre_id = tg.genre_id " +
-            "where tg.name = :queryParam" +
+            "where tg.name = :queryParam " +
             "group by m.movie_id"
             , nativeQuery = true)
     List<Movie> findByGenreContains(String queryParam, Pageable pageable);
