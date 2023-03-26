@@ -36,8 +36,8 @@ public class MovieController {
     @Autowired
     GenreService genreService;
 
-    @GetMapping(value="/movie/{movieId}", produces = "application/json; charset=UTF-8")
-    public Map<String,Object> searchList(HttpSession session, @PathVariable Integer movieId
+    @PostMapping(value="/movie/{movieId}", produces = "application/json; charset=UTF-8")
+    public Map<String,Object> search(HttpSession session, @PathVariable Integer movieId
     ) {
 
         Map<String,Object> result;
@@ -58,7 +58,7 @@ public class MovieController {
 
     @PostMapping(value="/movie/list/{group}/{order}", produces = "application/json; charset=UTF-8")
     public Map<String,Object> searchList(HttpSession session, @PathVariable String group, @PathVariable String order,
-                                     String groupKeyword, String orderType, Integer pageIndex, Integer countPerPage
+                                     String groupKeyword, String orderType, Integer pageIndex, Integer countPerPage, Long userId
     ) {
 
         Map<String,Object> result;
@@ -66,8 +66,14 @@ public class MovieController {
         try {
 
             Set<MovieDTO> resultSet = new LinkedHashSet<>();
+            List<Movie> movieList;
 
-            List<Movie> movieList = movieService.searchList(group, groupKeyword, order, orderType, pageIndex, countPerPage);
+            if(userId == null){
+                movieList = movieService.searchList(group, groupKeyword, order, orderType, pageIndex, countPerPage);
+            }else{
+                movieList = movieService.searchNotClassifiedList(group, groupKeyword, order, orderType, pageIndex, countPerPage, userId);
+            }
+
             for(Movie movie : movieList){
                 MovieDTO movieDTO = new MovieDTO(movie);
                 resultSet.add(movieDTO);
@@ -84,45 +90,6 @@ public class MovieController {
         } catch (InvocationTargetException e) {
             result = new HashMap<>(){{
                 put("error", e.getMessage());
-            }};
-        } catch (IllegalAccessException e) {
-            result = new HashMap<>(){{
-                put("error", e.getMessage());
-            }};
-        }
-
-        return result;
-    }
-
-    @PostMapping(value="/movie/notClassifiedList/{group}/{order}", produces = "application/json; charset=UTF-8")
-    public Map<String,Object> searchNotClassifiedList(HttpSession session, @PathVariable String group, @PathVariable String order,
-                                     String groupKeyword, String orderType, Integer pageIndex, Integer countPerPage, Long userId
-    ) throws IOException, URISyntaxException {
-//        peopleService.translateAll();
-
-        Map<String,Object> result;
-
-        try {
-
-            Set<MovieDTO> resultSet = new LinkedHashSet<>();
-
-            List<Movie> movieList = movieService.searchNotClassifiedList(group, groupKeyword, order, orderType, pageIndex, countPerPage, userId);
-            for(Movie movie : movieList){
-                MovieDTO movieDTO = new MovieDTO(movie);
-                resultSet.add(movieDTO);
-            }
-
-            result = new HashMap<>(){{
-                put("result", resultSet);
-            }};
-
-        }catch (NoSuchMethodException e){
-            result = new HashMap<>(){{
-                put("error", "검색형식 오류");
-            }};
-        } catch (InvocationTargetException e) {
-            result = new HashMap<>(){{
-                put("error", e.getCause());
             }};
         } catch (IllegalAccessException e) {
             result = new HashMap<>(){{
