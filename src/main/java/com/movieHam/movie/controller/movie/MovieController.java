@@ -63,10 +63,14 @@ public class MovieController {
             Set<MovieDTO> resultSet = new LinkedHashSet<>();
             List<Movie> movieList;
 
-            if(searchVO.getUserId() == null){
+            if(searchVO.getClassifiedYn() == null){
                 movieList = movieService.searchList(group, order, searchVO);
             }else{
-                movieList = movieService.searchNotClassifiedList(group, order, searchVO);
+                if(searchVO.isClassified()){
+                    movieList = movieService.searchClassifiedList(group, order, searchVO);
+                }else{
+                    movieList = movieService.searchNotClassifiedList(group, order, searchVO);
+                }
             }
 
             for(Movie movie : movieList){

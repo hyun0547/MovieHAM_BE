@@ -11,5 +11,14 @@ public class SearchVO {
     Integer pageIndex;
     Integer countPerPage;
     Long userId;
-    String ClassifiedYn;
+    String classifiedYn;
+
+    public boolean isClassified(){
+        if("Y".equals(classifiedYn)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }
