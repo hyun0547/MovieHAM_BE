@@ -6,7 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SearchVO {
+    String group;
     Object groupKeyword;
+    String order;
     String orderType;
     Integer pageIndex;
     Integer countPerPage;

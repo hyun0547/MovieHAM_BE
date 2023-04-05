@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
@@ -29,8 +28,7 @@ public class MovieController {
     GenreService genreService;
 
     @PostMapping(value="/movie/{movieId}", produces = "application/json; charset=UTF-8")
-    public Map<String,Object> search(HttpSession session, @PathVariable Integer movieId
-    ) {
+    public Map<String,Object> search(@PathVariable Integer movieId) {
 
         Map<String,Object> result;
 
@@ -49,12 +47,7 @@ public class MovieController {
     }
 
     @PostMapping(value="/movie/list/{group}/{order}", produces = "application/json; charset=UTF-8")
-    public Map<String,Object> searchList(
-            HttpSession session,
-            @PathVariable String group,
-            @PathVariable String order,
-            @RequestBody SearchVO searchVO
-    ) {
+    public Map<String,Object> searchList(@RequestBody SearchVO searchVO) {
 
         Map<String,Object> result;
 
@@ -64,12 +57,12 @@ public class MovieController {
             List<Movie> movieList;
 
             if(searchVO.getClassifiedYn() == null){
-                movieList = movieService.searchList(group, order, searchVO);
+                movieList = movieService.searchList(searchVO);
             }else{
                 if(searchVO.isClassified()){
-                    movieList = movieService.searchClassifiedList(group, order, searchVO);
+                    movieList = movieService.searchClassifiedList(searchVO);
                 }else{
-                    movieList = movieService.searchNotClassifiedList(group, order, searchVO);
+                    movieList = movieService.searchNotClassifiedList(searchVO);
                 }
             }
 

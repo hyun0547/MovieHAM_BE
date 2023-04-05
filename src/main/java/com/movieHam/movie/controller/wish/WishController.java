@@ -9,11 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-@Controller
+@RestController
 public class WishController {
 
     @Autowired
@@ -23,19 +24,25 @@ public class WishController {
     WishService wishService;
 
     @PostMapping(value="/wish/insert", produces = "application/json; charset=UTF-8")
-    public String insert (WishVO wishVO) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-
+    public void insert (WishVO wishVO) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         wishService.save(wishVO);
-
-        return "redirect:/movie/test";
     }
 
-    @RequestMapping(value="/movieHam/api/movie/wish/modify")
+    @PostMapping(value="/wish/modify")
     public String modify (Movie movieVO) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
 
 //        List<Movie> movieList = movieService.search("docid", movieVO.getDocid(), "");
 
         return "redirect:/movie/test";
+    }
+
+    @GetMapping(value="/wish/view/{userId}/{movieId}")
+    public String view (WishVO wishVO) {
+        try{
+            return wishService.findById(wishVO).toString();
+        }catch(Exception e){
+            return "fail";
+        }
     }
 
 }

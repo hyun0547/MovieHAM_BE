@@ -24,15 +24,15 @@ public class MovieService {
         return movieRepository.findById(movieId).get();
     }
 
-    public List<Movie> searchList(String group, String order, SearchVO searchVO) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public List<Movie> searchList(SearchVO searchVO) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
-        String groupFirstUpper = StringHandler.firstLetterUpperCase(group);
+        String groupFirstUpper = StringHandler.firstLetterUpperCase(searchVO.getGroup());
 
         Class repositoryBean = movieRepository.getClass();
         Method m;
 
         String methodName = "";
-        Sort sort = Sort.by(order);
+        Sort sort = Sort.by(searchVO.getOrder());
 
         PageRequest pageRequest =
                 PageRequest.of(
@@ -56,15 +56,15 @@ public class MovieService {
         return resultList;
     }
 
-    public List<Movie> searchNotClassifiedList(String group, String order, SearchVO searchVO) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public List<Movie> searchNotClassifiedList(SearchVO searchVO) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         {
-            String groupFirstUpper = StringHandler.firstLetterUpperCase(group);
+            String groupFirstUpper = StringHandler.firstLetterUpperCase(searchVO.getGroup());
 
             Class repositoryBean = movieRepository.getClass();
             Method m;
 
             String methodName = "";
-            Sort sort = Sort.by(order);
+            Sort sort = Sort.by(searchVO.getOrder());
 
             PageRequest pageRequest = PageRequest.of(CommonUtil.checkNullEmpty(searchVO.getPageIndex(), 0), CommonUtil.checkNullEmpty(searchVO.getCountPerPage(), 100), "asc".equals(searchVO.getOrderType()) ? sort.ascending() : sort.descending());
             List<Movie> resultList = null;
@@ -89,14 +89,14 @@ public class MovieService {
     }
 
 
-    public List<Movie> searchClassifiedList(String group, String order, SearchVO searchVO) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        String groupFirstUpper = StringHandler.firstLetterUpperCase(group);
+    public List<Movie> searchClassifiedList(SearchVO searchVO) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        String groupFirstUpper = StringHandler.firstLetterUpperCase(searchVO.getGroup());
 
         Class repositoryBean = movieRepository.getClass();
         Method m;
 
         String methodName = "";
-        Sort sort = Sort.by(order);
+        Sort sort = Sort.by(searchVO.getOrder());
 
         PageRequest pageRequest = PageRequest.of(CommonUtil.checkNullEmpty(searchVO.getPageIndex(), 0), CommonUtil.checkNullEmpty(searchVO.getCountPerPage(), 100), "asc".equals(searchVO.getOrderType()) ? sort.ascending() : sort.descending());
         List<Movie> resultList = null;
