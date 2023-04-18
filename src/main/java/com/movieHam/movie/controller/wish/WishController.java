@@ -1,5 +1,6 @@
 package com.movieHam.movie.controller.wish;
 
+import com.movieHam.movie.service.movie.MovieDTO;
 import com.movieHam.movie.service.wish.WishService;
 import com.movieHam.movie.service.movie.MovieService;
 import com.movieHam.movie.service.movie.Movie;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
+import java.util.*;
 
 @RestController
 public class WishController {
@@ -37,12 +38,19 @@ public class WishController {
     }
 
     @GetMapping(value="/wish/view/{userId}/{movieId}")
-    public String view (WishVO wishVO) {
+    public Map<String,Object> view (WishVO wishVO) {
+        Map<String,Object> result;
         try{
-            return wishService.findById(wishVO).toString();
+            result = new HashMap<String,Object>(){{
+                put("result", wishService.findById(wishVO));
+            }};
         }catch(Exception e){
-            return "fail";
+            result = new HashMap<String,Object>(){{
+                put("error", e.getMessage());
+            }};
         }
+
+        return result;
     }
 
 }

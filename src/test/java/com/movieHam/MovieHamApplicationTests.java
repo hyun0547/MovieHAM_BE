@@ -6,14 +6,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @SpringBootTest
 class MovieHamApplicationTests {
 
 	public static void main(String[] args) {
-		System.out.println("테 스트".matches(".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*"));
+		UUID uuid = UUID.randomUUID();
+		int l = ByteBuffer.wrap(uuid.toString().getBytes()).getInt();
+		System.out.println(Integer.toString(l, 9));
 	}
 
 }

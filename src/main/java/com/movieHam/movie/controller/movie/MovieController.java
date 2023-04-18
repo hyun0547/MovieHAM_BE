@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import util.com.CommonUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -47,7 +48,7 @@ public class MovieController {
     }
 
     @PostMapping(value="/movie/list/{group}/{order}", produces = "application/json; charset=UTF-8")
-    public Map<String,Object> searchList(@RequestBody SearchVO searchVO) {
+    public Map<String,Object> searchList(@RequestBody SearchVO searchVO, @PathVariable String group, @PathVariable String order) {
 
         Map<String,Object> result;
 
@@ -56,7 +57,10 @@ public class MovieController {
             Set<MovieDTO> resultSet = new LinkedHashSet<>();
             List<Movie> movieList;
 
-            if(searchVO.getClassifiedYn() == null){
+            searchVO.setOrder(order);
+            searchVO.setGroup(group);
+
+            if("".equals(CommonUtil.checkNullEmpty(searchVO.getClassifiedYn(), ""))){
                 movieList = movieService.searchList(searchVO);
             }else{
                 if(searchVO.isClassified()){

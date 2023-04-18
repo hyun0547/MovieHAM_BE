@@ -5,7 +5,8 @@ import com.movieHam.user.service.UserService;
 import com.movieHam.user.service.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -13,23 +14,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-public class UserProfileController {
+public class UserController {
 
     @Autowired
     UserService userService;
 
-    @GetMapping(value="/user/profile", produces = "application/json; charset=UTF-8")
-    public Map<String, Object> doLogin(HttpSession session, String code) {
-
-        SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-        UserVO user = userService.view(sessionUser.getUniqueId());
-
-        Map<String, Object> result = new HashMap<>(){{
-            put("status", "success");
-            put("user", user);
-        }};
-
-        return result;
+    @PostMapping(value="/user/insert", produces = "application/json; charset=UTF-8")
+    public void doLogin(@RequestBody UserVO user) {
+        userService.save(user);
     }
 
 

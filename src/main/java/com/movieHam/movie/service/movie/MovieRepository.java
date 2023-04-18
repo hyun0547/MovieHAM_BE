@@ -146,57 +146,67 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
             "group by m.movie_id"
             , nativeQuery = true)
     List<Movie> findByDirectorContainsNotClassified(String queryParam, Pageable pageable, Long userId);
+
     @Query("select m " +
             "from tn_movie m join tn_wish w " +
-            "on m.movieId = w.movieId and w.userId = :userId ")
+            "on m.movieId = w.movieId and w.userId = :userId " +
+            "where w.wishStatus not in('N')")
     List<Movie> findAllClassified(Pageable pageable, Long userId);
 
     @Query("select m " +
             "from tn_movie m join tn_wish w " +
             "on m.movieId = w.movieId and w.userId = :userId " +
-            "where m.movieId = :queryParam")
+            "where w.wishStatus not in('N') " +
+            "and m.movieId = :queryParam")
     List<Movie> findByMovieIdContainsClassified(String queryParam, Pageable pageable, Long userId);
 
     @Query("select m " +
             "from tn_movie m join tn_wish w " +
             "on m.movieId = w.movieId and w.userId = :userId " +
-            "where m.adult = :queryParam")
+            "where w.wishStatus not in('N') " +
+            "and m.adult = :queryParam")
     List<Movie> findByAdultContainsClassified(String queryParam, Pageable pageable, Long userId);
 
     @Query("select m " +
             "from tn_movie m join tn_wish w " +
             "on m.movieId = w.movieId and w.userId = :userId " +
-            "where m.originalLanguage like %:queryParam%")
+            "where w.wishStatus not in('N') " +
+            "and m.originalLanguage like %:queryParam%")
     List<Movie> findByOriginalLanguageContainsClassified(String queryParam, Pageable pageable, Long userId);
 
     @Query("select m " +
             "from tn_movie m join tn_wish w " +
             "on m.movieId = w.movieId and w.userId = :userId " +
-            "where m.originalTitle like %:queryParam%")
+            "where w.wishStatus not in('N') " +
+            "and m.originalTitle like %:queryParam%")
     List<Movie> findByOriginalTitleContainsClassified(String queryParam, Pageable pageable, Long userId);
 
     @Query("select m " +
             "from tn_movie m join tn_wish w " +
             "on m.movieId = w.movieId and w.userId = :userId " +
-            "where m.overview like %:queryParam%")
+            "where w.wishStatus not in('N') " +
+            "and m.overview like %:queryParam%")
     List<Movie> findByOverviewContainsClassified(String queryParam, Pageable pageable, Long userId);
 
     @Query("select m " +
             "from tn_movie m join tn_wish w " +
             "on m.movieId = w.movieId and w.userId = :userId " +
-            "where m.releaseDate = :queryParam")
+            "where w.wishStatus not in('N') " +
+            "and m.releaseDate = :queryParam")
     List<Movie> findByReleaseDateContainsClassified(String queryParam, Pageable pageable, Long userId);
 
     @Query(value = "select * " +
             "from tn_movie m join tn_wish w " +
             "on m.movie_id = w.movie_id and w.user_id = :userId " +
-            "where w.movie_id is null and date_format(m.release_date, '%Y') = :queryParam" , nativeQuery = true)
+            "where w.wishStatus not in('N') " +
+            "and w.movie_id is null and date_format(m.release_date, '%Y') = :queryParam" , nativeQuery = true)
     List<Movie> findByReleaseYearContainsClassified(String queryParam, Pageable pageable, Long userId);
 
     @Query("select m " +
             "from tn_movie m join tn_wish w " +
             "on m.movieId = w.movieId and w.userId = :userId " +
-            "where m.title like %:queryParam%")
+            "where w.wishStatus not in('N') " +
+            "and m.title like %:queryParam%")
     List<Movie> findByTitleContainsClassified(String queryParam, Pageable pageable, Long userId);
 
 
@@ -205,7 +215,7 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
             "left join tm_movie_genre tmg on m.movie_id = tmg.movie_id " +
             "left join tn_genre tg on tmg.genre_id = tg.genre_id " +
             "join tn_wish w on m.movie_id = w.movie_id and w.user_id = :userId " +
-            "where w.movie_id is null " +
+            "where w.wish_status not in('N') " +
             "and tg.name = :queryParam"
             , nativeQuery = true)
     List<Movie> findByGenreContainsClassified(String queryParam, Pageable pageable, Long userId);
@@ -215,7 +225,8 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
             "left join tm_movie_people tmp on m.movie_id = tmp.movie_id " +
             "left join tn_people tp on tp.people_id = tmp.people_id " +
             "join tn_wish w on m.movie_id = w.movie_id and w.user_id = :userId " +
-            "where tp.known_for_department = 'Acting' " +
+            "where w.wishStatus not in('N') " +
+            "and tp.known_for_department = 'Acting' " +
             "and tp.name like %:queryParam% " +
             "group by m.movie_id"
             , nativeQuery = true)
@@ -226,7 +237,8 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
             "left join tm_movie_people tmp on m.movie_id = tmp.movie_id " +
             "left join tn_people tp on tp.people_id = tmp.people_id " +
             "join tn_wish w on m.movie_id = w.movie_id and w.user_id = :userId " +
-            "where tp.known_for_department = 'Directing' " +
+            "where w.wishStatus not in('N') " +
+            "and tp.known_for_department = 'Directing' " +
             "and tp.name like %:queryParam% " +
             "group by m.movie_id"
             , nativeQuery = true)
