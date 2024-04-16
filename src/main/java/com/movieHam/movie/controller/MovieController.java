@@ -48,9 +48,4 @@ public class MovieController {
         return new ResultSet<Movie>("Success", "Test", movieService.getMovie(id));
     }
 
-    @GetMapping("/movie/wish/list")
-    public void getMovieListByWish() {
-
-    }
-
 }

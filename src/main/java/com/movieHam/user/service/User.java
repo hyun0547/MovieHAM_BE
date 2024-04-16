@@ -5,10 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id", "email", "birthday", "gender", "age_range", "nickname"})
 @Entity(name= "tn_user")
-public class UserVO {
+public class User {
 
     @Id
     @Column(name = "user_id")

@@ -9,11 +9,11 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public UserVO save(UserVO user){
+    public User save(User user){
         return userRepository.save(user);
     }
 
-    public UserVO view(Long userId){
+    public User view(Long userId){
         return userRepository.findById(userId).get();
     }
 }
