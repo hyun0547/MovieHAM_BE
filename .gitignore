@@ -41,3 +41,8 @@ secrets.yml
 .sts4-cache
 src/main/resources/application.*
 doc/apache-tomcat-9.0.63/
+Dockerfile
+build.gradle
+gradlew
+gradlew.bat
+gradle/wrapper/gradle-wrapper.properties
