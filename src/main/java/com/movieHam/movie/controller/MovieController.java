@@ -13,6 +13,7 @@ import util.mapper.ResultSet;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 
@@ -38,6 +39,13 @@ public class MovieController {
         ResultSet<List<Movie>> result = new ResultSet<List<Movie>>("Success", "Test", movieList);
         
         return result;
+    }
+
+    @GetMapping("/movie/{id}")
+    public ResultSet<Movie> getMovie(
+        @PathVariable("id") Integer id)
+    {
+        return new ResultSet<Movie>("Success", "Test", movieService.getMovie(id));
     }
 
     @GetMapping("/movie/wish/list")

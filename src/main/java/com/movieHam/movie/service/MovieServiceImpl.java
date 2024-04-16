@@ -1,11 +1,10 @@
 package com.movieHam.movie.service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Date;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -46,6 +45,12 @@ public class MovieServiceImpl implements MovieService{
         }
         
         return movieList;
+    }
+
+    @Override
+    public Movie getMovie(Integer id) {
+        Optional<Movie> test = movieRepository.findById(id);
+        return test.orElse(null);
     }
 
     @Override
