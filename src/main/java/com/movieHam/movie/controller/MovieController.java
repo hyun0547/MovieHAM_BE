@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 import com.movieHam.movie.service.Movie;
 import com.movieHam.movie.service.MovieSearch;
@@ -24,7 +25,7 @@ public class MovieController {
     MovieService movieService;
 
     @GetMapping("/movie/list")
-    public ResultSet<List<Movie>> getMovieList(
+    public ResultSet getMovieList(
         @ModelAttribute MovieSearch movieSearch) 
     {
         String searchType;
@@ -36,16 +37,19 @@ public class MovieController {
 
         List<Movie> movieList = movieService.getMovieList(movieSearch, searchType);
 
-        ResultSet<List<Movie>> result = new ResultSet<List<Movie>>("Success", "Test", movieList);
+        Map<String, Object> data = Map.of("list", movieList);
+
+        ResultSet result = new ResultSet("Success", "Test", data);
         
         return result;
     }
 
     @GetMapping("/movie/{id}")
-    public ResultSet<Movie> getMovie(
+    public ResultSet getMovie(
         @PathVariable("id") Integer id)
     {
-        return new ResultSet<Movie>("Success", "Test", movieService.getMovie(id));
+        Map<String, Object> data = Map.of("data", movieService.getMovie(id));
+        return new ResultSet("Success", "Test", data);
     }
 
 }

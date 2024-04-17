@@ -53,13 +53,4 @@ public class MovieServiceImpl implements MovieService{
         return test.orElse(null);
     }
 
-    @Override
-    public List<Movie> getMovieListByWish() {
-        List<Movie> movieList = new ArrayList<Movie>();
-        movieList.add(new Movie());
-        return movieList;
-    }
-
-
-
 }

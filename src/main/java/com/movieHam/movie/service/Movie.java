@@ -43,8 +43,6 @@ public class Movie {
     private int voteCount;
     private List<Cast> cast;
 
-    // 생성자, Getter 및 Setter는 생략하였습니다.
-
     @Getter
     public static class BelongsToCollection {
         @Field(value = "id")
@@ -53,7 +51,6 @@ public class Movie {
         private String posterPath;
         private String backdropPath;
 
-        // 생성자, Getter 및 Setter는 생략하였습니다.
     }
 
     @Getter
@@ -62,7 +59,6 @@ public class Movie {
         private int id;
         private String name;
 
-        // 생성자, Getter 및 Setter는 생략하였습니다.
     }
 
     @Getter
@@ -73,7 +69,6 @@ public class Movie {
         private String name;
         private String originCountry;
 
-        // 생성자, Getter 및 Setter는 생략하였습니다.
     }
 
     @Getter
@@ -81,7 +76,6 @@ public class Movie {
         private String iso_3166_1;
         private String name;
 
-        // 생성자, Getter 및 Setter는 생략하였습니다.
     }
 
     @Getter
@@ -90,7 +84,6 @@ public class Movie {
         private String iso_639_1;
         private String name;
 
-        // 생성자, Getter 및 Setter는 생략하였습니다.
     }
 
     @Getter
@@ -108,7 +101,6 @@ public class Movie {
         private String creditId;
         private int order;
 
-        // 생성자, Getter 및 Setter는 생략하였습니다.
     }
 }
 

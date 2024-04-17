@@ -1,24 +1,28 @@
 package util.mapper;
 
+import java.util.Map;
+
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class ResultSet<T> {
+@NoArgsConstructor
+public class ResultSet {
     private String resultCode;
     private String msg;
-    private T data;
+    private Map<String, Object> result;
     private Object extraData;
 
-    public ResultSet(String resultCode, String msg, T data) {
+    public ResultSet(String resultCode, String msg, Map<String, Object> result) {
         this.resultCode = resultCode;
         this.msg = msg;
-        this.data = data;
+        this.result = result;
     }
 
-    public ResultSet(String resultCode, String msg, T data, Object extraData) {
+    public ResultSet(String resultCode, String msg, Map<String, Object> result, Object extraData) {
         this.resultCode = resultCode;
         this.msg = msg;
-        this.data = data;
+        this.result = result;
         this.extraData = extraData;
     }
 

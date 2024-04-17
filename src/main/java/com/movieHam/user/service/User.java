@@ -11,15 +11,10 @@ public class User {
     @Id
     @Column(name = "user_id")
     private Integer id;
-
     private String email;
-
     private String birthday;
-
     private String gender;
-
     private String age_range;
-
     private String nickname;
 
 }

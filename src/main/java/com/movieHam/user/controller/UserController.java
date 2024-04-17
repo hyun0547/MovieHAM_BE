@@ -5,6 +5,9 @@ import com.movieHam.user.service.UserService;
 import util.mapper.ResultSet;
 
 import com.movieHam.user.service.User;
+
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,11 +23,12 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/user")
-    public ResultSet<User> getUser(
+    public ResultSet getUser(
         @RequestParam Integer id) 
     {
         User user = userService.getUser(id);
-        ResultSet<User> result = new ResultSet<User>("Success", "Test", user);
+        Map<String, Object> data = Map.of("data", user);
+        ResultSet result = new ResultSet("Success", "Test", data);
 
         return result;
     }
