@@ -10,7 +10,7 @@ public class User {
 
     @Id
     @Column(name = "user_id")
-    private Long id;
+    private Integer id;
 
     private String email;
 
