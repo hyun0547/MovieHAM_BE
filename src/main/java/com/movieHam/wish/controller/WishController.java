@@ -1,21 +1,16 @@
 package com.movieHam.wish.controller;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.StringJoiner;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.movieHam.wish.service.Wish;
 import com.movieHam.wish.service.WishService;
@@ -32,19 +27,18 @@ public class WishController {
 
     @GetMapping("/wish/list")
     public ResultSet getWishList(
-        @RequestParam Integer userId)
+        @RequestParam Integer userId,
+        Map<String, Object> categoryMap)
     {
         List<Wish> wishList = wishService.getWishList(userId);
 
         List<Integer> movieIdList = extractMovieIds(wishList);
 
-        Map<String, Object> param = Map.of(
-            "movieIdList", movieIdList
-        );
+        categoryMap.put("movieIdList", movieIdList);
 
-        ResultSet result = requestMovieAPI(param);
+        ResultSet result = requestMovieAPI(categoryMap);
 
-        return null;
+        return result;
     }
 
     @PostMapping("/wish/insert")

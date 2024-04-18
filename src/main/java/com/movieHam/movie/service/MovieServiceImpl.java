@@ -6,6 +6,8 @@ import java.util.Date;
 
 import org.springframework.stereotype.Service;
 
+import com.movieHam.movie.repository.MovieRepository;
+
 @Service
 public class MovieServiceImpl implements MovieService{
 
@@ -16,32 +18,9 @@ public class MovieServiceImpl implements MovieService{
     }
 
     @Override
-    public List<Movie> getMovieList(MovieSearch movieParam, String searchType) {
+    public List<Movie> getMovieList(MovieSearch movieSearch) {
 
-        List<Movie> movieList = null;
-
-        switch (searchType) {
-            case "title":
-                movieList = movieRepository.findByTitleContaining(movieParam.getTitle());
-                break;
-
-            case "date":
-                Date fromDate = movieParam.getFromDate();
-                Date toDate = movieParam.getToDate();
-
-                if (fromDate == null && toDate != null) {
-                    movieList = movieRepository.findByReleaseDateLessThan(toDate);
-                } else if (fromDate != null && toDate == null) {
-                    movieList = movieRepository.findByReleaseDateGreaterThan(fromDate);
-                } else {
-                    movieList = movieRepository.findByReleaseDateBetween(fromDate, toDate);
-                }
-                break;
-
-            default:
-                // 
-                return null;
-        }
+        List<Movie> movieList = movieRepository.findList(movieSearch);
         
         return movieList;
     }
