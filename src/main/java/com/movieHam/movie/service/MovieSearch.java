@@ -3,6 +3,7 @@ package com.movieHam.movie.service;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Setter
 public class MovieSearch {
     private String title;
+    private List<Integer> movieIdList;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fromDate;

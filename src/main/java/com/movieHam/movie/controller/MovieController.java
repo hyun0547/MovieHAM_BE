@@ -15,6 +15,8 @@ import util.mapper.ResultSet;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 
@@ -24,9 +26,9 @@ public class MovieController {
     @Autowired
     MovieService movieService;
 
-    @GetMapping("/movie/list")
+    @RequestMapping("/movie/list")
     public ResultSet getMovieList(
-        @ModelAttribute MovieSearch movieSearch) 
+        @RequestBody MovieSearch movieSearch) 
     {
         String searchType;
         if(movieSearch.getTitle() != null){
@@ -37,7 +39,7 @@ public class MovieController {
 
         List<Movie> movieList = movieService.getMovieList(movieSearch, searchType);
 
-        Map<String, Object> data = Map.of("list", movieList);
+        Map<String, Object> data = Map.of("data", movieList);
 
         ResultSet result = new ResultSet("Success", "Test", data);
         

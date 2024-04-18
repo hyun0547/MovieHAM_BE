@@ -47,3 +47,4 @@ gradlew
 gradlew.bat
 gradle/wrapper/gradle-wrapper.properties
 doc/script/mysql_ddl.sql
+doc/script/mysql_ddl.sql

@@ -86,7 +86,7 @@ CREATE TABLE tn_wish
     `review`          TEXT NULL COMMENT '',
     `seen_yn`         TINYINT(1) NOT NULL,
     `wish_yn`         TINYINT(1) NOT NULL,
-    primary key (`user_id`),
+    primary key (`user_id`, `movie_id`),
          FOREIGN KEY (USER_ID)
                  REFERENCES tn_user(USER_ID) ON UPDATE CASCADE
 ) charset=utf8 COLLATE=utf8_general_ci;
