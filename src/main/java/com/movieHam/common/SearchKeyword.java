@@ -1,4 +1,4 @@
-package com.movieHam.movie.service;
+package com.movieHam.common;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
-public class MovieSearch {
+public class SearchKeyword {
     private String title;
     private List<Integer> movieIdList;
 

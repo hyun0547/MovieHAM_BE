@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.movieHam.common.SearchKeyword;
 import com.movieHam.movie.repository.MovieRepository;
 
 @Service
@@ -17,7 +18,7 @@ public class MovieServiceImpl implements MovieService{
     }
 
     @Override
-    public List<Movie> getMovieList(MovieSearch movieSearch) {
+    public List<Movie> getMovieList(SearchKeyword movieSearch) {
 
         List<Movie> movieList = movieRepository.findList(movieSearch);
         

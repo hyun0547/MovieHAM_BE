@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
+import com.movieHam.common.SearchKeyword;
 import com.movieHam.movie.service.Movie;
-import com.movieHam.movie.service.MovieSearch;
 import com.movieHam.movie.service.MovieService;
 
 import util.mapper.ResultSet;
@@ -27,7 +27,7 @@ public class MovieController {
 
     @RequestMapping("/movie/list")
     public ResultSet getMovieList(
-        @RequestBody MovieSearch movieSearch) 
+        @RequestBody SearchKeyword movieSearch) 
     {
         List<Movie> movieList = movieService.getMovieList(movieSearch);
 

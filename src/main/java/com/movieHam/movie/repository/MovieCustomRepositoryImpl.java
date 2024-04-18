@@ -9,8 +9,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
+import com.movieHam.common.SearchKeyword;
 import com.movieHam.movie.service.Movie;
-import com.movieHam.movie.service.MovieSearch;
 
 public class MovieCustomRepositoryImpl implements MovieCustomRepository{
 
@@ -18,7 +18,7 @@ public class MovieCustomRepositoryImpl implements MovieCustomRepository{
     private MongoTemplate mongoTemplate;
 
     @Override
-    public List<Movie> findList(MovieSearch movieSearch) {
+    public List<Movie> findList(SearchKeyword movieSearch) {
         Query query = new Query();
         List<Criteria> criteriaList = new ArrayList<>();
         Criteria criteria = new Criteria();
