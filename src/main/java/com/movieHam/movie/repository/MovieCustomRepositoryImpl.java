@@ -45,6 +45,20 @@ public class MovieCustomRepositoryImpl implements MovieCustomRepository{
                         case "movieIdList":
                             criteriaList.add(Criteria.where("_id")
                                 .in(movieSearch.getMovieIdList()));
+                            break;
+                        case "peopleName":
+                            criteriaList.add(Criteria.where("cast.name")
+                                .regex(".*"+movieSearch.getPeopleName()+".*", "i"));
+                            break;
+                        case "productionCountries":
+                            criteriaList.add(Criteria.where("productionCountries.iso_3166_1")
+                                .is(movieSearch.getProductionCountries()));
+                            break;
+                        case "genre":
+                            criteriaList.add(Criteria.where("genres.name")
+                                .is(movieSearch.getGenre()));
+                            break;
+                                
                         default:
                             break;
                     }
