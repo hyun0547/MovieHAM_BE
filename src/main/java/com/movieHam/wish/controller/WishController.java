@@ -2,7 +2,6 @@ package com.movieHam.wish.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.movieHam.common.SearchKeyword;
 import com.movieHam.wish.service.Wish;
 import com.movieHam.wish.service.WishService;
 
@@ -28,15 +28,15 @@ public class WishController {
     @GetMapping("/wish/list")
     public ResultSet getWishList(
         @RequestParam Integer userId,
-        Map<String, Object> categoryMap)
+        SearchKeyword searchKeyword)
     {
         List<Wish> wishList = wishService.getWishList(userId);
 
         List<Integer> movieIdList = extractMovieIds(wishList);
 
-        categoryMap.put("movieIdList", movieIdList);
+        searchKeyword.setMovieIdList(movieIdList);
 
-        ResultSet result = requestMovieAPI(categoryMap);
+        ResultSet result = requestMovieAPI(searchKeyword);
 
         return result;
     }
@@ -58,12 +58,12 @@ public class WishController {
         return movieIdList;
     }
 
-    public ResultSet requestMovieAPI(Map<String, Object> param){
+    public ResultSet requestMovieAPI(SearchKeyword searchKeyword){
 
         RestTemplate restTemplate = new RestTemplate();
                 
         String url = "http://localhost:8080/movie/list";
 
-        return restTemplate.postForObject(url, param, ResultSet.class);
+        return restTemplate.postForObject(url, searchKeyword, ResultSet.class);
     }
 }
