@@ -21,4 +21,7 @@ public class SearchKeyword {
     private String peopleName;
     private String productionCountries;
     private String genre;
+
+    private Integer countPerPage = 10;
+    private Integer page;
 }

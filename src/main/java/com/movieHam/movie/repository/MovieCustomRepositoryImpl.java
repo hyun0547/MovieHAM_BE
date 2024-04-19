@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.domain.Sort;
+
 
 import com.movieHam.common.SearchKeyword;
 import com.movieHam.movie.service.Movie;
@@ -18,46 +20,49 @@ public class MovieCustomRepositoryImpl implements MovieCustomRepository{
     private MongoTemplate mongoTemplate;
 
     @Override
-    public List<Movie> findList(SearchKeyword movieSearch) {
+    public List<Movie> findList(SearchKeyword searchKeyword) {
         Query query = new Query();
         List<Criteria> criteriaList = new ArrayList<>();
         Criteria criteria = new Criteria();
 
         // Non null field check
-        for(Field field : movieSearch.getClass().getDeclaredFields()){
+        for(Field field : searchKeyword.getClass().getDeclaredFields()){
             field.setAccessible(true);
 
             try {
-                if(field.get(movieSearch) != null){
+                if(field.get(searchKeyword) != null){
                     switch (field.getName()) {
                         case "title":
                             criteriaList.add(Criteria.where("title")
-                                .regex(".*"+movieSearch.getTitle()+".*", "i"));
+                                .regex(".*"+searchKeyword.getTitle()+".*", "i"));
                             break;
                         case "fromDate":
                             criteriaList.add(Criteria.where("releaseDate")
-                                .gte(movieSearch.getFromDate()));
+                                .gte(searchKeyword.getFromDate()));
                             break;
                         case "toDate":
                             criteriaList.add(Criteria.where("releaseDate")
-                                .lte(movieSearch.getToDate()));
+                                .lte(searchKeyword.getToDate()));
                             break;
                         case "movieIdList":
                             criteriaList.add(Criteria.where("_id")
-                                .in(movieSearch.getMovieIdList()));
+                                .in(searchKeyword.getMovieIdList()));
                             break;
                         case "peopleName":
                             criteriaList.add(Criteria.where("cast.name")
-                                .regex(".*"+movieSearch.getPeopleName()+".*", "i"));
+                                .regex(".*"+searchKeyword.getPeopleName()+".*", "i"));
                             break;
                         case "productionCountries":
                             criteriaList.add(Criteria.where("productionCountries.iso_3166_1")
-                                .is(movieSearch.getProductionCountries()));
+                                .is(searchKeyword.getProductionCountries()));
                             break;
                         case "genre":
                             criteriaList.add(Criteria.where("genres.name")
-                                .is(movieSearch.getGenre()));
+                                .is(searchKeyword.getGenre()));
                             break;
+                        case "countPerPage":
+
+                        break;
                                 
                         default:
                             break;
@@ -71,6 +76,14 @@ public class MovieCustomRepositoryImpl implements MovieCustomRepository{
 
         criteria.andOperator(criteriaList.toArray(new Criteria[0]));
         query.addCriteria(criteria);
+
+        // 정렬
+        Sort.Direction direction = Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, "releaseDate");
+        query.with(sort);
+
+        // 페이지당 카운트
+        query.limit(searchKeyword.getCountPerPage());
         
         return mongoTemplate.find(query, Movie.class);
     }
